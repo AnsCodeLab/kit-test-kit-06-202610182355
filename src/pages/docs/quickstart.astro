@@ -1,0 +1,32 @@
+---
+import { getEntry } from 'astro:content';
+import Docs from '../../layouts/Docs.astro';
+import InstallCommand from '../../components/InstallCommand.astro';
+import { renderDoc } from '../../lib/skill-markdown';
+
+const chapter = await getEntry('handbook', '02-quickstart');
+if (!chapter) throw new Error('Handbook chapter 02-quickstart is missing from the content collection');
+const { title, body } = chapter.data;
+const { html, headings } = renderDoc(body);
+---
+
+<Docs
+  title={`${title} | Docs - Coding Agent Kit`}
+  description="Install Coding Agent Kit, run the wizard or the non-interactive form, and fix the common errors."
+  current="quickstart"
+  headings={headings}
+>
+  <h1>{title}</h1>
+  <div class="cmd">
+    <InstallCommand />
+  </div>
+  <div class="prose" data-doc-body set:html={html} />
+</Docs>
+
+<style>
+  .cmd {
+    margin-block: var(--space-5) var(--space-6);
+    padding-block: var(--space-3);
+    border-block: 2px solid var(--color-ink);
+  }
+</style>
