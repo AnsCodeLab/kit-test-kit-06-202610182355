@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found - Coding Agent Kit" description="This page does not exist. Go back to the home page or the docs.">
+  <section class="missing">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>Page not found</h1>
+    <p>There is nothing at this address. It may have moved, or the link may be wrong.</p>
+    <ul class="back">
+      <li><a href="/">Back to Home</a></li>
+      <li><a href="/docs/">Read the Docs</a></li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .missing {
+    padding-block: var(--space-7);
+    max-width: var(--measure);
+  }
+  .code {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-signal);
+  }
+  .back {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+</style>
