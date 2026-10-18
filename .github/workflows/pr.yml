@@ -1,0 +1,697 @@
+name: PR Checks
+
+# Per-run PR workflow for the project-run harness (GitHub Actions, self-hosted
+# Linux runner with label `podman`, bash, Jira).
+#
+# Origin: the EQQNext Gitea workflow (.gitea/workflows/pr.yml). Same design, ported:
+#   Gitea -> GitHub            API calls use `gh api` and the built-in GITHUB_TOKEN
+#   Mantis -> Jira             ticket fetched over REST; QA verdict goes back as a Jira comment
+#   PowerShell -> bash         Linux runner, `defaults.run.shell: bash`
+#   omp + auth broker -> Claude Code (`claude -p`) with a podman-secret OAuth token
+#   Windows junction cache -> plain `npm ci` (each run has its own container)
+#   merge via a whitelisted user token -> `gh pr merge` with GITHUB_TOKEN
+#
+# Jobs (needs in brackets):
+#   protected-paths  Fails a PR whose files include .github/**, review-prompt.md, qa-prompt.md, DONE.md, PLAN-INSTRUCTIONS.md
+#                or TICKET.md (the pipeline owns them; the builder opens an issue instead). Runs from the base branch. review and qa
+#                need it, and review and qa run every script from a copy of the BASE branch ($TRUSTED), never from the PR.
+#   commit-lint  Every commit subject and the PR title must be `KEY-123 - description`
+#                (Jira key, e.g. `AKC-213 - Implement login`), and every commit's key must
+#                equal the PR title's key. Blocking. Logic in .github/scripts/lint-commits.sh.
+#   ci           Install, lint, unit tests, regression tests, build, healthcheck, secret scan and
+#                dependency audit, then Playwright smoke, axe and Lighthouse CI against the served
+#                `dist/`. Every step runs only when the project defines it (see "npm scripts" in
+#                README.md), so the same file works on an almost empty repo and on the finished
+#                site. Tests, build, healthcheck, secret scan and smoke block; type-check, format,
+#                the dependency audit, axe and Lighthouse are warning-only.
+#   review       [commit-lint, ci] Gate B. DECIDE ONLY. A deterministic step collects the
+#                diff, earlier reviews, comments and the Jira context (ticket, parent epic,
+#                linked issues, recent comments; .github/scripts/jira-context.sh) into files. Claude Code then
+#                runs with read tools plus Write and may only write decision.txt and
+#                review-comment.md. A later deterministic step posts the review. The agent
+#                cannot merge, push or comment.
+#   qa           [ci] Gate Q. Required for Real tickets: the first step `decide` reads the PR's CURRENT
+#                labels over the API (never the event payload, which can predate the label) and also
+#                accepts the Jira label `flow-real`; when neither is set every later step is skipped, the
+#                job ends green and exports qa_ran=false. Otherwise it serves the built `dist/`,
+#                takes Playwright screenshots (plus the rendered link list) of the pages named in the ticket (fallback `/`),
+#                builds facts.txt (CI step results and per page lang, title, landmarks, headings, alt counts;
+#                .github/scripts/qa-facts.mjs), and gives Claude Code ONLY the acceptance criteria, the
+#                screenshots, the link lists, facts.txt and the URL, never the diff or the source.
+#                The verdict is posted to Jira (first line exactly
+#                `QA: PASS` or `QA: FAIL`) and to the PR. The job fails on FAIL.
+#   merge        [review, qa] Deterministic, no LLM. Dismisses stale change requests, then
+#                `gh pr merge --merge --delete-branch`, only when the review decision is MERGE and the
+#                qa job succeeded: with qa_ran=true that means QA PASS, with qa_ran=false the ticket
+#                was trivial. A PR that is labelled flow-real when merge starts but whose QA did not run
+#                is NOT merged. The review job reads no labels.
+#
+# Why merge is a separate job: the review job must never merge itself. In EQQNext the review
+# job's own status was a required check, so merging from inside it deadlocked (Gitea refused
+# while that same status was pending). GitHub free private repos have no required checks,
+# so here the reason is determinism: the agent job only decides, and one plain script
+# job with no LLM is the single place that merges.
+#
+# Runner environment (set from podman secrets at container start, never written to the repo):
+#   JIRA_BASE_URL, JIRA_USER, JIRA_TOKEN   Jira REST access
+#   CLAUDE_CODE_OAUTH_TOKEN                Claude Code auth
+#   MODEL (optional)                       model override, default claude-sonnet-5-5
+#   EAK_PROMPT_DIR (optional)              directory with review-prompt.md and qa-prompt.md that
+#                                          lives outside the repo; otherwise the prompts are read
+#                                          from .github/prompts/ on the BASE branch (never from
+#                                          the PR head, so a PR cannot change its own reviewer)
+# No secret value appears in this file. Secrets reach steps only through the runner
+# environment; steps use them inside commands and never echo them.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read   # qa reads the ci job's step results (gh api .../actions/runs/<id>/jobs)
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Commit subjects (blocking)
+  # ---------------------------------------------------------------------------
+  commit-lint:
+    name: Commit Messages
+    runs-on: [self-hosted, podman]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # The checker comes from the BASE branch, never from the PR, so a PR cannot change the rule that judges it.
+      - name: Validate commit subjects and PR title
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: git show "origin/$BASE_REF:.github/scripts/lint-commits.sh" | bash
+
+  # ---------------------------------------------------------------------------
+  # 1b. Protected paths (blocking): the pipeline owns .github/, the two prompts, DONE.md, PLAN-INSTRUCTIONS.md, TICKET.md
+  # ---------------------------------------------------------------------------
+  # The job checks out the BASE branch (not the PR) and reads the PR's file list over the API, so nothing the PR contains
+  # runs here. `review` and `qa` need it: a PR that touches a protected path is never reviewed, QA'd or merged.
+  protected-paths:
+    name: Protected Paths
+    runs-on: [self-hosted, podman]
+    timeout-minutes: 5
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Fail when the PR changes pipeline files
+        run: |
+          . .github/scripts/post-once.sh
+          files() ( set -o pipefail; gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files" --jq '.[] | .filename, (.previous_filename // empty)' )
+          retry3_to "$RUNNER_TEMP/pr-files.txt" files
+          echo "PR changes $(sort -u "$RUNNER_TEMP/pr-files.txt" | wc -l) file(s)"
+          bash .github/scripts/protected-paths.sh < "$RUNNER_TEMP/pr-files.txt"
+
+  # ---------------------------------------------------------------------------
+  # 2. CI (tests, build and smoke blocking; everything else warning only)
+  # ---------------------------------------------------------------------------
+  ci:
+    name: CI
+    runs-on: [self-hosted, podman]
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      BASE_URL: http://127.0.0.1:4173
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect project scripts
+        id: detect
+        run: |
+          if [ -f package.json ]; then
+            echo "pkg=true" >> "$GITHUB_OUTPUT"
+            for s in lint type-check format:check test test:regression build healthcheck scan:secrets audit test:smoke test:a11y lighthouse; do
+              if jq -e --arg s "$s" '.scripts[$s]' package.json >/dev/null 2>&1; then
+                echo "${s//[:-]/_}=true" >> "$GITHUB_OUTPUT"; echo "defined: $s"
+              else
+                echo "${s//[:-]/_}=false" >> "$GITHUB_OUTPUT"; echo "not defined: $s (step skipped)"
+              fi
+            done
+          else
+            echo "pkg=false" >> "$GITHUB_OUTPUT"
+            echo "No package.json yet: nothing to check."
+          fi
+
+      - name: Install dependencies
+        if: steps.detect.outputs.pkg == 'true'
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+
+      - name: Lint
+        if: steps.detect.outputs.lint == 'true'
+        run: npm run lint
+
+      # Warning only: type and format findings do not block the merge.
+      - name: Type check (warning only)
+        if: steps.detect.outputs.type_check == 'true'
+        continue-on-error: true
+        run: npm run type-check
+
+      - name: Format check (warning only)
+        if: steps.detect.outputs.format_check == 'true'
+        continue-on-error: true
+        run: npm run format:check
+
+      # BLOCKING
+      - name: Unit tests
+        if: steps.detect.outputs.test == 'true'
+        run: npm test
+
+      # BLOCKING: the regression tests for reported defects.
+      - name: Regression tests
+        if: steps.detect.outputs.test_regression == 'true'
+        run: npm run test:regression
+
+      # BLOCKING
+      - name: Build
+        if: steps.detect.outputs.build == 'true'
+        run: npm run build
+
+      # BLOCKING: inspects the built dist/ (listed pages exist, have an h1, return 200).
+      - name: Healthcheck
+        if: steps.detect.outputs.healthcheck == 'true'
+        run: npm run healthcheck
+
+      # BLOCKING: no committed secrets.
+      - name: Secret scan
+        if: steps.detect.outputs.scan_secrets == 'true'
+        run: npm run scan:secrets
+
+      - name: Dependency audit (warning only)
+        if: steps.detect.outputs.audit == 'true'
+        continue-on-error: true
+        run: npm run audit
+
+      - name: Serve dist
+        id: serve
+        if: steps.detect.outputs.build == 'true' && (steps.detect.outputs.test_smoke == 'true' || steps.detect.outputs.test_a11y == 'true' || steps.detect.outputs.lighthouse == 'true')
+        run: |
+          [ -d dist ] || { echo "build defined but dist/ missing"; exit 1; }
+          nohup node .github/scripts/serve.mjs dist 4173 > "$RUNNER_TEMP/serve-ci.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/serve-ci.pid"
+          for i in $(seq 1 30); do
+            curl -fsS -o /dev/null http://127.0.0.1:4173/ && exit 0 || sleep 1
+          done
+          echo "static server did not come up"; cat "$RUNNER_TEMP/serve-ci.log"; exit 1
+
+      # BLOCKING: Playwright smoke against the served build (BASE_URL).
+      - name: Playwright smoke
+        if: steps.serve.outcome == 'success' && steps.detect.outputs.test_smoke == 'true'
+        run: npm run test:smoke
+
+      - name: Axe accessibility (warning only)
+        if: steps.serve.outcome == 'success' && steps.detect.outputs.test_a11y == 'true'
+        continue-on-error: true
+        run: npm run test:a11y
+
+      - name: Lighthouse CI (warning only)
+        if: steps.serve.outcome == 'success' && steps.detect.outputs.lighthouse == 'true'
+        continue-on-error: true
+        run: npm run lighthouse
+
+      - name: Stop server
+        if: always() && steps.serve.outcome != 'skipped'
+        run: |
+          [ -f "$RUNNER_TEMP/serve-ci.pid" ] && kill "$(cat "$RUNNER_TEMP/serve-ci.pid")" 2>/dev/null || true
+
+  # ---------------------------------------------------------------------------
+  # 3. Review (Gate B): decide only, then post. Never merges.
+  # ---------------------------------------------------------------------------
+  review:
+    name: Claude Code Review
+    runs-on: [self-hosted, podman]
+    needs: [commit-lint, protected-paths, ci]
+    timeout-minutes: 25
+    outputs:
+      decision: ${{ steps.decide.outputs.decision }}
+      head_sha: ${{ steps.decide.outputs.head_sha }}
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      PR_BODY: ${{ github.event.pull_request.body }}
+      BASE_REF: ${{ github.base_ref }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Everything that JUDGES the PR runs from the BASE branch: the scripts below are copied out of origin/<base> into
+      # $TRUSTED and used from there, so a PR can never change the code that reviews or QA-checks it.
+      - name: Trusted pipeline scripts (from the base branch)
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          T="$RUNNER_TEMP/trusted"; rm -rf "$T"; mkdir -p "$T"
+          for i in 1 2 3; do
+            git fetch --no-tags --depth=1 origin "$BASE_REF" && break
+            [ "$i" = 3 ] && { echo "FAIL: could not fetch the base branch."; exit 1; }
+            sleep $(( i == 1 ? 5 : 15 ))
+          done
+          git archive FETCH_HEAD .github | tar -x -C "$T"
+          echo "TRUSTED=$T" >> "$GITHUB_ENV"
+          echo "Trusted scripts: $(ls "$T/.github/scripts" | tr '\n' ' ')"
+
+      # Deterministic input collection. No LLM, no secrets echoed.
+      - name: Collect review inputs
+        run: |
+          set +x
+          R="$RUNNER_TEMP/review"
+          rm -rf "$R"; mkdir -p "$R"
+          . "$TRUSTED/.github/scripts/post-once.sh"   # retry3, retry3_to: every network read below retries (3 attempts, 5 s then 15 s)
+
+          retry3_to "$R/diff.txt" gh pr diff "$PR_NUMBER" --repo "$REPO"
+          echo "Diff: $(wc -c < "$R/diff.txt") bytes"
+
+          list_json() ( set -o pipefail; gh api --paginate --slurp "repos/$REPO/$1/$PR_NUMBER/$2" | jq 'add // []' )
+          retry3_to "$R/reviews.json" list_json pulls reviews
+          retry3_to "$R/comments.json" list_json issues comments
+          echo "Reviews: $(jq length "$R/reviews.json") | Comments: $(jq length "$R/comments.json")"
+
+          jq -n --arg t "$PR_TITLE" --arg b "$PR_BODY" '{title:$t, body:$b}' > "$R/pr.json"
+
+          # Jira ticket: first KEY-123 in the PR title, then the body.
+          KEY="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -1 || true)"
+          echo "key=$KEY" > "$R/key.env"
+          if [ -z "$KEY" ]; then
+            echo "No Jira issue key found in the PR title or body." | tee "$R/ticket.json" > "$R/ticket.txt"
+          elif [ -z "${JIRA_BASE_URL:-}" ] || [ -z "${JIRA_USER:-}" ] || [ -z "${JIRA_TOKEN:-}" ]; then
+            echo "Jira ticket $KEY unavailable: runner has no Jira credentials." | tee "$R/ticket.json" > "$R/ticket.txt"
+          else
+            bash "$TRUSTED/.github/scripts/jira-context.sh" "$KEY" review "$R"
+          fi
+
+          {
+            echo "Repository: $REPO"
+            echo "PR: #$PR_NUMBER"
+            echo "Title: $PR_TITLE"
+            echo "Base: $BASE_REF | Head SHA: $HEAD_SHA"
+            echo "Jira key: ${KEY:-none}"
+            echo "Repository checkout: $GITHUB_WORKSPACE"
+            echo "PR link: https://github.com/$REPO/pull/$PR_NUMBER"
+          } > "$R/context.md"
+
+          # Prompt: runner-side directory if configured, else the BASE branch copy.
+          if [ -n "${EAK_PROMPT_DIR:-}" ] && [ -f "$EAK_PROMPT_DIR/review-prompt.md" ]; then
+            cp "$EAK_PROMPT_DIR/review-prompt.md" "$R/prompt.md"
+          else
+            retry3_to "$R/prompt.md" gh api -H 'Accept: application/vnd.github.raw' \
+              "repos/$REPO/contents/.github/prompts/review-prompt.md?ref=$BASE_REF"
+          fi
+          sha256sum "$R/prompt.md" | cut -c1-16 | sed 's/^/review prompt sha256: /'
+
+      # DECIDE ONLY. Tools are limited to Read, Grep, Glob, Write. There is no Bash, git or
+      # network tool, so the agent cannot merge, comment or push. It runs in a directory
+      # outside the repository, with the checkout added read-only by convention, and its
+      # only outputs are decision.txt and review-comment.md.
+      - name: Claude Code review (decision only)
+        id: decide
+        run: |
+          R="$RUNNER_TEMP/review"
+          cd "$R"
+          rm -f decision.txt review-comment.md
+          MODEL="${MODEL:-claude-sonnet-5-5}"
+          echo "model: $MODEL"
+
+          timeout 20m claude -p \
+            --model "$MODEL" \
+            --tools "Read,Grep,Glob,Write" \
+            --allowedTools "Read,Grep,Glob,Write" \
+            --permission-mode acceptEdits \
+            --add-dir "$GITHUB_WORKSPACE" \
+            --no-session-persistence \
+            < prompt.md 2>&1 | tee review-output.txt
+
+          # The agent must not have touched the repository.
+          if [ -n "$(git -C "$GITHUB_WORKSPACE" status --porcelain)" ]; then
+            echo "FAIL: the review agent modified the repository checkout."
+            git -C "$GITHUB_WORKSPACE" status --porcelain
+            exit 1
+          fi
+          if [ ! -s decision.txt ] || [ ! -s review-comment.md ]; then
+            echo "FAIL: agent did not produce decision.txt and review-comment.md."
+            exit 1
+          fi
+          decision="$(tr -d '[:space:]' < decision.txt)"
+          if [ "$decision" != "MERGE" ] && [ "$decision" != "REQUEST_CHANGES" ]; then
+            echo "FAIL: invalid decision '$decision' (expected MERGE or REQUEST_CHANGES)."
+            exit 1
+          fi
+          echo "Decision: $decision"
+          echo "decision=$decision" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+
+      # POST ONLY. Deterministic, no LLM. Merging happens in the separate `merge` job.
+      # Retried (3 attempts) and idempotent: a review for this head SHA that is already on the PR is not posted again,
+      # so a lost response ("unexpected end of JSON input") after GitHub accepted the post cannot double-post.
+      - name: Post review
+        run: |
+          . "$TRUSTED/.github/scripts/post-once.sh"
+          R="$RUNNER_TEMP/review"
+          decision="$(tr -d '[:space:]' < "$R/decision.txt")"
+          if [ "$decision" = "REQUEST_CHANGES" ]; then event=REQUEST_CHANGES; else event=COMMENT; fi
+          {
+            echo "**Claude Code review: $decision** (head \`${HEAD_SHA:0:7}\`)"
+            echo
+            head -c 60000 "$R/review-comment.md"
+          } > "$R/review-post.md"
+          post_review_once "$REPO" "$PR_NUMBER" "${HEAD_SHA:0:7}" "$event" "$R/review-post.md"
+
+      - name: Upload review files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-files
+          path: |
+            ${{ runner.temp }}/review/decision.txt
+            ${{ runner.temp }}/review/review-comment.md
+            ${{ runner.temp }}/review/review-output.txt
+            ${{ runner.temp }}/review/context.md
+            ${{ runner.temp }}/review/ticket.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+  # ---------------------------------------------------------------------------
+  # 4. QA (Gate Q): required for Real tickets (flow-real on the PR or the Jira ticket). Sees criteria + screenshots, never the diff.
+  # ---------------------------------------------------------------------------
+  qa:
+    name: QA (Gate Q)
+    runs-on: [self-hosted, podman]
+    needs: [protected-paths, ci]
+    outputs:
+      qa_ran: ${{ steps.decide.outputs.real }}
+    timeout-minutes: 25
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      PR_BODY: ${{ github.event.pull_request.body }}
+      BASE_REF: ${{ github.base_ref }}
+      REPO: ${{ github.repository }}
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PLAYWRIGHT_VERSION: '1.49'
+      QA_PORT: '4174'
+    steps:
+      # Gate decision. NEVER read labels from the event payload: the driver opens the PR and adds the
+      # label a moment later, so `opened` can fire before the label exists (that skipped QA on a real
+      # ticket). Read the PR's CURRENT labels over the API instead, with a few retries, and accept the
+      # Jira label `flow-real` on the ticket as a second source. Every later step needs real == 'true';
+      # when it is false the job ends green and `merge` sees qa_ran=false.
+      - name: Decide whether this ticket is Real
+        id: decide
+        run: |
+          set +x
+          real=false
+          for i in 1 2 3 4 5; do
+            if out="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json labels --jq '[.labels[].name] | index("flow-real") != null')"; then
+              got=1
+              if [ "$out" = "true" ]; then real=true; echo "PR label flow-real present (attempt $i)."; break; fi
+            else
+              got=0
+            fi
+            [ "$i" -lt 5 ] && sleep 3
+          done
+          [ "${got:-0}" = 1 ] || { echo "FAIL: could not read the PR labels."; exit 1; }
+
+          if [ "$real" != true ]; then
+            KEY="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -1 || true)"
+            if [ -n "$KEY" ] && [ -n "${JIRA_BASE_URL:-}" ] && [ -n "${JIRA_USER:-}" ] && [ -n "${JIRA_TOKEN:-}" ]; then
+              # No checkout yet at this step, so a plain loop instead of post-once.sh: retry network failures and 429/5xx.
+              for try in 1 2 3; do
+                code="$(curl -sS -o "$RUNNER_TEMP/jira-labels.json" -w '%{http_code}' -u "$JIRA_USER:$JIRA_TOKEN" \
+                  -H 'Accept: application/json' "$JIRA_BASE_URL/rest/api/3/issue/$KEY?fields=labels" || true)"
+                code="${code: -3}"; [ "${#code}" -eq 3 ] || code=000   # curl prints 000 itself when it cannot connect
+                case "$code" in 000|429|5??) [ "$try" -lt 3 ] && { [ "$try" = 1 ] && sleep 5 || sleep 15; } ;; *) break ;; esac
+              done
+              if [ "$code" = "200" ] && jq -e '.fields.labels // [] | index("flow-real")' "$RUNNER_TEMP/jira-labels.json" >/dev/null; then
+                real=true; echo "Jira label flow-real present on $KEY."
+              elif [ "$code" != "200" ]; then
+                echo "note: Jira label lookup for $KEY failed (HTTP $code); using the PR label only."
+              fi
+              rm -f "$RUNNER_TEMP/jira-labels.json"
+            fi
+          fi
+
+          echo "real=$real" >> "$GITHUB_OUTPUT"
+          if [ "$real" = true ]; then echo "QA required: ticket is Real."; else echo "QA skipped: ticket is trivial (no flow-real label on the PR or the Jira ticket)."; fi
+
+      - uses: actions/checkout@v4
+        if: steps.decide.outputs.real == 'true'
+
+      # Everything that JUDGES the PR runs from the BASE branch: the scripts below are copied out of origin/<base> into
+      # $TRUSTED and used from there, so a PR can never change the code that reviews or QA-checks it.
+      - name: Trusted pipeline scripts (from the base branch)
+        if: steps.decide.outputs.real == 'true'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          T="$RUNNER_TEMP/trusted"; rm -rf "$T"; mkdir -p "$T"
+          for i in 1 2 3; do
+            git fetch --no-tags --depth=1 origin "$BASE_REF" && break
+            [ "$i" = 3 ] && { echo "FAIL: could not fetch the base branch."; exit 1; }
+            sleep $(( i == 1 ? 5 : 15 ))
+          done
+          git archive FETCH_HEAD .github | tar -x -C "$T"
+          echo "TRUSTED=$T" >> "$GITHUB_ENV"
+          echo "Trusted scripts: $(ls "$T/.github/scripts" | tr '\n' ' ')"
+
+      - name: Build
+        if: steps.decide.outputs.real == 'true'
+        run: |
+          if [ -f package.json ]; then
+            if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+            if jq -e '.scripts.build' package.json >/dev/null 2>&1; then npm run build; fi
+          fi
+          [ -d dist ] || { echo "FAIL: no dist/ to test."; exit 1; }
+
+      - name: Collect QA inputs (criteria only, no diff)
+        if: steps.decide.outputs.real == 'true'
+        run: |
+          set +x
+          Q="$RUNNER_TEMP/qa"
+          rm -rf "$Q"; mkdir -p "$Q/shots"
+          . "$TRUSTED/.github/scripts/post-once.sh"
+
+          KEY="$(printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" | grep -oE '[A-Z][A-Z0-9]+-[0-9]+' | head -1 || true)"
+          [ -n "$KEY" ] || { echo "FAIL: no Jira key in PR title or body; cannot find acceptance criteria."; exit 1; }
+          [ -n "${JIRA_BASE_URL:-}" ] && [ -n "${JIRA_USER:-}" ] && [ -n "${JIRA_TOKEN:-}" ] \
+            || { echo "FAIL: runner has no Jira credentials."; exit 1; }
+          echo "$KEY" > "$Q/key.txt"
+
+          bash "$TRUSTED/.github/scripts/jira-context.sh" "$KEY" qa "$Q"
+          mv "$Q/ticket.txt" "$Q/criteria.txt"
+          echo "Criteria file: $(wc -l < "$Q/criteria.txt") lines"
+          echo "QA input files:"; ls -1 "$Q" | sed 's/^/  /'
+          echo "Comment sections in criteria.txt: $(grep -c '^--- ' "$Q/criteria.txt" || true); lines starting with QA: $(grep -c '^QA:' "$Q/criteria.txt" || true)"
+
+          # Pages named in the ticket: tokens that start with / after whitespace, quote, ( or backtick.
+          { grep -oE '(^|[[:space:]"(`])/[A-Za-z0-9][A-Za-z0-9._/-]*' "$Q/criteria.txt" || true; } \
+            | sed -E 's/^[[:space:]"(`]+//; s/[.,;:]+$//' | sort -u > "$Q/pages.txt"
+          # the home page is always checked, in addition to every page the criteria name
+          { echo "/"; cat "$Q/pages.txt" 2>/dev/null; } | grep -v '^$' | sort -u > "$Q/pages.all" && mv "$Q/pages.all" "$Q/pages.txt"
+          echo "http://127.0.0.1:$QA_PORT" > "$Q/url.txt"
+          echo "Pages: $(tr '\n' ' ' < "$Q/pages.txt")"
+
+          if [ -n "${EAK_PROMPT_DIR:-}" ] && [ -f "$EAK_PROMPT_DIR/qa-prompt.md" ]; then
+            cp "$EAK_PROMPT_DIR/qa-prompt.md" "$Q/prompt.md"
+          else
+            retry3_to "$Q/prompt.md" gh api -H 'Accept: application/vnd.github.raw' \
+              "repos/$REPO/contents/.github/prompts/qa-prompt.md?ref=$BASE_REF"
+          fi
+
+      - name: Serve dist and take screenshots
+        if: steps.decide.outputs.real == 'true'
+        run: |
+          . "$TRUSTED/.github/scripts/post-once.sh"
+          Q="$RUNNER_TEMP/qa"
+          nohup node "$TRUSTED/.github/scripts/serve.mjs" dist "$QA_PORT" > "$Q/serve.log" 2>&1 &
+          echo $! > "$Q/serve.pid"
+          for i in $(seq 1 30); do
+            curl -s -o /dev/null "http://127.0.0.1:$QA_PORT/" && break
+            sleep 1
+          done
+          mkdir -p "$Q/pw" && (cd "$Q/pw" && npm init -y >/dev/null && retry3 npm i "playwright@$PLAYWRIGHT_VERSION" --no-audit --no-fund >/dev/null)
+          mapfile -t pages < <(grep -v '^$' "$Q/pages.txt")
+          NODE_PATH="$Q/pw/node_modules" node "$TRUSTED/.github/scripts/shoot.cjs" "http://127.0.0.1:$QA_PORT" "$Q/shots" "${pages[@]}"
+
+          # facts.txt: deterministic evidence for criteria a screenshot cannot show (CI step results, script names,
+          # per page lang, title, landmarks, headings, alt counts). Names and results only, never source or diff.
+          # The jobs API can lag behind a finished job (steps still without a conclusion): wait until every CI step is final.
+          for i in $(seq 1 12); do
+            retry3_to "$Q/ci-jobs.json" gh api "repos/$REPO/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+              || { echo "warning: could not read the CI job results"; rm -f "$Q/ci-jobs.json"; break; }
+            jq -e '[.jobs[] | select(.name=="CI") | .steps[]? | select(.conclusion == null)] | length == 0' "$Q/ci-jobs.json" >/dev/null && break
+            echo "CI step results not final yet (attempt $i of 12), waiting 10 s"; sleep 10
+          done
+          node "$TRUSTED/.github/scripts/qa-facts.mjs" --base "http://127.0.0.1:$QA_PORT" --pages "$Q/pages.txt" --dist dist \
+            --jobs "$Q/ci-jobs.json" --package package.json --head "$PR_HEAD_SHA" --shots "$Q/shots" --out "$Q/facts.txt"
+          rm -f "$Q/ci-jobs.json"
+
+          kill "$(cat "$Q/serve.pid")" 2>/dev/null || true
+          ls -la "$Q/shots"
+
+      # The agent runs in a directory that holds only criteria, page list, URL, facts and screenshots.
+      # The repository is not added, so the diff and code are out of its reach.
+      - name: Claude Code QA (criteria and screenshots only)
+        if: steps.decide.outputs.real == 'true'
+        run: |
+          Q="$RUNNER_TEMP/qa"
+          cd "$Q"
+          rm -f qa-result.txt qa-comment.md
+          MODEL="${MODEL:-claude-sonnet-5-5}"
+          echo "model: $MODEL"
+          timeout 20m claude -p \
+            --model "$MODEL" \
+            --tools "Read,Grep,Glob,Write" \
+            --allowedTools "Read,Grep,Glob,Write" \
+            --permission-mode acceptEdits \
+            --no-session-persistence \
+            < prompt.md 2>&1 | tee qa-output.txt
+          if [ ! -s qa-result.txt ] || [ ! -s qa-comment.md ]; then
+            echo "FAIL: agent did not produce qa-result.txt and qa-comment.md."; exit 1
+          fi
+          result="$(tr -d '[:space:]' < qa-result.txt)"
+          if [ "$result" != "PASS" ] && [ "$result" != "FAIL" ]; then
+            echo "FAIL: invalid qa result '$result'."; exit 1
+          fi
+          echo "QA result: $result"
+
+      - name: Post QA result (Jira comment and PR comment)
+        if: steps.decide.outputs.real == 'true'
+        run: |
+          set +x
+          . "$TRUSTED/.github/scripts/post-once.sh"
+          Q="$RUNNER_TEMP/qa"
+          KEY="$(cat "$Q/key.txt")"
+          result="$(tr -d '[:space:]' < "$Q/qa-result.txt")"
+          PR_URL="https://github.com/$REPO/pull/$PR_NUMBER"
+          HEAD7="${PR_HEAD_SHA:0:7}"
+
+          # ADF body: first paragraph is exactly "QA: PASS" or "QA: FAIL"; the "Head:" line marks the verdict as belonging to
+          # this commit so a retry or rerun never posts it twice.
+          { echo "QA: $result"; echo "PR: $PR_URL"; echo "Head: $HEAD7"; cat "$Q/qa-comment.md"; } > "$Q/jira-text.txt"
+          jq -Rs '{body:{type:"doc",version:1,content:(split("\n")|map(select(length>0))|map({type:"paragraph",content:[{type:"text",text:.}]}))}}' \
+            "$Q/jira-text.txt" > "$Q/jira-comment.json"
+          jira_post_qa_once "$KEY" "$HEAD7" "$Q/jira-comment.json" || { echo "FAIL: could not post the Jira QA comment."; exit 1; }
+
+          MARK="(Jira $KEY, head \`$HEAD7\`)"
+          { echo "**QA: $result** $MARK"; echo; cat "$Q/qa-comment.md"; } > "$Q/pr-comment.md"
+          pr_comment_once "$REPO" "$PR_NUMBER" "**QA: $result** $MARK" "$Q/pr-comment.md" || { echo "FAIL: could not post the PR QA comment."; exit 1; }
+
+          if [ "$result" != "PASS" ]; then echo "QA FAILED."; exit 1; fi
+
+      - name: Upload QA files
+        if: always() && steps.decide.outputs.real == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-files
+          path: |
+            ${{ runner.temp }}/qa/shots
+            ${{ runner.temp }}/qa/qa-result.txt
+            ${{ runner.temp }}/qa/qa-comment.md
+            ${{ runner.temp }}/qa/criteria.txt
+            ${{ runner.temp }}/qa/facts.txt
+            ${{ runner.temp }}/qa/qa-output.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Stop server
+        if: always() && steps.decide.outputs.real == 'true'
+        run: |
+          [ -f "$RUNNER_TEMP/qa/serve.pid" ] && kill "$(cat "$RUNNER_TEMP/qa/serve.pid")" 2>/dev/null || true
+
+  # ---------------------------------------------------------------------------
+  # 5. Merge (deterministic, no LLM). See header for why this is a separate job.
+  # ---------------------------------------------------------------------------
+  merge:
+    name: Merge Approved PR
+    runs-on: [self-hosted, podman]
+    needs: [review, qa]
+    if: ${{ !cancelled() && needs.review.result == 'success' && needs.review.outputs.decision == 'MERGE' && needs.qa.result == 'success' && (needs.qa.outputs.qa_ran == 'true' || needs.qa.outputs.qa_ran == 'false') }}
+    timeout-minutes: 10
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+      REVIEWED_SHA: ${{ needs.review.outputs.head_sha }}
+      QA_RAN: ${{ needs.qa.outputs.qa_ran }}
+    steps:
+      - name: Dismiss stale change requests and merge
+        run: |
+          # This job has no checkout, so the retry helpers are inlined. They are copies of retry3, _merge_attempt and
+          # merge_once in .github/scripts/post-once.sh (a test keeps the two in sync).
+          retry3() {
+            # Names are prefixed: the command that runs inside may use variables like n or rc, and bash locals are dynamically scoped.
+            local _try=0 _rc=0 _wait
+            local -a _delays
+            read -r -a _delays <<< "$EAK_RETRY_SLEEPS"
+            while :; do
+              "$@" && return 0
+              _rc=$?
+              _try=$((_try + 1))
+              if [ "$_rc" -eq 64 ] || [ "$_try" -ge 3 ]; then return "$_rc"; fi
+              _wait="${_delays[$((_try - 1))]:-15}"
+              echo "attempt $_try failed (exit $_rc): $1; retrying in ${_wait}s" >&2
+              sleep "$_wait"
+            done
+          }
+
+          _merge_attempt() {
+            local st
+            st="$(gh pr view "$2" --repo "$1" --json state --jq .state)" || return 1
+            if [ "$st" = MERGED ]; then echo "PR #$2 is already merged."; return 0; fi
+            gh pr merge "$2" --repo "$1" --merge --delete-branch
+          }
+          merge_once() { retry3 _merge_attempt "$@"; }
+
+          EAK_RETRY_SLEEPS="5 15"
+
+          # The reviewed commit must still be the PR head.
+          head="$(retry3 gh pr view "$PR_NUMBER" --repo "$REPO" --json headRefOid --jq .headRefOid)"
+          if [ "$head" != "$REVIEWED_SHA" ]; then
+            echo "FAIL: PR head moved since the review ($REVIEWED_SHA -> $head)."; exit 1
+          fi
+
+          # qa_ran=true means the qa job ran its steps and (since the job succeeded) QA passed.
+          # qa_ran=false means the decide step judged the ticket trivial. If the PR carries the label
+          # now but QA did not run (label added after the decision), do not merge.
+          labels="$(retry3 gh pr view "$PR_NUMBER" --repo "$REPO" --json labels --jq '[.labels[].name] | index("flow-real") != null')"
+          if [ "$QA_RAN" = "false" ] && [ "$labels" = true ]; then
+            echo "FAIL: PR is labelled flow-real but QA did not run. Push again (or re-run) so Gate Q runs."; exit 1
+          fi
+          echo "QA ran: $QA_RAN"
+
+          # A MERGE decision supersedes earlier REQUEST_CHANGES reviews.
+          reviews="$(retry3 gh api --paginate --slurp "repos/$REPO/pulls/$PR_NUMBER/reviews")"
+          printf '%s' "$reviews" | jq -r 'add // [] | .[] | select(.state=="CHANGES_REQUESTED") | .id' \
+            | while read -r id; do
+                retry3 gh api -X PUT "repos/$REPO/pulls/$PR_NUMBER/reviews/$id/dismissals" \
+                  -f message="Superseded by the latest MERGE decision." --silent
+                echo "Dismissed review $id."
+              done
+
+          merge_once "$REPO" "$PR_NUMBER"
+          echo "Merged PR #$PR_NUMBER."
