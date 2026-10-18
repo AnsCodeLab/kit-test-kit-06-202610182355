@@ -69,7 +69,7 @@ const lists = [
             <ul class="items">
               {g.skills.map((s) => (
                 <li id={`skill-${s.id}`} data-skill={s.id}>
-                  <span class="name">{s.name}</span>
+                  <a class="name" href={`/product/skills/${s.id}/`}>{s.name}</a>
                   <span class="purpose">{purpose(s.description)}</span>
                 </li>
               ))}
@@ -197,6 +197,12 @@ const lists = [
     font-family: var(--font-mono);
     font-weight: var(--weight-medium);
     overflow-wrap: anywhere;
+  }
+  a.name {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
   }
   .purpose {
     min-width: 0;

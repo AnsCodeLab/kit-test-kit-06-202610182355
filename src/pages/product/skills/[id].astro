@@ -1,0 +1,211 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getSkills } from '../../../lib/catalog';
+import type { Skill } from '../../../lib/catalog';
+import { loadSkillDoc } from '../../../lib/skill-markdown';
+
+export function getStaticPaths() {
+  const skills = getSkills();
+  return skills.map((skill) => {
+    const inGroup = skills.filter((s) => s.group === skill.group);
+    const i = inGroup.indexOf(skill);
+    return { params: { id: skill.id }, props: { skill, prev: inGroup[i - 1], next: inGroup[i + 1], groupSize: inGroup.length, position: i + 1 } };
+  });
+}
+
+interface Props {
+  skill: Skill;
+  prev?: Skill;
+  next?: Skill;
+  groupSize: number;
+  position: number;
+}
+const { skill, prev, next, groupSize, position } = Astro.props;
+const doc = loadSkillDoc(skill.id);
+---
+
+<Base title={`${skill.name} | Coding Agent Kit skill`} description={skill.description.replace(/\s+/g, ' ').trim()}>
+  <article class="skill">
+    <p class="crumbs"><a href="/product/">Back to the Product page</a></p>
+    <header>
+      <p class="meta">
+        <span class="group">{skill.group}</span>
+        <span class="pos">{position} of {groupSize}</span>
+      </p>
+      <h1>{skill.name}</h1>
+    </header>
+
+    <section aria-labelledby="h-desc">
+      <h2 id="h-desc">Description</h2>
+      <p data-description>{skill.description}</p>
+    </section>
+
+    {
+      (doc.frontMatter.name || doc.frontMatter.description) && (
+        <section aria-labelledby="h-fm">
+          <h2 id="h-fm">Front matter of SKILL.md</h2>
+          <dl class="fm">
+            {doc.frontMatter.name && (
+              <>
+                <dt>name</dt>
+                <dd>{doc.frontMatter.name}</dd>
+              </>
+            )}
+            {doc.frontMatter.description && (
+              <>
+                <dt>description</dt>
+                <dd>{doc.frontMatter.description}</dd>
+              </>
+            )}
+          </dl>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="h-body">
+      <h2 id="h-body">SKILL.md</h2>
+      <div class="prose" data-skill-body set:html={doc.html} />
+    </section>
+
+    <nav class="neighbours" aria-label={`More skills in ${skill.group}`}>
+      {
+        prev && (
+          <a rel="prev" href={`/product/skills/${prev.id}/`}>
+            <span class="dir">Previous in {skill.group}</span>
+            <span class="nm">{prev.name}</span>
+          </a>
+        )
+      }
+      {
+        next && (
+          <a rel="next" href={`/product/skills/${next.id}/`}>
+            <span class="dir">Next in {skill.group}</span>
+            <span class="nm">{next.name}</span>
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .skill {
+    max-width: 52rem;
+    min-width: 0;
+  }
+  .crumbs a,
+  .neighbours a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+  }
+  .meta {
+    display: flex;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-signal);
+  }
+  h1 {
+    overflow-wrap: anywhere;
+  }
+  section {
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--color-rule);
+    margin-block-start: var(--space-5);
+  }
+  h2 {
+    margin-block-end: var(--space-4);
+  }
+  [data-description],
+  .fm dd {
+    overflow-wrap: anywhere;
+  }
+  .fm {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1) var(--space-4);
+    margin: 0;
+  }
+  .fm dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+  .fm dd {
+    margin: 0 0 var(--space-3);
+  }
+  .neighbours {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block-start: var(--space-5);
+    border-top: 2px solid var(--color-ink);
+  }
+  .neighbours a {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .dir {
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+  .nm {
+    font-family: var(--font-mono);
+    overflow-wrap: anywhere;
+  }
+  .prose {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(.scroll) {
+    max-width: 100%;
+    overflow: auto;
+    margin-block: var(--space-4);
+    border: 1px solid var(--color-rule);
+    background: var(--color-surface);
+  }
+  .prose :global(pre) {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    overflow-wrap: normal;
+  }
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+  }
+  .prose :global(table) {
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-rule-soft);
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: normal;
+  }
+  .prose :global(blockquote) {
+    margin-inline: 0;
+    padding-inline-start: var(--space-4);
+    border-inline-start: 3px solid var(--color-rule);
+    color: var(--color-ink-muted);
+  }
+  @media (min-width: 48rem) {
+    .fm {
+      grid-template-columns: 9rem minmax(0, 1fr);
+    }
+    .fm dd {
+      margin: 0;
+    }
+  }
+</style>
