@@ -1,7 +1,155 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getRepositoryUrl } from '../../lib/contact';
+
+const contact = getRepositoryUrl();
+const proPack = ['Private skills', 'Templates', 'Team policy presets'];
+const services = ['Team onboarding', 'Setup for your repositories', 'Priority support'];
 ---
 
-<Base title="Offer - Coding Agent Kit">
-  <h1>Offer</h1>
+<Base
+  title="Offer: free kit, planned Pro Pack and services"
+  description="What is free in Coding Agent Kit, what the planned Pro Pack will include, which services are offered, and how to ask about them."
+>
+  <div class="manifest">
+    <section class="row" aria-labelledby="h-offer">
+      <p class="label" aria-hidden="true">/offer</p>
+      <div class="body">
+        <h1 id="h-offer">Free kit, planned Pro Pack, services for teams</h1>
+        <p class="lede">
+          This page is informational. Nothing here can be bought yet. To ask about the Pro Pack or the services, use the
+          link at the end of the page.
+        </p>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-free" data-offer="free">
+      <p class="label" aria-hidden="true">/free</p>
+      <div class="body">
+        <h2 id="h-free">Free</h2>
+        <p>The CLI and the skills, MIT licensed. Run it with <code>npx @anscodelab/coding-agent-kit</code>.</p>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-pro" data-offer="pro-pack">
+      <p class="label" aria-hidden="true">/pro-pack</p>
+      <div class="body">
+        <h2 id="h-pro">Pro Pack <span class="tag">planned</span></h2>
+        <p>
+          The Pro Pack is planned and not available yet. It is meant to deliver three things under a licence key:
+        </p>
+        <ul class="items">
+          {proPack.map((i) => <li>{i}</li>)}
+        </ul>
+        <p class="ask" data-pricing>
+          <strong>Ask about the Pro Pack.</strong> Scope and terms are agreed directly, not listed here.
+        </p>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-services" data-offer="services">
+      <p class="label" aria-hidden="true">/services</p>
+      <div class="body">
+        <h2 id="h-services">Services</h2>
+        <p>For teams that want help beyond the free kit:</p>
+        <ul class="items">
+          {services.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-ask">
+      <p class="label" aria-hidden="true">/ask</p>
+      <div class="body">
+        <h2 id="h-ask">How to ask</h2>
+        <p>The project repository is the place to start a conversation about the Pro Pack or the services.</p>
+        <p class="cta">
+          <a class="button" href={contact} data-contact>Ask about the Pro Pack on the project repository</a>
+        </p>
+      </div>
+    </section>
+  </div>
 </Base>
+
+<style>
+  .manifest {
+    border-top: 2px solid var(--color-ink);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--space-7);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .label {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-signal);
+  }
+  .body {
+    min-width: 0;
+  }
+  .body > :last-child {
+    margin-block-end: 0;
+  }
+  .lede {
+    max-width: var(--measure);
+    font-size: var(--text-lg);
+  }
+  code {
+    font-family: var(--font-mono);
+    overflow-wrap: anywhere;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-signal);
+  }
+  .items {
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-rule);
+  }
+  .items li {
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-rule-soft);
+    font-family: var(--font-mono);
+  }
+  .ask {
+    margin: 0;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+    max-width: var(--measure);
+  }
+  .cta {
+    margin: 0;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-5);
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    box-shadow: var(--shadow-2);
+  }
+  .button:hover {
+    background: var(--color-ink);
+  }
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: var(--space-6);
+    }
+    .label {
+      margin: 0;
+      padding-block-start: var(--space-2);
+    }
+  }
+</style>
