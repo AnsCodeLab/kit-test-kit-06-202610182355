@@ -1,0 +1,36 @@
+{
+  "name": "kit06-site",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "node scripts/serve.mjs dist 4173",
+    "test": "vitest run",
+    "test:smoke": "playwright test tests/e2e/smoke.spec.ts",
+    "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "lint": "eslint . && astro check"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.58.2",
+    "astro": "^7.4.0",
+    "chrome-launcher": "^1.2.2",
+    "eslint": "^10.13.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "lighthouse": "^13.5.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "playwright-core": "1.58.2"
+  }
+}
