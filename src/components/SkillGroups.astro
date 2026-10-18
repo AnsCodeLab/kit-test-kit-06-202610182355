@@ -1,0 +1,59 @@
+---
+import { getSkillGroups } from '../lib/catalog';
+
+const groups = getSkillGroups();
+const total = groups.reduce((sum, g) => sum + g.count, 0);
+---
+
+<div class="skills" data-skill-groups>
+  <p class="total"><strong data-skill-total>{total}</strong> skills in {groups.length} groups</p>
+  <ul>
+    {
+      groups.map((g) => (
+        <li data-skill-group={g.group}>
+          <span class="name">{g.group}</span>
+          <span class="count">{g.count}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .total {
+    margin-block-end: var(--space-4);
+    font-size: var(--text-lg);
+  }
+  .total strong {
+    font-family: var(--font-mono);
+    color: var(--color-signal);
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-rule);
+    border-left: 1px solid var(--color-rule);
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--space-3) var(--space-4);
+    border-right: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+    background: var(--color-surface);
+  }
+  .name {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-medium);
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-signal);
+  }
+</style>
