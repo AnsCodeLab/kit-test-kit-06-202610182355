@@ -33,5 +33,8 @@ const sitemap = {
 export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
+  // The CSP forbids inline script and style, so every stylesheet and script is emitted as a hashed file.
+  build: { inlineStylesheets: 'never' },
+  vite: { build: { assetsInlineLimit: 0 } },
   integrations: [fixture, sitemap],
 });
