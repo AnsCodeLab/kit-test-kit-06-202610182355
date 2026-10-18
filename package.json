@@ -32,7 +32,6 @@
     "chrome-launcher": "^1.2.2",
     "eslint": "^10.13.0",
     "eslint-plugin-astro": "^3.2.1",
-    "test:regression": "node scripts/regression.mjs",
     "lighthouse": "^13.5.0",
     "marked": "^18.1.1",
     "typescript": "^6.0.3",
