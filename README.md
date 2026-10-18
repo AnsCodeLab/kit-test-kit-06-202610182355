@@ -14,7 +14,7 @@ Astro, static output only (no server code, no adapter). The build needs no secre
 
 ## Commands
 
-Install with `npm ci`, then `npx playwright install chromium` once for the browser tests.
+Install with `npm ci`. The browser commands download Playwright chromium on first use.
 
 | Command | What it does |
 |---|---|
