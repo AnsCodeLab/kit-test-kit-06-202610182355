@@ -4,24 +4,97 @@ import path from 'node:path';
 import Base from '../../layouts/Base.astro';
 import '../../styles/prose.css';
 import { renderDoc } from '../../lib/skill-markdown';
+import { readNotices } from '../../lib/notices';
 
 const source = fs.readFileSync(path.join(process.cwd(), 'content', 'THIRD-PARTY.md'), 'utf8');
 // The file's own title becomes the page h1; the rest is rendered as written.
 const { html } = renderDoc(source.replace(/^# .*\n+/, ''));
+const notices = readNotices();
 ---
 
 <Base
   title="Third-party notices - Coding Agent Kit"
-  description="Where the third-party skills in Coding Agent Kit come from and under which licence, as listed in the kit's THIRD-PARTY.md."
+  description="Where the third-party skills in Coding Agent Kit come from and under which licence, with every notice file of the kit shown in full."
 >
   <article class="legal">
     <h1>Third-party content</h1>
-    <div class="prose" data-doc-body set:html={html} />
+    <nav class="contents" aria-labelledby="contents-title">
+      <h2 id="contents-title">Contents</h2>
+      <ul data-toc>
+        <li><a href="#third-party-list">THIRD-PARTY.md</a></li>
+        {
+          notices.map((n) => (
+            <li>
+              <a href={`#${n.id}`}>{n.file}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <section aria-labelledby="third-party-list" data-third-party>
+      <h2 id="third-party-list">THIRD-PARTY.md</h2>
+      <div class="prose" data-doc-body set:html={html} />
+    </section>
+    {
+      notices.map((n) => (
+        <section aria-labelledby={n.id} data-notice>
+          <h2 id={n.id}>{n.file}</h2>
+          <pre tabindex="0">{n.text}</pre>
+        </section>
+      ))
+    }
   </article>
 </Base>
 
 <style>
   .legal {
     padding-block: var(--space-7);
+    max-width: var(--measure);
+  }
+  .contents {
+    margin-block: var(--space-5) var(--space-6);
+    padding-block-end: var(--space-4);
+    border-block-end: 2px solid var(--color-ink);
+  }
+  .contents h2 {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .contents ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .contents a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    overflow-wrap: anywhere;
+  }
+  section {
+    margin-block-start: var(--space-7);
+  }
+  h2 {
+    scroll-margin-block-start: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    overflow-wrap: anywhere;
+  }
+  pre {
+    margin: 0;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 </style>
