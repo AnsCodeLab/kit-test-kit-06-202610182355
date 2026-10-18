@@ -55,14 +55,19 @@ test('links to /license/ and /third-party/ exist', async ({ page }) => {
   await expect(page.locator('a[href="/third-party/"]')).toHaveCount(1);
 });
 
-// The two target pages are built by KRK06-13; until then the links cannot return 200.
 for (const target of ['/license/', '/third-party/']) {
-  test(`${target} returns 200`, async ({ page }) => {
-    test.fixme(true, 'pending KRK06-13, which publishes the licence and third-party pages');
+  test(`${target} returns 200 with one h1`, async ({ page }) => {
     const res = await page.goto(target);
     expect(res?.status()).toBe(200);
+    await expect(page.locator('h1')).toHaveCount(1);
   });
 }
+
+test('the licence page shows the synced LICENSE text', async ({ page }) => {
+  await page.goto('/license/');
+  const text = await page.locator('[data-license]').innerText();
+  expect(text.replace(/\s+/g, ' ').trim()).toBe(fs.readFileSync('content/LICENSE', 'utf8').replace(/\s+/g, ' ').trim());
+});
 
 test('no digit-percent and none of the unsupported claim words', async ({ page }) => {
   await page.goto('/about/');

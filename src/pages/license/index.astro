@@ -1,0 +1,35 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '../../layouts/Base.astro';
+
+const text = fs.readFileSync(path.join(process.cwd(), 'content', 'LICENSE'), 'utf8');
+---
+
+<Base title="Licence: MIT - Coding Agent Kit" description="The MIT licence text of Coding Agent Kit, shown exactly as in the LICENSE file of the kit.">
+  <article class="legal">
+    <h1>Licence</h1>
+    <p>The text below is the <code>LICENSE</code> file of the kit, unchanged.</p>
+    <pre tabindex="0" data-license>{text}</pre>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-block: var(--space-7);
+    max-width: var(--measure);
+  }
+  pre {
+    margin: 0;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  code {
+    font-family: var(--font-mono);
+  }
+</style>
