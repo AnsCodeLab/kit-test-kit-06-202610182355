@@ -1,7 +1,178 @@
 ---
 import Base from '../layouts/Base.astro';
+import InstallCommand from '../components/InstallCommand.astro';
+import RepoTree from '../components/RepoTree.astro';
+import SkillGroups from '../components/SkillGroups.astro';
+
+const how = [
+  { title: 'Writes files and exits', text: 'The kit is not a runtime. It writes the config your choices need and stops.' },
+  { title: 'No network, no secrets', text: 'It never installs software, never logs in and never writes credentials.' },
+  { title: 'Re-runnable', text: 'Running it again with the same choices changes nothing. That is also how you update.' },
+  { title: 'Your text stays yours', text: 'Text outside its own marked sections is never touched.' },
+];
+const offer = [
+  { name: 'Free', text: 'The CLI and the skills, MIT licensed.' },
+  { name: 'Pro Pack (planned)', text: 'Private skills, templates and team policy presets.' },
+  { name: 'Services', text: 'Team onboarding, setup for your repositories, priority support.' },
+];
 ---
 
-<Base title="Coding Agent Kit">
-  <h1>Coding Agent Kit</h1>
+<Base
+  title="Coding Agent Kit: set up your AI coding agent in one command"
+  description="A free setup wizard for AI coding agents. It writes the skills, rules, MCP servers and hooks your agent needs into your repo, then exits."
+>
+  <div class="manifest">
+    <section class="row" aria-labelledby="h-install">
+      <p class="label" aria-hidden="true">/install</p>
+      <div class="body">
+        <h1 id="h-install">Set up your AI coding agent with one command</h1>
+        <p class="lede">
+          Pick an agent, an editor, skills, MCP servers and safeguard hooks. The kit writes the config files those
+          choices need into your repo, without overwriting anything you already have.
+        </p>
+        <InstallCommand />
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-writes">
+      <p class="label" aria-hidden="true">/writes</p>
+      <div class="body">
+        <h2 id="h-writes">What it writes into your repo</h2>
+        <RepoTree />
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-how">
+      <p class="label" aria-hidden="true">/how</p>
+      <div class="body">
+        <h2 id="h-how">How it works</h2>
+        <ul class="plain how">
+          {
+            how.map((h) => (
+              <li>
+                <h3>{h.title}</h3>
+                <p>{h.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-skills">
+      <p class="label" aria-hidden="true">/skills</p>
+      <div class="body">
+        <h2 id="h-skills">Skills, grouped</h2>
+        <SkillGroups />
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-offer">
+      <p class="label" aria-hidden="true">/offer</p>
+      <div class="body">
+        <h2 id="h-offer">Free today, more planned</h2>
+        <ul class="plain offer">
+          {
+            offer.map((o) => (
+              <li>
+                <h3>{o.name}</h3>
+                <p>{o.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-next">
+      <p class="label" aria-hidden="true">/next</p>
+      <div class="body">
+        <h2 id="h-next">Where to go next</h2>
+        <p class="cta">
+          <a class="button" href="/docs/">Read the docs</a>
+          <a class="button alt" href="/product/">See the product</a>
+        </p>
+      </div>
+    </section>
+  </div>
 </Base>
+
+<style>
+  .manifest {
+    border-top: 2px solid var(--color-ink);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--space-7);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .label {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-signal);
+  }
+  .body {
+    min-width: 0;
+  }
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--color-ink-muted);
+    margin-block-end: var(--space-6);
+  }
+  .plain {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .plain h3 {
+    margin-block-end: var(--space-2);
+  }
+  .plain p {
+    margin: 0;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: 0;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding-inline: var(--space-5);
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    box-shadow: var(--shadow-2);
+  }
+  .button:hover {
+    background: var(--color-ink);
+  }
+  .button.alt {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 2px var(--color-ink), var(--shadow-2);
+  }
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: var(--space-6);
+    }
+    .label {
+      margin: 0;
+      padding-block-start: var(--space-2);
+    }
+    .how {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .offer {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
