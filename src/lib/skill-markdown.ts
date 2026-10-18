@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { Marked, Renderer, type Tokens } from 'marked';
 import { parse } from 'yaml';
+import { resolveDocHref } from './docs';
 
 export interface SkillDoc {
   /** Front-matter keys of SKILL.md, as written. */
@@ -70,10 +71,10 @@ export function slugify(text: string): string {
  * `headings` lists them in document order for the in-page navigation.
  */
 export function renderDoc(body: string): RenderedDoc {
-  return render(body, 1, true);
+  return render(body, 1, true, resolveDocHref);
 }
 
-function render(body: string, firstLevel: number, doc = false): RenderedDoc {
+function render(body: string, firstLevel: number, doc = false, resolveHref?: (href: string) => string | undefined): RenderedDoc {
   const renderer = new Renderer();
   let lastLevel = doc ? 1 : firstLevel - 1;
   let blocks = 0;
@@ -109,8 +110,10 @@ function render(body: string, firstLevel: number, doc = false): RenderedDoc {
   };
   renderer.link = function ({ href, tokens }: Tokens.Link) {
     const inner = this.parser.parseInline(tokens);
-    if (!/^https?:\/\//i.test(href)) return inner;
-    return `<a href="${escapeHtml(href)}" rel="noopener noreferrer">${inner}</a>`;
+    const target = resolveHref ? resolveHref(href) : /^https?:\/\//i.test(href) ? href : undefined;
+    if (!target) return inner;
+    const external = /^https?:\/\//i.test(target);
+    return `<a href="${escapeHtml(target)}"${external ? ' rel="noopener noreferrer"' : ''}>${inner}</a>`;
   };
   renderer.checkbox = ({ checked }: Tokens.Checkbox) => (checked ? '[x] ' : '[ ] ');
   renderer.image = ({ text }: Tokens.Image) => escapeHtml(text);

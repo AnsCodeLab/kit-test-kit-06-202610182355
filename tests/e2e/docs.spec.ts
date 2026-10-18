@@ -29,7 +29,7 @@ test('titles differ between the index and the quickstart', async ({ page }) => {
 
 test('index links to the quickstart using the handbook title', async ({ page }) => {
   await page.goto('/docs/');
-  const link = page.locator('[data-doc-pages] a');
+  const link = page.locator('[data-doc-pages] a[href="/docs/quickstart/"]');
   await expect(link).toHaveAttribute('href', '/docs/quickstart/');
   const text = (await link.textContent())!.trim();
   await page.goto('/docs/quickstart/');
