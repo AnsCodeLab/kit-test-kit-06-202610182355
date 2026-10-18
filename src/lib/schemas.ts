@@ -23,9 +23,11 @@ const itemSchema = z.looseObject({ id: text, name: text, description: text.optio
 export const hookSchema = itemSchema;
 export const mcpServerSchema = itemSchema;
 export const agentSchema = itemSchema;
+export const ideSchema = itemSchema;
 
 export type Skill = z.infer<typeof skillSchema>;
 export type Chapter = z.infer<typeof chapterSchema>;
 export type Hook = z.infer<typeof hookSchema>;
 export type McpServer = z.infer<typeof mcpServerSchema>;
 export type Agent = z.infer<typeof agentSchema>;
+export type Ide = z.infer<typeof ideSchema>;

@@ -1,7 +1,224 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getAgents, getHooks, getIdes, getMcpServers, getSkillGroups } from '../../lib/catalog';
+import { purpose } from '../../lib/purpose';
+
+const groups = getSkillGroups();
+const total = groups.reduce((sum, g) => sum + g.count, 0);
+const hooks = getHooks();
+const mcp = getMcpServers();
+const agents = getAgents();
+const ides = getIdes();
+
+const inventory = [
+  { label: 'skills', count: total },
+  { label: 'hooks', count: hooks.length },
+  { label: 'MCP servers', count: mcp.length },
+  { label: 'agents', count: agents.length },
+  { label: 'IDE support', count: ides.length },
+];
+const lists = [
+  { key: 'hooks', title: 'Hooks', items: hooks },
+  { key: 'mcp', title: 'MCP servers', items: mcp },
+  { key: 'agents', title: 'Agents', items: agents },
+  { key: 'ides', title: 'IDE support', items: ides },
+];
 ---
 
-<Base title="Product - Coding Agent Kit">
-  <h1>Product</h1>
+<Base
+  title="Product: what Coding Agent Kit contains"
+  description={`The Coding Agent Kit catalogue: ${total} skills in ${groups.length} groups, plus hooks, MCP servers, agents and IDE support.`}
+>
+  <div class="manifest">
+    <section class="row" aria-labelledby="h-contents">
+      <p class="label" aria-hidden="true">/contents</p>
+      <div class="body">
+        <h1 id="h-contents">What the kit contains</h1>
+        <ul class="inventory" data-inventory>
+          {
+            inventory.map((i) => (
+              <li>
+                <span class="n">{i.count}</span>
+                <span class="t">{i.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <nav aria-label="Skill groups">
+          <ul class="jump">
+            {
+              groups.map((g) => (
+                <li>
+                  <a href={`#group-${g.group}`}>{g.group}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    {
+      groups.map((g) => (
+        <section class="row" id={`group-${g.group}`} aria-labelledby={`h-group-${g.group}`} data-skill-group={g.group}>
+          <p class="label" aria-hidden="true">/skills/{g.group}</p>
+          <div class="body">
+            <h2 id={`h-group-${g.group}`}>
+              {g.group} <span class="count" data-group-count>{g.count}</span>
+            </h2>
+            <ul class="items">
+              {g.skills.map((s) => (
+                <li id={`skill-${s.id}`} data-skill={s.id}>
+                  <span class="name">{s.name}</span>
+                  <span class="purpose">{purpose(s.description)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      lists.map((l) => (
+        <section class="row" aria-labelledby={`h-${l.key}`} data-list={l.key}>
+          <p class="label" aria-hidden="true">/{l.key}</p>
+          <div class="body">
+            <h2 id={`h-${l.key}`}>
+              {l.title} <span class="count">{l.items.length}</span>
+            </h2>
+            <ul class="items">
+              {l.items.map((item) => (
+                <li data-id={item.id}>
+                  <span class="name">{item.id}</span>
+                  <span class="purpose">
+                    <strong>{item.name}</strong>
+                    {item.description && <> {item.description}</>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))
+    }
+  </div>
 </Base>
+
+<style>
+  .manifest {
+    border-top: 2px solid var(--color-ink);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--space-7);
+    border-bottom: 1px solid var(--color-rule);
+    scroll-margin-top: var(--space-5);
+  }
+  .label {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-signal);
+    overflow-wrap: anywhere;
+  }
+  .body {
+    min-width: 0;
+  }
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-block-end: var(--space-5);
+  }
+  .count,
+  .n {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-bold);
+    color: var(--color-signal);
+  }
+  .inventory,
+  .jump,
+  .items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .inventory {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    margin-block: var(--space-5);
+    border-top: 1px solid var(--color-rule);
+    border-left: 1px solid var(--color-rule);
+  }
+  .inventory li {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) var(--space-4);
+    border-right: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+    background: var(--color-surface);
+  }
+  .n {
+    font-size: var(--text-2xl);
+  }
+  .t {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding-inline: var(--space-4);
+    font-family: var(--font-mono);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+    background: var(--color-surface);
+  }
+  .items li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--color-rule-soft);
+    scroll-margin-top: var(--space-5);
+  }
+  .items li:first-child {
+    border-top: 1px solid var(--color-rule);
+  }
+  .name {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-medium);
+    overflow-wrap: anywhere;
+  }
+  .purpose {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-ink-muted);
+  }
+  .purpose strong {
+    color: var(--color-ink);
+    font-weight: var(--weight-medium);
+  }
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: var(--space-6);
+    }
+    .label {
+      margin: 0;
+      padding-block-start: var(--space-2);
+    }
+    .items li {
+      grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+      column-gap: var(--space-5);
+    }
+  }
+</style>
