@@ -51,8 +51,8 @@ test('repository link is the README repository link', async ({ page }) => {
 
 test('links to /license/ and /third-party/ exist', async ({ page }) => {
   await page.goto('/about/');
-  await expect(page.locator('a[href="/license/"]')).toHaveCount(1);
-  await expect(page.locator('a[href="/third-party/"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="/license/"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="/third-party/"]')).toHaveCount(1);
 });
 
 for (const target of ['/license/', '/third-party/']) {
