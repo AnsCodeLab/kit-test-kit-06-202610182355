@@ -1,0 +1,156 @@
+---
+import { getCollection } from 'astro:content';
+import Base from './Base.astro';
+import { DOC_PAGES, docPath } from '../lib/docs';
+import type { DocHeading } from '../lib/skill-markdown';
+import '../styles/prose.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Slug of the docs page being shown; omit on the index. */
+  current?: string;
+  headings?: DocHeading[];
+}
+const { title, description, current, headings = [] } = Astro.props;
+
+const chapters = new Map((await getCollection('handbook')).map((c) => [c.id, c.data]));
+const pages = DOC_PAGES.map((p) => ({ href: docPath(p.slug), slug: p.slug, title: chapters.get(p.id)?.title ?? p.slug }));
+---
+
+<Base title={title} description={description}>
+  <div class="docs">
+    <aside class="rail">
+      <nav aria-label="Docs">
+        <p class="label"><a href="/docs/" aria-current={current === undefined ? 'page' : undefined}>Docs</a></p>
+        <ul>
+          {
+            pages.map((p) => (
+              <li>
+                <a href={p.href} aria-current={p.slug === current ? 'page' : undefined}>{p.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      {
+        headings.length > 0 && (
+          <details class="toc" data-toc>
+            <summary>On this page</summary>
+            <nav aria-label="On this page">
+              <ul>
+                {headings.map((h) => (
+                  <li class={`l${h.level}`}>
+                    <a href={`#${h.id}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </details>
+        )
+      }
+    </aside>
+    <div class="body">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<script>
+  // The contents list is a closed disclosure on narrow screens and always open beside the text on wide ones.
+  const toc = document.querySelector<HTMLDetailsElement>('[data-toc]');
+  const wide = window.matchMedia('(min-width: 64rem)');
+  const sync = () => {
+    if (toc && wide.matches) toc.open = true;
+  };
+  sync();
+  wide.addEventListener('change', sync);
+  toc?.addEventListener('toggle', sync);
+</script>
+
+<style>
+  .docs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+  .body {
+    min-width: 0;
+  }
+  .rail {
+    min-width: 0;
+    border-block-end: 2px solid var(--color-ink);
+    padding-block-end: var(--space-4);
+  }
+  .rail ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rail a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .rail a:hover {
+    text-decoration: underline;
+  }
+  .rail a[aria-current='page'] {
+    font-weight: var(--weight-bold);
+    box-shadow: inset 3px 0 0 var(--color-accent);
+    padding-inline-start: var(--space-3);
+  }
+  .label {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .label a {
+    font-size: inherit;
+    color: inherit;
+  }
+  .toc {
+    margin-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-rule);
+  }
+  .toc summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .toc .l3 a {
+    padding-inline-start: var(--space-4);
+  }
+  .toc .l4 a {
+    padding-inline-start: var(--space-6);
+  }
+  @media (min-width: 64rem) {
+    .docs {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      column-gap: var(--space-7);
+      align-items: start;
+    }
+    .rail {
+      border-block-end: 0;
+      border-inline-end: 1px solid var(--color-rule);
+      padding-inline-end: var(--space-4);
+    }
+    .toc summary {
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+</style>

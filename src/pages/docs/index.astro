@@ -1,7 +1,45 @@
 ---
-import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import Docs from '../../layouts/Docs.astro';
+import { DOC_PAGES, docPath } from '../../lib/docs';
+
+const chapters = new Map((await getCollection('handbook')).map((c) => [c.id, c.data]));
+const pages = DOC_PAGES.map((p) => {
+  const chapter = chapters.get(p.id);
+  if (!chapter) throw new Error(`Handbook chapter ${p.id} is missing from the content collection`);
+  return { href: docPath(p.slug), title: chapter.title };
+});
 ---
 
-<Base title="Docs - Coding Agent Kit">
+<Docs title="Docs - Coding Agent Kit" description="Documentation for Coding Agent Kit, taken from its handbook.">
   <h1>Docs</h1>
-</Base>
+  <ul class="pages" data-doc-pages>
+    {
+      pages.map((p) => (
+        <li>
+          <a href={p.href}>{p.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Docs>
+
+<style>
+  .pages {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 2px solid var(--color-ink);
+  }
+  .pages li {
+    border-block-end: 1px solid var(--color-rule);
+  }
+  .pages a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    padding-block: var(--space-3);
+  }
+</style>
