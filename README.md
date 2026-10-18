@@ -30,6 +30,7 @@ Install with `npm ci`. The browser commands download Playwright chromium on firs
 | `npm test` | Unit tests (Vitest) |
 | `npm run test:smoke` | Playwright smoke test on the served `dist/` at 375, 768 and 1440 px |
 | `npm run test:a11y` | axe on every built page at 375, 768 and 1440 px |
+| `npm run test:regression` | Site-wide bars on every page in the sitemap plus 404 at 375, 768 and 1440 px (status, lang, title, h1, headings, landmarks, alt, external requests, cookies, console errors, horizontal scroll, 44 px targets, internal links), then Home size and CLS and the font budget. Builds `dist/` first when it is missing. Negative tests prove it fails on broken HTML. |
 | `npm run lighthouse` | Lighthouse on every built page, asserts performance and accessibility >= 90 |
 | `npm run preview` | Serve `dist/` on http://127.0.0.1:4173 |
 

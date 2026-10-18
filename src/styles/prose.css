@@ -109,9 +109,10 @@
   margin-block: var(--space-6);
 }
 
-/* A link that is a table cell on its own is a target in its own right, not part of a sentence. */
+/* A link that is a table cell or a paragraph on its own is a target in its own right, not part of a sentence. */
 .prose td > a:only-child,
-.prose th > a:only-child {
+.prose th > a:only-child,
+.prose p > a:only-child {
   display: inline-flex;
   align-items: center;
   min-width: var(--tap-min);
