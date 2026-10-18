@@ -25,6 +25,8 @@ Install with `npm ci`. The browser commands download Playwright chromium on firs
 | `npm run dev` | Astro dev server |
 | `npm run build` | Static build into `dist/` |
 | `npm run lint` | ESLint, then `astro check` |
+| `npm run scan:secrets` | Offline secret scan of the working tree and git history (allowlist: `scripts/secret-scan-allowlist.txt`, a reason on every entry) |
+| `npm run audit` | `npm audit` on production dependencies, fails on high or critical |
 | `npm test` | Unit tests (Vitest) |
 | `npm run test:smoke` | Playwright smoke test on the served `dist/` at 375, 768 and 1440 px |
 | `npm run test:a11y` | axe on every built page at 375, 768 and 1440 px |
