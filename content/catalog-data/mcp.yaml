@@ -1,0 +1,50 @@
+- id: filesystem
+  name: Filesystem
+  description: Read/write files.
+  defaultChecked: true
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/filesystem.json.hbs }]
+- id: github
+  name: GitHub
+  description: Repos, issues, PRs.
+  defaultChecked: true
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/github.json.hbs }]
+- id: atlassian
+  name: Atlassian (Jira/Confluence)
+  description: Ticket and doc access.
+  defaultChecked: true
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/atlassian.json.hbs }]
+- id: playwright
+  name: Playwright
+  description: Browser automation.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/playwright.json.hbs }]
+- id: postgresql
+  name: PostgreSQL
+  description: Database access.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/postgresql.json.hbs }]
+- id: context7
+  name: Context7
+  description: Library/API documentation lookup.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/context7.json.hbs }]
+- id: sentry
+  name: Sentry
+  description: Error tracking.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/sentry.json.hbs }]
+- id: linear
+  name: Linear
+  description: Issue tracking.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/linear.json.hbs }]
+- id: slack
+  name: Slack
+  description: Messaging.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/slack.json.hbs }]
+- id: figma
+  name: Figma
+  description: Design file access.
+  defaultChecked: false
+  actions: [{ kind: mergeJson, target: .mcp.json, template: mcp/figma.json.hbs }]

@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "sync": "node scripts/sync-content.mjs",
+    "check:sync": "node scripts/check-sync.mjs",
+    "build": "npm run check:sync && astro build",
     "preview": "node scripts/serve.mjs dist 4173",
     "test": "vitest run",
     "test:smoke": "node scripts/ensure-browser.mjs && playwright test tests/e2e/smoke.spec.ts",

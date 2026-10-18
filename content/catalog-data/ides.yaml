@@ -1,0 +1,19 @@
+- id: vscode
+  name: VS Code
+  description: Most popular editor at this org; generates a recommended-extensions entry.
+  setup: "Install VS Code (https://code.visualstudio.com/download) and accept the recommended-extension prompt when you open the repo."
+  setupBin: code
+  actions:
+    - kind: mergeJsonArray
+      target: .vscode/extensions.json
+      template: ides/vscode/extensions.json.hbs
+- id: orca
+  name: Orca
+  description: >-
+    Agent Development Environment. Orchestrates 30+ CLI agents via isolated git worktrees, an embedded
+    browser, and a CLI other agents can drive.
+  setup: "Install Orca (https://www.onorca.dev/) and add this repo as a project."
+  actions:
+    - kind: mergeYaml
+      target: .orca/config.yaml
+      template: ides/orca/config.yaml.hbs
