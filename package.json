@@ -11,6 +11,8 @@
     "sync": "node scripts/sync-content.mjs",
     "check:sync": "node scripts/check-sync.mjs",
     "build": "npm run check:sync && astro build",
+    "build:fixture": "npm run check:sync && KIT_FIXTURE=1 astro build --outDir dist-fixture",
+    "test:components": "npm run build:fixture && node scripts/ensure-browser.mjs && playwright test -c playwright.fixture.config.ts",
     "preview": "node scripts/serve.mjs dist 4173",
     "test": "vitest run",
     "test:smoke": "node scripts/ensure-browser.mjs && playwright test tests/e2e/smoke.spec.ts tests/e2e/layout.spec.ts",
