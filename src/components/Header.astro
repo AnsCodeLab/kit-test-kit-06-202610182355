@@ -1,0 +1,93 @@
+---
+interface Props {
+  current?: string;
+}
+const { current = '' } = Astro.props;
+const links = [
+  { href: '/product/', label: 'product' },
+  { href: '/docs/', label: 'docs' },
+  { href: '/offer/', label: 'offer' },
+  { href: '/about/', label: 'about' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Coding Agent Kit, home" aria-current={current === '/' ? 'page' : undefined}>
+      <span class="brand-mark" aria-hidden="true">&gt;</span>coding-agent-kit
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={current === l.href ? 'page' : undefined}>
+                <span class="slash" aria-hidden="true">/</span>{l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-surface);
+    border-block-end: 2px solid var(--color-ink);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--space-5);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    font-family: var(--font-mono);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .brand-mark {
+    color: var(--color-accent);
+    margin-inline-end: var(--space-2);
+  }
+  ul {
+    margin-inline-start: calc(var(--space-3) * -1);
+    display: flex;
+    flex-wrap: wrap;
+    margin-block: 0;
+    margin-inline-end: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding-inline: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    text-decoration: none;
+    border-block-end: 3px solid transparent;
+  }
+  nav a:hover {
+    border-block-end-color: var(--color-ink-muted);
+  }
+  nav a[aria-current='page'] {
+    border-block-end-color: var(--color-accent);
+    font-weight: var(--weight-bold);
+  }
+  .slash {
+    color: var(--color-ink-muted);
+  }
+</style>

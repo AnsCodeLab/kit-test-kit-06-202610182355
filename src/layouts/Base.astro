@@ -1,8 +1,14 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
 interface Props {
   title: string;
+  description?: string;
 }
-const { title } = Astro.props;
+const { title, description } = Astro.props;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 
 <!doctype html>
@@ -11,10 +17,27 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <main>
-      <slot />
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header current={path} />
+    <main id="main" tabindex="-1">
+      <div class="wrap content">
+        <slot />
+      </div>
     </main>
+    <Footer />
   </body>
 </html>
+
+<style>
+  main {
+    padding-block: var(--space-7);
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

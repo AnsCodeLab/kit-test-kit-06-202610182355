@@ -8,6 +8,7 @@ import { launch } from 'chrome-launcher';
 import { builtPages } from './pages.mjs';
 
 const MIN = 0.9;
+const MAX_CLS = 0.05;
 let server;
 let base = process.env.BASE_URL;
 if (!base) {
@@ -37,6 +38,10 @@ try {
       console.log(`${ok ? 'PASS' : 'FAIL'} ${page} ${id}: ${Math.round(score * 100)}`);
       if (!ok) failed = true;
     }
+    const cls = result.lhr.audits['cumulative-layout-shift'].numericValue ?? 1;
+    const clsOk = cls <= MAX_CLS;
+    console.log(`${clsOk ? 'PASS' : 'FAIL'} ${page} cumulative-layout-shift: ${cls.toFixed(3)}`);
+    if (!clsOk) failed = true;
   }
 } finally {
   chrome.kill();
