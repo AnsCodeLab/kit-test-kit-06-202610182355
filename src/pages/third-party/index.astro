@@ -1,0 +1,27 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '../../layouts/Base.astro';
+import '../../styles/prose.css';
+import { renderDoc } from '../../lib/skill-markdown';
+
+const source = fs.readFileSync(path.join(process.cwd(), 'content', 'THIRD-PARTY.md'), 'utf8');
+// The file's own title becomes the page h1; the rest is rendered as written.
+const { html } = renderDoc(source.replace(/^# .*\n+/, ''));
+---
+
+<Base
+  title="Third-party notices - Coding Agent Kit"
+  description="Where the third-party skills in Coding Agent Kit come from and under which licence, as listed in the kit's THIRD-PARTY.md."
+>
+  <article class="legal">
+    <h1>Third-party content</h1>
+    <div class="prose" data-doc-body set:html={html} />
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-block: var(--space-7);
+  }
+</style>
