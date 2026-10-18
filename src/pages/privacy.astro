@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+
+const facts = [
+  'No analytics.',
+  'No cookies are set.',
+  'No forms, so nothing you type is sent anywhere.',
+  'No third-party services: pages make no requests to other origins.',
+  'Fonts are self-hosted and served from this site.',
+];
+---
+
+<Base title="Privacy - Coding Agent Kit" description="This site collects no data: no analytics, no cookies, no forms and no third-party requests.">
+  <article class="legal">
+    <h1>Privacy</h1>
+    <p class="lede">This site collects no data about you.</p>
+    <ul class="facts">
+      {facts.map((f) => <li>{f}</li>)}
+    </ul>
+    <p>
+      The pages are static files. Following the link to the project on GitHub leaves this site, and that site is not
+      covered here.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-block: var(--space-7);
+    max-width: var(--measure);
+  }
+  .lede {
+    font-size: var(--text-lg);
+  }
+  .facts {
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-rule);
+  }
+  .facts li {
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-rule-soft);
+    font-family: var(--font-mono);
+  }
+</style>

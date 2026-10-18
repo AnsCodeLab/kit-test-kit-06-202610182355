@@ -36,8 +36,10 @@ http
   .createServer((req, res) => {
     const file = find(req.url ?? '/');
     if (!file) {
-      res.writeHead(404, { 'content-type': 'text/plain' });
-      res.end('Not found');
+      const notFound = path.join(root, '404.html');
+      res.writeHead(404, { 'content-type': fs.existsSync(notFound) ? types['.html'] : 'text/plain' });
+      if (fs.existsSync(notFound)) fs.createReadStream(notFound).pipe(res);
+      else res.end('Not found');
       return;
     }
     res.writeHead(200, { 'content-type': types[path.extname(file)] ?? 'application/octet-stream' });

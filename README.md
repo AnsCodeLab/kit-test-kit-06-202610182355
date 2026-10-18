@@ -12,6 +12,10 @@ Astro, static output only (no server code, no adapter). The build needs no secre
 - `tests/` unit (`tests/unit`) and end-to-end (`tests/e2e`)
 - `docs/` working documents
 
+## Site URL
+
+`npm run build` writes `dist/sitemap.xml` and points the `Sitemap:` line of `dist/robots.txt` at the origin in the `SITE_URL` environment variable. When `SITE_URL` is not set it uses the placeholder `https://example.invalid`, which is not a real address. Set `SITE_URL` (for example `SITE_URL=https://www.example.com npm run build`) before building the site that is deployed.
+
 ## Commands
 
 Install with `npm ci`. The browser commands download Playwright chromium on first use.
