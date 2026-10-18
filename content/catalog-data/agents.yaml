@@ -1,0 +1,58 @@
+- id: claude-code
+  name: Claude Code
+  description: Terminal-first agent, best for complex multi-file reasoning.
+  ideRelationship: { kind: companion, ides: [vscode, orca] }
+  skillsDir: .claude/skills
+  vscodeExtensionId: anthropic.claude-code
+  setup: "Install Claude Code (https://code.claude.com/docs/en/setup, or npm i -g @anthropic-ai/claude-code), then run `claude` and log in."
+  setupBin: claude
+  actions:
+    - kind: appendMarkdownSection
+      target: CLAUDE.md
+      template: agents/claude-code/CLAUDE.md.hbs
+- id: codex
+  name: Codex
+  description: Terminal/CLI agent, native subagent support.
+  ideRelationship: { kind: companion, ides: [vscode, orca] }
+  skillsDir: .agents/skills
+  vscodeExtensionId: openai.chatgpt
+  setup: "Install Codex (npm i -g @openai/codex, docs: https://developers.openai.com/codex/cli), then run `codex` and sign in."
+  setupBin: codex
+  actions:
+    - kind: appendMarkdownSection
+      target: AGENTS.md
+      template: agents/codex/AGENTS.md.hbs
+- id: cursor
+  name: Cursor
+  description: IDE-native daily-driver.
+  ideRelationship: { kind: self }
+  skillsDir: .claude/skills
+  setup: "Install Cursor (https://cursor.com/download), sign in, and pick a model in Cursor settings."
+  setupBin: cursor
+  actions:
+    - kind: appendMarkdownSection
+      target: AGENTS.md
+      template: agents/cursor/AGENTS.md.hbs
+- id: github-copilot
+  name: GitHub Copilot
+  description: Enterprise-default, lowest-friction rollout.
+  ideRelationship: { kind: self }
+  skillsDir: .claude/skills
+  setup: "Enable GitHub Copilot for your account and sign in from your editor (https://docs.github.com/en/copilot)."
+  actions:
+    - kind: appendMarkdownSection
+      target: AGENTS.md
+      template: agents/github-copilot/AGENTS.md.hbs
+- id: omp
+  name: omp (Oh My Pi)
+  description: >-
+    Batteries-included harness: in-process LSP, real DAP debugging, persistent Python/Bun kernels,
+    subagent fan-out over git worktrees, role-based multi-provider routing.
+  ideRelationship: { kind: companion, ides: [vscode, orca] }
+  skillsDir: .claude/skills
+  setup: "Install omp (curl -fsSL https://omp.sh/install | sh), then set up providers and model routing (https://omp.sh)."
+  setupBin: omp
+  actions:
+    - kind: appendMarkdownSection
+      target: AGENTS.md
+      template: agents/omp/AGENTS.md.hbs

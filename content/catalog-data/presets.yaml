@@ -1,0 +1,20 @@
+- id: core
+  name: Core flow
+  description: Plan, test, review and ship with discipline (the pre-checked set).
+  skills: [brainstorming, writing-plans, executing-plans, subagent-driven-development, dispatching-parallel-agents, using-git-worktrees, test-driven-development, systematic-debugging, verification-before-completion, requesting-code-review, receiving-code-review, finishing-a-development-branch, writing-skills, cross-model-review, agent-commit-audit-log, resolving-merge-conflicts, plan-to-tickets, ticket-flow]
+- id: tickets
+  name: Ticket workflow
+  description: Work a Jira, Mantis or GitHub ticket from fetch to merged PR, with the skills it relies on.
+  skills: [ticket-flow, plan-to-tickets, agent-commit-audit-log, brainstorming, writing-plans, using-git-worktrees, verification-before-completion, requesting-code-review, receiving-code-review, acceptance-test, ui-review]
+- id: ui
+  name: UI and UX
+  description: Choose a visual direction, build tokens, critique a rendered screen, and audit a whole UI.
+  skills: [ui-style-direction, design-brief, design-token, color-system, typography-scale, spacing-system, layout-grid, motion-system, premium-visual-polish, visual-critique-screen, ui-review, critique-visual-hierarchy, critique-affordance, critique-color, critique-composition, critique-typography, critique-brand-consistency, critique-information-density]
+- id: maintenance
+  name: Maintenance
+  description: Keep docs in sync, audit security, check a release, run unattended test rounds.
+  skills: [docs-sync, scheduled-security-audit, post-deploy-qa, overnight-test-loop, acceptance-test]
+- id: architecture
+  name: Architecture and design
+  description: Model the domain, design modules, prototype and hand off work.
+  skills: [capture-intent, domain-modeling, codebase-design, improve-codebase-architecture, prototype, handoff, writing-for-agents, find-skills]

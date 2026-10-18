@@ -1,0 +1,385 @@
+- id: using-superpowers
+  name: using-superpowers
+  group: core
+  description: Enforcement rule that makes every other skill get invoked. Always installed, never a wizard choice.
+  defaultChecked: true
+  forced: true
+  actions: [{ kind: copyDir, source: skills/using-superpowers, target: "{skillsDir}/using-superpowers" }]
+- id: brainstorming
+  name: brainstorming
+  group: core
+  description: >-
+    Design-and-approval gate before any implementation. Adapted from upstream: for a redesign/rebuild
+    spec, splits audit/findings evidence into a companion doc instead of interleaving it with the
+    forward-looking design.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/brainstorming, target: "{skillsDir}/brainstorming" }]
+- id: writing-plans
+  name: writing-plans
+  group: core
+  description: >-
+    Turns an approved spec into a bite-sized, zero-context-assumed implementation plan. Adapted from
+    upstream: splits large multi-milestone plans (8+ tasks or ~20KB+) into a directory of per-milestone
+    files instead of one monolithic plan file.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/writing-plans, target: "{skillsDir}/writing-plans" }]
+- id: executing-plans
+  name: executing-plans
+  group: core
+  description: Implements a written plan task by task in the current session, then a final whole-branch review.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/executing-plans, target: "{skillsDir}/executing-plans" }]
+- id: test-driven-development
+  name: test-driven-development
+  group: core
+  description: Red-Green-Refactor iron law — no production code before a failing test.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/test-driven-development, target: "{skillsDir}/test-driven-development" }]
+- id: systematic-debugging
+  name: systematic-debugging
+  group: core
+  description: Four-phase root-cause-first debugging gate.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/systematic-debugging, target: "{skillsDir}/systematic-debugging" }]
+- id: verification-before-completion
+  name: verification-before-completion
+  group: core
+  description: No completion claims without fresh verification evidence in the same response.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/verification-before-completion, target: "{skillsDir}/verification-before-completion" }]
+- id: requesting-code-review
+  name: requesting-code-review
+  group: core
+  description: Dispatches a reviewer subagent with precisely-scoped context.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/requesting-code-review, target: "{skillsDir}/requesting-code-review" }]
+- id: receiving-code-review
+  name: receiving-code-review
+  group: core
+  description: Technical verification of review feedback, no performative agreement.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/receiving-code-review, target: "{skillsDir}/receiving-code-review" }]
+- id: using-git-worktrees
+  name: using-git-worktrees
+  group: core
+  description: Detect-then-create isolated workspace logic; dependency installs ask for confirmation first.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/using-git-worktrees, target: "{skillsDir}/using-git-worktrees" }]
+- id: dispatching-parallel-agents
+  name: dispatching-parallel-agents
+  group: core
+  description: Decision rule for fanning independent problems to concurrent subagents.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/dispatching-parallel-agents, target: "{skillsDir}/dispatching-parallel-agents" }]
+- id: subagent-driven-development
+  name: subagent-driven-development
+  group: core
+  description: Implementer-subagent + reviewer + fix-loop + ledger execution engine.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/subagent-driven-development, target: "{skillsDir}/subagent-driven-development" }]
+- id: finishing-a-development-branch
+  name: finishing-a-development-branch
+  group: core
+  description: End-of-work integration gate — merge/PR/keep, exact-word discard confirmation.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/finishing-a-development-branch, target: "{skillsDir}/finishing-a-development-branch" }]
+- id: writing-skills
+  name: writing-skills
+  group: core
+  description: TDD applied to authoring/editing skills themselves.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/writing-skills, target: "{skillsDir}/writing-skills" }]
+- id: ticket-flow
+  name: ticket-flow
+  group: core
+  description: Plan/Parallelize/Verify/QA-handoff/Cross-Review flow for a ticket end to end; Jira, Mantis, GitHub Issues or a local ticket file.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/ticket-flow, target: "{skillsDir}/ticket-flow" }]
+- id: plan-to-tickets
+  name: plan-to-tickets
+  group: core
+  description: >-
+    Derives a ticket breakdown from an approved plan.md's own Task/Interfaces structure (one ticket per
+    demoable Task slice, blocking edges from real Consumes/Produces overlap, never from reading order),
+    requires explicit human sign-off on that breakdown before any tracker call, then files real Jira Blocks
+    links or Mantis parent/child links accordingly and hands each ticket to ticket-flow individually instead
+    of implementing anything itself.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/plan-to-tickets, target: "{skillsDir}/plan-to-tickets" }]
+- id: cross-model-review
+  name: cross-model-review
+  group: core
+  description: Requires a genuinely different model/vendor reviewer before shipping non-trivial ad hoc work outside ticket-flow.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/cross-model-review, target: "{skillsDir}/cross-model-review" }]
+- id: agent-commit-audit-log
+  name: agent-commit-audit-log
+  group: core
+  description: Appends Agent-Model/Agent-Task git trailers to every agent-authored commit for auditability.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/agent-commit-audit-log, target: "{skillsDir}/agent-commit-audit-log" }]
+- id: acceptance-test
+  name: acceptance-test
+  group: maintenance
+  description: >-
+    Use when a ticket has acceptance criteria that must be checked in a running web app. Turns each
+    criterion into a Playwright test written without reading the diff, runs it against a preview or
+    local URL, never weakens an assertion to reach green, and reports pass or fail per criterion as
+    QA evidence for ticket-flow's QA step.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/acceptance-test, target: "{skillsDir}/acceptance-test" }]
+- id: overnight-test-loop
+  name: overnight-test-loop
+  group: maintenance
+  description: Runs the suite in bounded unattended rounds with a ledger, a strong verification gate before any bug or ticket, and explicit stop conditions.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/overnight-test-loop, target: "{skillsDir}/overnight-test-loop" }]
+- id: find-skills
+  name: find-skills
+  group: architecture
+  description: >-
+    Discovers and installs third-party agent skills via the Vercel skills.sh CLI when the user asks "is there
+    a skill for X" or wants to extend agent capabilities. Org default: runs the CLI with telemetry disabled
+    (DISABLE_TELEMETRY=1) since it phones install/search events to a Vercel-owned endpoint by default.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/find-skills, target: "{skillsDir}/find-skills" }]
+- id: resolving-merge-conflicts
+  name: resolving-merge-conflicts
+  group: core
+  description: Resolves an in-progress git merge/rebase conflict by tracing each side back to its primary source (commit/PR/issue) rather than guessing from the diff alone.
+  defaultChecked: true
+  actions: [{ kind: copyDir, source: skills/resolving-merge-conflicts, target: "{skillsDir}/resolving-merge-conflicts" }]
+- id: domain-modeling
+  name: domain-modeling
+  group: architecture
+  description: Builds and sharpens a living CONTEXT.md glossary and sparse ADRs as domain terms and decisions crystallize during a session, instead of letting them go undocumented.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/domain-modeling, target: "{skillsDir}/domain-modeling" }]
+- id: codebase-design
+  name: codebase-design
+  group: architecture
+  description: Shared deep-module vocabulary (module/interface/depth/seam/adapter/leverage/locality) for designing testable interfaces and deciding where a seam belongs.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/codebase-design, target: "{skillsDir}/codebase-design" }]
+- id: improve-codebase-architecture
+  name: improve-codebase-architecture
+  group: architecture
+  description: >-
+    User-invoked scan for deepening opportunities in a codebase, presented as a visual HTML report (written to
+    the OS temp dir, never the repo) before any interface change is proposed. Adapted from upstream: replaces
+    its dependency on the separate "grilling" skill with a self-contained one-question-at-a-time design loop.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/improve-codebase-architecture, target: "{skillsDir}/improve-codebase-architecture" }]
+- id: prototype
+  name: prototype
+  group: architecture
+  description: Builds throwaway, clearly-marked prototype code (a logic demo or radically-different UI variants) to answer a design question fast, then captures the validated decision and commits the prototype itself to a throwaway branch.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/prototype, target: "{skillsDir}/prototype" }]
+- id: handoff
+  name: handoff
+  group: architecture
+  description: Compacts the current conversation into a redacted handoff document (OS temp dir) for a fresh agent to resume, naming which skills the next session should use.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/handoff, target: "{skillsDir}/handoff" }]
+- id: writing-for-agents
+  name: writing-for-agents
+  group: architecture
+  description: Reference methodology for writing any agent-facing document (skills, AGENTS.md/CLAUDE.md) - context pointers, the two loads, progressive disclosure, and pruning no-ops.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/writing-for-agents, target: "{skillsDir}/writing-for-agents" }]
+- id: docs-sync
+  name: docs-sync
+  group: maintenance
+  description: Post-ship doc-drift reconciliation — scans README/ARCHITECTURE.md/CHANGELOG.md/AGENTS.md/docs/ against the diff and fixes only what drifted, never inventing new doc structure.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/docs-sync, target: "{skillsDir}/docs-sync" }]
+- id: scheduled-security-audit
+  name: scheduled-security-audit
+  group: maintenance
+  description: OWASP-style vulnerability sweep with severity-rated evidence per finding; never auto-patches a Critical/High without explicit human confirmation.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/scheduled-security-audit, target: "{skillsDir}/scheduled-security-audit" }]
+- id: capture-intent
+  name: capture-intent
+  group: architecture
+  description: Converts a raw, non-technical customer/stakeholder ask into a confirmed, version-controlled intent record before any technical framing begins.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/capture-intent, target: "{skillsDir}/capture-intent" }]
+- id: post-deploy-qa
+  name: post-deploy-qa
+  group: maintenance
+  description: Drives a real browser against the live deployed URL to walk the changed flow end to end before declaring a release safe, never substituting a static/stub-DOM re-execution for live interaction.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/post-deploy-qa, target: "{skillsDir}/post-deploy-qa" }]
+- id: design-brief
+  name: design-brief
+  group: ui
+  description: Writes a project brief (problem, audience, constraints, success criteria) at kickoff, before any technical framing or solutioning begins.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/design-brief, target: "{skillsDir}/design-brief" }]
+- id: visual-hierarchy
+  name: visual-hierarchy
+  group: ui
+  description: Establishes deliberate visual hierarchy (size/weight/colour/spacing/position) when composing new UI, so exactly one primary action per view is chosen rather than left to chance.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/visual-hierarchy, target: "{skillsDir}/visual-hierarchy" }]
+- id: state-machine
+  name: state-machine
+  group: ui
+  description: Models a component's full state/event/transition space explicitly so impossible states (e.g. loading+error simultaneously) are designed out instead of discovered in production.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/state-machine, target: "{skillsDir}/state-machine" }]
+- id: loading-states
+  name: loading-states
+  group: ui
+  description: Designs real waiting experiences (skeletons, optimistic UI, progressive reveal) with concrete duration thresholds, instead of a single generic spinner or a blank screen.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/loading-states, target: "{skillsDir}/loading-states" }]
+- id: form-design
+  name: form-design
+  group: ui
+  description: Designs a form end to end (field order, input types, inline validation, multi-step handling, accessibility) instead of a generic single-column field dump.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/form-design, target: "{skillsDir}/form-design" }]
+- id: feedback-patterns
+  name: feedback-patterns
+  group: ui
+  description: Designs concrete confirmation/status/notification feedback for every user action, so nothing ships silent or ambiguous about whether it registered.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/feedback-patterns, target: "{skillsDir}/feedback-patterns" }]
+- id: design-token
+  name: design-token
+  group: ui
+  description: Defines a real token layer (colour/spacing/type/elevation, tiered global -> alias -> component) instead of hardcoded literal values scattered through components.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/design-token, target: "{skillsDir}/design-token" }]
+- id: component-spec
+  name: component-spec
+  group: ui
+  description: Writes a complete component spec (anatomy, variants, props, every state, accessibility) before implementation, instead of a component that only handles its happy path.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/component-spec, target: "{skillsDir}/component-spec" }]
+- id: design-system-governance
+  name: design-system-governance
+  group: ui
+  description: Defines how a design system evolves across multiple contributors (ownership model, contribution process, versioning, deprecation) so it doesn't fragment as the product scales.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/design-system-governance, target: "{skillsDir}/design-system-governance" }]
+- id: motion-system
+  name: motion-system
+  group: ui
+  description: Defines a product-wide motion vocabulary (duration/easing tokens, choreography rules, reduced-motion handling) instead of one-off, inconsistent animation decisions per component.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/motion-system, target: "{skillsDir}/motion-system" }]
+- id: color-system
+  name: color-system
+  group: ui
+  description: Builds a full accessible colour system (tonal scales, semantic roles, contrast-checked) instead of picking single swatches ad hoc per screen.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/color-system, target: "{skillsDir}/color-system" }]
+- id: typography-scale
+  name: typography-scale
+  group: ui
+  description: Creates a modular type scale (mathematical ratio, weight/line-height/letter-spacing rules) instead of arbitrary one-off font sizes.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/typography-scale, target: "{skillsDir}/typography-scale" }]
+- id: spacing-system
+  name: spacing-system
+  group: ui
+  description: Creates a spacing scale from a base unit with explicit application rules, instead of arbitrary padding/margin values per component.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/spacing-system, target: "{skillsDir}/spacing-system" }]
+- id: layout-grid
+  name: layout-grid
+  group: ui
+  description: Defines a responsive grid (columns/gutters/margins/breakpoints) as an explicit system instead of ad hoc per-page layout decisions.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/layout-grid, target: "{skillsDir}/layout-grid" }]
+- id: critique-visual-hierarchy
+  name: critique-visual-hierarchy
+  group: ui
+  description: Critiques an already-rendered screen's entry point, eye flow, weight, and emphasis against real measured evidence, not a vibes-based visual pass.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-visual-hierarchy, target: "{skillsDir}/critique-visual-hierarchy" }]
+- id: critique-affordance
+  name: critique-affordance
+  group: ui
+  description: Critiques a rendered screen's clickability signals, state visibility, CTA clarity, and action discoverability against concrete failure patterns.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-affordance, target: "{skillsDir}/critique-affordance" }]
+- id: critique-color
+  name: critique-color
+  group: ui
+  description: Critiques a rendered screen's colour usage with measured WCAG contrast ratios, palette coherence, and semantic correctness, not estimated-by-eye judgments.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-color, target: "{skillsDir}/critique-color" }]
+- id: critique-composition
+  name: critique-composition
+  group: ui
+  description: Critiques a rendered screen's balance, whitespace, rhythm, and gestalt grouping when a layout feels off but hierarchy alone doesn't explain why.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-composition, target: "{skillsDir}/critique-composition" }]
+- id: critique-typography
+  name: critique-typography
+  group: ui
+  description: Critiques a rendered screen's type scale usage, readability, consistency, and token compliance against concrete measured thresholds.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-typography, target: "{skillsDir}/critique-typography" }]
+- id: critique-brand-consistency
+  name: critique-brand-consistency
+  group: ui
+  description: Critiques a rendered screen against a project's own mood.md/voice.md/tokens.md when those exist, never inventing brand rules when they don't.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-brand-consistency, target: "{skillsDir}/critique-brand-consistency" }]
+- id: critique-information-density
+  name: critique-information-density
+  group: ui
+  description: Critiques a rendered screen's cognitive load, content prioritisation, scanning pattern, and progressive disclosure when a screen feels overwhelming.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/critique-information-density, target: "{skillsDir}/critique-information-density" }]
+- id: visual-critique-screen
+  name: visual-critique-screen
+  group: ui
+  description: >-
+    Runs all 7 visual-critique skills on a rendered screen into one deduplicated, severity-ranked fix list.
+    Adapted from upstream (Owl-Listener/designer-skills' /critique-screen): real testing found the original
+    ranking step had no dedupe pass and no real severity model (a promo button's low-contrast text and an
+    unconfirmed destructive delete could both land in P1); this version fixes both.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/visual-critique-screen, target: "{skillsDir}/visual-critique-screen" }]
+- id: ui-style-direction
+  name: ui-style-direction
+  group: ui
+  description: >-
+    Use before building or redesigning a marketing or product UI. Chooses a deliberate visual direction
+    that is not the product-type default (three candidates that differ in layout, one signature device),
+    writes mood.md, voice.md and tokens.md for critique-brand-consistency, and ends with a distinctness
+    gate: a template-tell scan and a cold-reviewer test. Style entries adapted from the MIT-licensed
+    ui-ux-pro-max-skill.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/ui-style-direction, target: "{skillsDir}/ui-style-direction" }]
+- id: ui-review
+  name: ui-review
+  group: ui
+  description: >-
+    Use to audit a web UI end to end ("review this UI", "what should we improve on this page", "audit the
+    site before launch"). Measures first (axe, contrast, tap targets, overflow at 1440/768/375, console
+    errors, broken links, template tells), then critiques with the 7 visual dimensions and a UX pass, and
+    returns one P1 to P3 list where every item has evidence, plus a coverage line. Reports only, never fixes.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/ui-review, target: "{skillsDir}/ui-review" }]
+- id: premium-visual-polish
+  name: premium-visual-polish
+  group: ui
+  description: >-
+    Use after applying design tokens (color-system/typography-scale/spacing-system/motion-system) and
+    before calling a UI done — catches the gap between "technically token-correct" and "reads as
+    considered" that a token audit alone cannot see. Authored after real user feedback that a
+    token-correct rebuild still looked generic, and after a follow-up evidence-based critique found
+    two invented token values (an accent blue and a border gray) silently failed real WCAG contrast
+    minimums even though the token *pattern* was correct — the skill's central recommendation is to
+    adopt a real, published, accessibility-tested design system's actual values (Carbon, Material,
+    Fluent, etc.) over inventing your own.
+  defaultChecked: false
+  actions: [{ kind: copyDir, source: skills/premium-visual-polish, target: "{skillsDir}/premium-visual-polish" }]

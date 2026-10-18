@@ -1,0 +1,58 @@
+- id: secret-scan
+  name: Secret scanning (gitleaks)
+  description: >-
+    Pre-commit hook that runs gitleaks against staged changes before every commit. Fails open with a
+    loud warning (does not block commits) if gitleaks isn't installed yet.
+  defaultChecked: true
+  setup: "Install gitleaks (https://github.com/gitleaks/gitleaks); until then the hook only warns."
+  setupBin: gitleaks
+  setupOptional: true
+  actions:
+    - kind: writeScript
+      target: .git/hooks/pre-commit
+      template: hooks/pre-commit.sh.hbs
+- id: claude-usage-statusline
+  name: Claude Code usage statusline
+  description: >-
+    Claude Code only. Shows model plus 5h and 7d plan usage (green/yellow/red) with reset times.
+    Writes .claude/statusline.sh and sets statusLine in .claude/settings.local.json (personal, normally
+    gitignored). That file outranks settings.json and ~/.claude/settings.json, so this statusline replaces
+    any you have there; an existing different statusLine in settings.local.json itself is kept and reported
+    as a conflict. Needs jq.
+  defaultChecked: false
+  agents: [claude-code]
+  setup: "Install jq (https://jqlang.org/download/); the statusline needs it."
+  setupBin: jq
+  actions:
+    - kind: writeScript
+      target: .claude/statusline.sh
+      template: hooks/claude-statusline.sh.hbs
+    - kind: mergeJsonTop
+      target: .claude/settings.local.json
+      key: statusLine
+      template: hooks/claude-statusline.json.hbs
+- id: omp-auto-resume
+  name: omp auto-resume at usage limit
+  description: >-
+    omp only. Vendored extension: after a confirmed Anthropic 5h/7d usage-limit block it waits for the
+    reset and sends "continue". Installs to .omp/extensions/auto-resume. (Claude Code already does this
+    natively via /config, "Continue automatically at usage limit".)
+  defaultChecked: false
+  agents: [omp]
+  actions:
+    - kind: copyDir
+      source: extensions/omp-auto-resume
+      target: .omp/extensions/auto-resume
+- id: gitwho
+  name: "gitwho: commit as the right identity"
+  description: >-
+    Appends a short gitwho section to the selected agent's instructions file (CLAUDE.md or AGENTS.md):
+    install/check steps, a rule to stop and ask the user when a commit is blocked with "No profile set
+    for this repo", and a ban on bypassing the hook. Writes nothing outside the repo and installs nothing.
+  defaultChecked: false
+  setup: "Install gitwho (npm i -g @anscodelab/gitwho && gitwho init), then check with `gitwho whoami`."
+  setupBin: gitwho
+  actions:
+    - kind: appendMarkdownSection
+      target: "{agentInstructions}"
+      template: hooks/gitwho.md.hbs
