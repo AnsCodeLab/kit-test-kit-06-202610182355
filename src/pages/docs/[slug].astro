@@ -1,0 +1,22 @@
+---
+import { getEntry } from 'astro:content';
+import Docs from '../../layouts/Docs.astro';
+import { CONCEPT_PAGES } from '../../lib/docs';
+import { renderDoc } from '../../lib/skill-markdown';
+
+export function getStaticPaths() {
+  return CONCEPT_PAGES.map((p) => ({ params: { slug: p.slug }, props: { id: p.id } }));
+}
+
+const { slug } = Astro.params;
+const { id } = Astro.props;
+const chapter = await getEntry('handbook', id);
+if (!chapter) throw new Error(`Handbook chapter ${id} is missing from the content collection`);
+const { title, body } = chapter.data;
+const { html, headings } = renderDoc(body);
+---
+
+<Docs title={`${title} | Docs - Coding Agent Kit`} description={`${title}: a chapter of the Coding Agent Kit handbook.`} current={slug} headings={headings}>
+  <h1>{title}</h1>
+  <div class="prose" data-doc-body set:html={html} />
+</Docs>

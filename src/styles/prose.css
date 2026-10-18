@@ -108,3 +108,12 @@
   border-block-start: 1px solid var(--color-rule);
   margin-block: var(--space-6);
 }
+
+/* A link that is a table cell on its own is a target in its own right, not part of a sentence. */
+.prose td > a:only-child,
+.prose th > a:only-child {
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+}

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from './Base.astro';
-import { DOC_PAGES, docPath } from '../lib/docs';
+import { DOC_PAGES, docNeighbours, docPath } from '../lib/docs';
 import type { DocHeading } from '../lib/skill-markdown';
 import '../styles/prose.css';
 
@@ -16,6 +16,8 @@ const { title, description, current, headings = [] } = Astro.props;
 
 const chapters = new Map((await getCollection('handbook')).map((c) => [c.id, c.data]));
 const pages = DOC_PAGES.map((p) => ({ href: docPath(p.slug), slug: p.slug, title: chapters.get(p.id)?.title ?? p.slug }));
+const { prev, next } = current ? docNeighbours(current) : {};
+const titleOf = (p: { id: string; slug: string }) => chapters.get(p.id)?.title ?? p.slug;
 ---
 
 <Base title={title} description={description}>
@@ -52,6 +54,24 @@ const pages = DOC_PAGES.map((p) => ({ href: docPath(p.slug), slug: p.slug, title
     </aside>
     <div class="body">
       <slot />
+      {
+        current && (prev || next) && (
+          <nav class="pager" aria-label="Previous and next chapter">
+            {prev ? (
+              <a class="prev" rel="prev" href={docPath(prev.slug)}>
+                <span class="dir">Previous</span>
+                <span>{titleOf(prev)}</span>
+              </a>
+            ) : null}
+            {next && (
+              <a class="next" rel="next" href={docPath(next.slug)}>
+                <span class="dir">Next</span>
+                <span>{titleOf(next)}</span>
+              </a>
+            )}
+          </nav>
+        )
+      }
     </div>
   </div>
 </Base>
@@ -136,6 +156,35 @@ const pages = DOC_PAGES.map((p) => ({ href: docPath(p.slug), slug: p.slug, title
   }
   .toc .l4 a {
     padding-inline-start: var(--space-6);
+  }
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-block-start: var(--space-7);
+    padding-block-start: var(--space-5);
+    border-block-start: 2px solid var(--color-ink);
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--tap-min);
+    padding-block: var(--space-3);
+    max-width: 24rem;
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+  }
+  .pager .next {
+    margin-inline-start: auto;
+    text-align: end;
+  }
+  .pager .dir {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
   @media (min-width: 64rem) {
     .docs {
