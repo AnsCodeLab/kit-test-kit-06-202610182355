@@ -1,0 +1,76 @@
+---
+const links = [
+  { href: '/product/', label: 'product' },
+  { href: '/docs/', label: 'docs' },
+  { href: '/offer/', label: 'offer' },
+  { href: '/about/', label: 'about' },
+];
+---
+
+<footer class="site-footer on-dark">
+  <div class="wrap inner">
+    <p class="line">
+      <strong>@anscodelab/coding-agent-kit</strong>. A free, MIT-licensed setup wizard for AI coding agents.
+    </p>
+    <nav aria-label="Footer">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="https://github.com/AnsCodeLab/Coding-Agent-Kit">source on GitHub</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: auto;
+    background: var(--color-dark);
+    color: var(--color-on-dark);
+    padding-block: var(--space-6);
+  }
+  .inner {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .line {
+    margin: 0;
+    color: var(--color-on-dark-muted);
+    font-size: var(--text-sm);
+  }
+  .line strong {
+    color: var(--color-on-dark);
+    font-family: var(--font-mono);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding-inline: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-on-dark);
+  }
+  @media (min-width: 48rem) {
+    .inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+  }
+</style>

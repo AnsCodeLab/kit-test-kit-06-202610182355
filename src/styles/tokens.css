@@ -1,0 +1,80 @@
+/* Design tokens. Documented, with measured contrast pairs, in docs/design-direction.md. */
+:root {
+  /* Colour: surfaces and text */
+  --color-bg: #f4f4f0;
+  --color-surface: #ffffff;
+  --color-ink: #17181a;
+  --color-ink-muted: #4f5358;
+  --color-rule: #82877d;
+  --color-rule-soft: #d6d7d0;
+
+  /* Colour: accent (primary action, links) and second hue (state, emphasis) */
+  --color-accent: #b02f14;
+  --color-accent-ink: #ffffff;
+  --color-signal: #0b6262;
+
+  /* Colour: dark band (footer) */
+  --color-dark: #17181a;
+  --color-on-dark: #f4f4f0;
+  --color-on-dark-muted: #b9bdb5;
+
+  /* Colour: focus ring (light and dark backgrounds) */
+  --color-focus: #0b57d0;
+  --color-focus-on-dark: #ffd166;
+
+  /* Type families (fallbacks are metric-matched in fonts.css) */
+  --font-sans: 'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, monospace;
+
+  /* Type scale (fluid, 375 px to 1440 px) */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --text-xl: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 3vw, 4rem);
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.6;
+  --weight-regular: 400;
+  --weight-medium: 560;
+  --weight-bold: 740;
+
+  /* Spacing scale (4 px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  /* Layout */
+  --measure: 68ch;
+  --page-max: 80rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --tap-min: 2.75rem; /* 44 px */
+
+  /* Radii: square by default, the manifest look */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 6px;
+
+  /* Shadows: hard offset, no blur */
+  --shadow-1: 0 1px 0 var(--color-rule-soft);
+  --shadow-2: 3px 3px 0 var(--color-ink);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Focus */
+  --focus-width: 3px;
+  --focus-offset: 3px;
+}

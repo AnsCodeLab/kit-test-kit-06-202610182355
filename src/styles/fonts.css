@@ -1,0 +1,37 @@
+/* Self-hosted, subsetted (Basic Latin plus a few punctuation marks) variable fonts. Licences: public/fonts/OFL-*.txt */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-matched fallbacks: the system font is scaled to the web font's width and line metrics, so the swap does not move text. */
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  font-display: swap;
+  size-adjust: 101.8%;
+  ascent-override: 98.2%;
+  descent-override: 29.8%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Courier New'), local('Liberation Mono');
+  font-display: swap;
+  size-adjust: 100%;
+  ascent-override: 102%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
