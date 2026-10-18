@@ -6,16 +6,18 @@ import {
   agentSchema,
   chapterSchema,
   hookSchema,
+  ideSchema,
   mcpServerSchema,
   skillSchema,
   type Agent,
   type Chapter,
   type Hook,
+  type Ide,
   type McpServer,
   type Skill,
 } from './schemas';
 
-export type { Agent, Chapter, Hook, McpServer, Skill };
+export type { Agent, Chapter, Hook, Ide, McpServer, Skill };
 
 export interface SkillGroup {
   group: string;
@@ -81,4 +83,8 @@ export function getMcpServers(): McpServer[] {
 
 export function getAgents(): Agent[] {
   return readYamlList('agents.yaml', agentSchema);
+}
+
+export function getIdes(): Ide[] {
+  return readYamlList('ides.yaml', ideSchema);
 }
