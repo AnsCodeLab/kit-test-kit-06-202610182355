@@ -1,0 +1,3362 @@
+{
+ "version": 1,
+ "generated_from": "scripts/build-palettes.mjs",
+ "palettes": [
+  {
+   "id": "calm-slate-sky-amber",
+   "name": "Slate, sky, amber",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#0369A1",
+    "on_accent": "#FFFFFF",
+    "second": "#B45309"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#38BDF8",
+    "second": "#FBBF24"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 5.67,
+    "on_accent": 5.93,
+    "second_on_bg": 4.8,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 9.42,
+    "second_on_dark": 12.08
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#395EA0",
+      "#877703"
+     ],
+     "contrast": 1.42,
+     "hue_gap": 165,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E6BA3",
+      "#6F6100"
+     ],
+     "contrast": 1.17,
+     "hue_gap": 168,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-stone-teal-pink",
+   "name": "Stone, teal, pink",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#0F766E",
+    "on_accent": "#FFFFFF",
+    "second": "#BE185D"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#2DD4BF",
+    "second": "#F472B6"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 5.24,
+    "on_accent": 5.47,
+    "second_on_bg": 5.78,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 10.61,
+    "second_on_dark": 7.46
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#62656F",
+      "#736E59"
+     ],
+     "contrast": 1.14,
+     "hue_gap": 178,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6F6E",
+      "#484E5E"
+     ],
+     "contrast": 1.65,
+     "hue_gap": 164,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-gray-cyan-orange",
+   "name": "Gray, cyan, orange",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#0E7490",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#22D3EE",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 5.13,
+    "on_accent": 5.36,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 11.14,
+    "second_on_dark": 8.9
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#546690",
+      "#877800"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 169,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#647191",
+      "#685B00"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 170,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-slate-blue-yellow",
+   "name": "Slate, blue, yellow",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#A16207"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#60A5FA",
+    "second": "#FACC15"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 4.94,
+    "on_accent": 5.17,
+    "second_on_bg": 4.71,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 7.93,
+    "second_on_dark": 13.17
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#85760A"
+     ],
+     "contrast": 1.15,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#766800"
+     ],
+     "contrast": 1.29,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-zinc-teal-red",
+   "name": "Zinc, teal, red",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#0F766E",
+    "on_accent": "#FFFFFF",
+    "second": "#DC2626"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#2DD4BF",
+    "second": "#F87171"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.24,
+    "on_accent": 5.47,
+    "second_on_bg": 4.63,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 10.69,
+    "second_on_dark": 7.19
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#62656F",
+      "#8F801B"
+     ],
+     "contrast": 1.46,
+     "hue_gap": 174,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6F6E",
+      "#635923"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 9,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-neutral-sky-pink",
+   "name": "Neutral, sky, pink",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#0369A1",
+    "on_accent": "#FFFFFF",
+    "second": "#BE185D"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#38BDF8",
+    "second": "#F472B6"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 5.68,
+    "on_accent": 5.93,
+    "second_on_bg": 5.78,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 9.24,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#395EA0",
+      "#736E59"
+     ],
+     "contrast": 1.25,
+     "hue_gap": 170,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E6BA3",
+      "#484E5E"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 4,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-stone-blue-orange",
+   "name": "Stone, blue, orange",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#60A5FA",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.95,
+    "on_accent": 5.17,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.77,
+    "second_on_dark": 8.73
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#877800"
+     ],
+     "contrast": 1.18,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#685B00"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [
+    "blue plus orange CTA pair, the category default"
+   ],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-gray-teal-rose",
+   "name": "Gray, teal, rose",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#0F766E",
+    "on_accent": "#FFFFFF",
+    "second": "#BE123C"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#2DD4BF",
+    "second": "#FB7185"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 5.24,
+    "on_accent": 5.47,
+    "second_on_bg": 6.01,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 10.82,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#62656F",
+      "#776C37"
+     ],
+     "contrast": 1.1,
+     "hue_gap": 176,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6F6E",
+      "#4E4A3C"
+     ],
+     "contrast": 1.76,
+     "hue_gap": 13,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-slate-cyan-rose",
+   "name": "Slate, cyan, rose",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#0E7490",
+    "on_accent": "#FFFFFF",
+    "second": "#BE123C"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#22D3EE",
+    "second": "#FB7185"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 5.12,
+    "on_accent": 5.36,
+    "second_on_bg": 6.01,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 11.16,
+    "second_on_dark": 7.5
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#546690",
+      "#776C37"
+     ],
+     "contrast": 1.08,
+     "hue_gap": 172,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#647191",
+      "#4E4A3C"
+     ],
+     "contrast": 1.82,
+     "hue_gap": 176,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "calm-zinc-sky-orange",
+   "name": "Zinc, sky, orange",
+   "feel": "calm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#0369A1",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#38BDF8",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.68,
+    "on_accent": 5.93,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 9.29,
+    "second_on_dark": 8.79
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#395EA0",
+      "#877800"
+     ],
+     "contrast": 1.44,
+     "hue_gap": 165,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E6BA3",
+      "#685B00"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 167,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "quiet product pages and documentation where reading comes first",
+   "not_when": "loud or playful brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-stone-red-teal",
+   "name": "Stone, red, teal",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#0F766E"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#F87171",
+    "second": "#2DD4BF"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.62,
+    "on_accent": 4.83,
+    "second_on_bg": 5.24,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.14,
+    "second_on_dark": 10.61
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#62656F"
+     ],
+     "contrast": 1.46,
+     "hue_gap": 174,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#6F6F6E"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 9,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-neutral-rose-sky",
+   "name": "Neutral, rose, sky",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#E11D48",
+    "on_accent": "#FFFFFF",
+    "second": "#0369A1"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FB7185",
+    "second": "#38BDF8"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.5,
+    "on_accent": 4.7,
+    "second_on_bg": 5.68,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.36,
+    "second_on_dark": 9.24
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8E8242",
+      "#395EA0"
+     ],
+     "contrast": 1.65,
+     "hue_gap": 167,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#5F5A48",
+      "#4E6BA3"
+     ],
+     "contrast": 1.3,
+     "hue_gap": 173,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-stone-orange-blue",
+   "name": "Stone, orange, blue",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#C2410C",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FB923C",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.96,
+    "on_accent": 5.18,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 8.73,
+    "second_on_dark": 7.77
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877800",
+      "#0064E8"
+     ],
+     "contrast": 1.18,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#685B00",
+      "#0076F0"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-zinc-red-blue",
+   "name": "Zinc, red, blue",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#F87171",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 4.63,
+    "on_accent": 4.83,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.19,
+    "second_on_dark": 7.83
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#0064E8"
+     ],
+     "contrast": 1.32,
+     "hue_gap": 162,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#0076F0"
+     ],
+     "contrast": 1.63,
+     "hue_gap": 160,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-stone-amber-purple",
+   "name": "Stone, amber, purple",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#B45309",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FBBF24",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.81,
+    "on_accent": 5.02,
+    "second_on_bg": 5.15,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 11.83,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877703",
+      "#006AE6"
+     ],
+     "contrast": 1.11,
+     "hue_gap": 159,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6100",
+      "#0069EF"
+     ],
+     "contrast": 1.26,
+     "hue_gap": 162,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-neutral-pink-teal",
+   "name": "Neutral, pink, teal",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#BE185D",
+    "on_accent": "#FFFFFF",
+    "second": "#0F766E"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#F472B6",
+    "second": "#2DD4BF"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 5.78,
+    "on_accent": 6.04,
+    "second_on_bg": 5.24,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.48,
+    "second_on_dark": 10.64
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#736E59",
+      "#62656F"
+     ],
+     "contrast": 1.14,
+     "hue_gap": 178,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#484E5E",
+      "#6F6F6E"
+     ],
+     "contrast": 1.65,
+     "hue_gap": 164,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-gray-red-cyan",
+   "name": "Gray, red, cyan",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#F87171",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 4.62,
+    "on_accent": 4.83,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 7.28,
+    "second_on_dark": 11.14
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#546690"
+     ],
+     "contrast": 1.43,
+     "hue_gap": 170,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#647191"
+     ],
+     "contrast": 1.45,
+     "hue_gap": 172,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-stone-yellow-blue",
+   "name": "Stone, yellow, blue",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#A16207",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FACC15",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.71,
+    "on_accent": 4.92,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 12.9,
+    "second_on_dark": 7.77
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#85760A",
+      "#0064E8"
+     ],
+     "contrast": 1.15,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#766800",
+      "#0076F0"
+     ],
+     "contrast": 1.29,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-slate-rose-purple",
+   "name": "Slate, rose, purple",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#BE123C",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#FB7185",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 6.01,
+    "on_accent": 6.29,
+    "second_on_bg": 5.14,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 7.5,
+    "second_on_dark": 7.63
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#776C37",
+      "#006AE6"
+     ],
+     "contrast": 1.06,
+     "hue_gap": 162,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E4A3C",
+      "#0069EF"
+     ],
+     "contrast": 1.8,
+     "hue_gap": 167,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "editorial-neutral-orange-cyan",
+   "name": "Neutral, orange, cyan",
+   "feel": "editorial",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#C2410C",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FB923C",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.96,
+    "on_accent": 5.18,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 8.75,
+    "second_on_dark": 10.96
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877800",
+      "#546690"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 169,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#685B00",
+      "#647191"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 170,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "story-led pages, long-form docs, magazine-like layouts",
+   "not_when": "dense dashboards",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-blue-yellow",
+   "name": "Zinc, blue, yellow",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#A16207"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#60A5FA",
+    "second": "#FACC15"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 4.95,
+    "on_accent": 5.17,
+    "second_on_bg": 4.72,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.83,
+    "second_on_dark": 12.99
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#85760A"
+     ],
+     "contrast": 1.15,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#766800"
+     ],
+     "contrast": 1.29,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-neutral-red-sky",
+   "name": "Neutral, red, sky",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#0369A1"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#F87171",
+    "second": "#38BDF8"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.63,
+    "on_accent": 4.83,
+    "second_on_bg": 5.68,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.16,
+    "second_on_dark": 9.24
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#395EA0"
+     ],
+     "contrast": 1.61,
+     "hue_gap": 166,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#4E6BA3"
+     ],
+     "contrast": 1.33,
+     "hue_gap": 169,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-fuchsia-yellow",
+   "name": "Zinc, fuchsia, yellow",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#C026D3",
+    "on_accent": "#FFFFFF",
+    "second": "#A16207"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#E879F9",
+    "second": "#FACC15"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 4.51,
+    "on_accent": 4.71,
+    "second_on_bg": 4.72,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 8.09,
+    "second_on_dark": 12.99
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#4679CF",
+      "#85760A"
+     ],
+     "contrast": 1.07,
+     "hue_gap": 165,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0069D7",
+      "#766800"
+     ],
+     "contrast": 1.07,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-neutral-orange-blue",
+   "name": "Neutral, orange, blue",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#C2410C",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FB923C",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.96,
+    "on_accent": 5.18,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 8.75,
+    "second_on_dark": 7.79
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877800",
+      "#0064E8"
+     ],
+     "contrast": 1.18,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#685B00",
+      "#0076F0"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-pink-cyan",
+   "name": "Zinc, pink, cyan",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#BE185D",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#F472B6",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.78,
+    "on_accent": 6.04,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.51,
+    "second_on_dark": 11.01
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#736E59",
+      "#546690"
+     ],
+     "contrast": 1.12,
+     "hue_gap": 174,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#484E5E",
+      "#647191"
+     ],
+     "contrast": 1.71,
+     "hue_gap": 1,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-purple-orange",
+   "name": "Zinc, purple, orange",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#9333EA",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#C084FC",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.16,
+    "on_accent": 5.38,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.53,
+    "second_on_dark": 8.79
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#006AE6",
+      "#877800"
+     ],
+     "contrast": 1.12,
+     "hue_gap": 159,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0069EF",
+      "#685B00"
+     ],
+     "contrast": 1.38,
+     "hue_gap": 161,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-neutral-rose-purple",
+   "name": "Neutral, rose, purple",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#E11D48",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FB7185",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.5,
+    "on_accent": 4.7,
+    "second_on_bg": 5.16,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.36,
+    "second_on_dark": 7.49
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8E8242",
+      "#006AE6"
+     ],
+     "contrast": 1.29,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#5F5A48",
+      "#0069EF"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 167,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-cyan-orange",
+   "name": "Zinc, cyan, orange",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#0E7490",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#22D3EE",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.13,
+    "on_accent": 5.36,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 11.01,
+    "second_on_dark": 8.79
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#546690",
+      "#877800"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 169,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#647191",
+      "#685B00"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 170,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-neutral-red-cyan",
+   "name": "Neutral, red, cyan",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#F87171",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.63,
+    "on_accent": 4.83,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.16,
+    "second_on_dark": 10.96
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#546690"
+     ],
+     "contrast": 1.43,
+     "hue_gap": 170,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#647191"
+     ],
+     "contrast": 1.45,
+     "hue_gap": 172,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "bold-zinc-violet-amber",
+   "name": "Zinc, violet, amber",
+   "feel": "bold",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#7C3AED",
+    "on_accent": "#FFFFFF",
+    "second": "#B45309"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#A78BFA",
+    "second": "#FBBF24"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.46,
+    "on_accent": 5.7,
+    "second_on_bg": 4.81,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.31,
+    "second_on_dark": 11.92
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0063EA",
+      "#877703"
+     ],
+     "contrast": 1.18,
+     "hue_gap": 162,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0069F2",
+      "#6F6100"
+     ],
+     "contrast": 1.27,
+     "hue_gap": 162,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "launch pages and brands that want a strong first impression",
+   "not_when": "conservative buyers, long reading",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-orange-sky",
+   "name": "Stone, orange, sky",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#C2410C",
+    "on_accent": "#FFFFFF",
+    "second": "#0369A1"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FB923C",
+    "second": "#38BDF8"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.96,
+    "on_accent": 5.18,
+    "second_on_bg": 5.68,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 8.73,
+    "second_on_dark": 9.22
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877800",
+      "#395EA0"
+     ],
+     "contrast": 1.44,
+     "hue_gap": 165,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#685B00",
+      "#4E6BA3"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 167,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-red-blue",
+   "name": "Stone, red, blue",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#F87171",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.62,
+    "on_accent": 4.83,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.14,
+    "second_on_dark": 7.77
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#0064E8"
+     ],
+     "contrast": 1.32,
+     "hue_gap": 162,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#0076F0"
+     ],
+     "contrast": 1.63,
+     "hue_gap": 160,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-rose-cyan",
+   "name": "Stone, rose, cyan",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#E11D48",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FB7185",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.5,
+    "on_accent": 4.7,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.34,
+    "second_on_dark": 10.93
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8E8242",
+      "#546690"
+     ],
+     "contrast": 1.47,
+     "hue_gap": 171,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#5F5A48",
+      "#647191"
+     ],
+     "contrast": 1.42,
+     "hue_gap": 176,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-neutral-amber-purple",
+   "name": "Neutral, amber, purple",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#B45309",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FBBF24",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.81,
+    "on_accent": 5.02,
+    "second_on_bg": 5.16,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 11.86,
+    "second_on_dark": 7.49
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877703",
+      "#006AE6"
+     ],
+     "contrast": 1.11,
+     "hue_gap": 159,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6100",
+      "#0069EF"
+     ],
+     "contrast": 1.26,
+     "hue_gap": 162,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-orange-blue",
+   "name": "Stone, orange, blue",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#C2410C",
+    "on_accent": "#FFFFFF",
+    "second": "#2563EB"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FB923C",
+    "second": "#60A5FA"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.96,
+    "on_accent": 5.18,
+    "second_on_bg": 4.95,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 8.73,
+    "second_on_dark": 7.77
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877800",
+      "#0064E8"
+     ],
+     "contrast": 1.18,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#685B00",
+      "#0076F0"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-pink-teal",
+   "name": "Stone, pink, teal",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#BE185D",
+    "on_accent": "#FFFFFF",
+    "second": "#0F766E"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#F472B6",
+    "second": "#2DD4BF"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 5.78,
+    "on_accent": 6.04,
+    "second_on_bg": 5.24,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.46,
+    "second_on_dark": 10.61
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#736E59",
+      "#62656F"
+     ],
+     "contrast": 1.14,
+     "hue_gap": 178,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#484E5E",
+      "#6F6F6E"
+     ],
+     "contrast": 1.65,
+     "hue_gap": 164,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-yellow-purple",
+   "name": "Stone, yellow, purple",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#A16207",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FACC15",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.71,
+    "on_accent": 4.92,
+    "second_on_bg": 5.15,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 12.9,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#85760A",
+      "#006AE6"
+     ],
+     "contrast": 1.09,
+     "hue_gap": 159,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#766800",
+      "#0069EF"
+     ],
+     "contrast": 1.14,
+     "hue_gap": 161,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-neutral-rose-cyan",
+   "name": "Neutral, rose, cyan",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#171717",
+    "muted": "#525252",
+    "border": "#737373",
+    "accent": "#E11D48",
+    "on_accent": "#FFFFFF",
+    "second": "#0E7490"
+   },
+   "dark": {
+    "bg": "#0A0A0A",
+    "text": "#F5F5F5",
+    "accent": "#FB7185",
+    "second": "#22D3EE"
+   },
+   "checks": {
+    "text_on_bg": 17.18,
+    "muted_on_bg": 7.49,
+    "accent_on_bg": 4.5,
+    "on_accent": 4.7,
+    "second_on_bg": 5.13,
+    "border_on_bg": 4.54,
+    "text_on_dark": 18.16,
+    "accent_on_dark": 7.36,
+    "second_on_dark": 10.96
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8E8242",
+      "#546690"
+     ],
+     "contrast": 1.47,
+     "hue_gap": 171,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#5F5A48",
+      "#647191"
+     ],
+     "contrast": 1.42,
+     "hue_gap": 176,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-red-sky",
+   "name": "Stone, red, sky",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#DC2626",
+    "on_accent": "#FFFFFF",
+    "second": "#0369A1"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#F87171",
+    "second": "#38BDF8"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.62,
+    "on_accent": 4.83,
+    "second_on_bg": 5.68,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 7.14,
+    "second_on_dark": 9.22
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#8F801B",
+      "#395EA0"
+     ],
+     "contrast": 1.61,
+     "hue_gap": 166,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#635923",
+      "#4E6BA3"
+     ],
+     "contrast": 1.33,
+     "hue_gap": 169,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "warm-stone-amber-purple",
+   "name": "Stone, amber, purple",
+   "feel": "warm",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "600",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAF9",
+    "surface": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#57534E",
+    "border": "#78716C",
+    "accent": "#B45309",
+    "on_accent": "#FFFFFF",
+    "second": "#9333EA"
+   },
+   "dark": {
+    "bg": "#0C0A09",
+    "text": "#F5F5F4",
+    "accent": "#FBBF24",
+    "second": "#C084FC"
+   },
+   "checks": {
+    "text_on_bg": 16.74,
+    "muted_on_bg": 7.3,
+    "accent_on_bg": 4.81,
+    "on_accent": 5.02,
+    "second_on_bg": 5.15,
+    "border_on_bg": 4.59,
+    "text_on_dark": 18.11,
+    "accent_on_dark": 11.83,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#877703",
+      "#006AE6"
+     ],
+     "contrast": 1.11,
+     "hue_gap": 159,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6100",
+      "#0069EF"
+     ],
+     "contrast": 1.26,
+     "hue_gap": 162,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "friendly, human products and services",
+   "not_when": "cold technical or security positioning",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-slate-blue-amber",
+   "name": "Slate, blue, amber",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#B45309"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#60A5FA",
+    "second": "#FBBF24"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 4.94,
+    "on_accent": 5.17,
+    "second_on_bg": 4.8,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 7.93,
+    "second_on_dark": 12.08
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#877703"
+     ],
+     "contrast": 1.17,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#6F6100"
+     ],
+     "contrast": 1.43,
+     "hue_gap": 159,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-zinc-cyan-orange",
+   "name": "Zinc, cyan, orange",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#0E7490",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#22D3EE",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 5.13,
+    "on_accent": 5.36,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 11.01,
+    "second_on_dark": 8.79
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#546690",
+      "#877800"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 169,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#647191",
+      "#685B00"
+     ],
+     "contrast": 1.4,
+     "hue_gap": 170,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-slate-sky-pink",
+   "name": "Slate, sky, pink",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#0369A1",
+    "on_accent": "#FFFFFF",
+    "second": "#BE185D"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#38BDF8",
+    "second": "#F472B6"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 5.67,
+    "on_accent": 5.93,
+    "second_on_bg": 5.77,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 9.42,
+    "second_on_dark": 7.62
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#395EA0",
+      "#736E59"
+     ],
+     "contrast": 1.25,
+     "hue_gap": 170,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E6BA3",
+      "#484E5E"
+     ],
+     "contrast": 1.57,
+     "hue_gap": 4,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-gray-blue-yellow",
+   "name": "Gray, blue, yellow",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#A16207"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#60A5FA",
+    "second": "#FACC15"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 4.95,
+    "on_accent": 5.17,
+    "second_on_bg": 4.71,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 7.92,
+    "second_on_dark": 13.15
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#85760A"
+     ],
+     "contrast": 1.15,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#766800"
+     ],
+     "contrast": 1.29,
+     "hue_gap": 158,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-zinc-indigo-amber",
+   "name": "Zinc, indigo, amber",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "300",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#4F46E5",
+    "on_accent": "#FFFFFF",
+    "second": "#B45309"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#A5B4FC",
+    "second": "#FBBF24"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 6.02,
+    "on_accent": 6.29,
+    "second_on_bg": 4.81,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 9.98,
+    "second_on_dark": 11.92
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0059E2",
+      "#877703"
+     ],
+     "contrast": 1.32,
+     "hue_gap": 163,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0067EA",
+      "#6F6100"
+     ],
+     "contrast": 1.22,
+     "hue_gap": 162,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [
+    "generic developer-tool hue: write a reason before using it"
+   ],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-slate-cyan-rose",
+   "name": "Slate, cyan, rose",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#0E7490",
+    "on_accent": "#FFFFFF",
+    "second": "#BE123C"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#22D3EE",
+    "second": "#FB7185"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 5.12,
+    "on_accent": 5.36,
+    "second_on_bg": 6.01,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 11.16,
+    "second_on_dark": 7.5
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#546690",
+      "#776C37"
+     ],
+     "contrast": 1.08,
+     "hue_gap": 172,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#647191",
+      "#4E4A3C"
+     ],
+     "contrast": 1.82,
+     "hue_gap": 176,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-gray-sky-orange",
+   "name": "Gray, sky, orange",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#0369A1",
+    "on_accent": "#FFFFFF",
+    "second": "#C2410C"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#38BDF8",
+    "second": "#FB923C"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 5.68,
+    "on_accent": 5.93,
+    "second_on_bg": 4.96,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 9.4,
+    "second_on_dark": 8.9
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#395EA0",
+      "#877800"
+     ],
+     "contrast": 1.44,
+     "hue_gap": 165,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#4E6BA3",
+      "#685B00"
+     ],
+     "contrast": 1.28,
+     "hue_gap": 167,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-zinc-blue-amber",
+   "name": "Zinc, blue, amber",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text": "#18181B",
+    "muted": "#52525B",
+    "border": "#71717A",
+    "accent": "#2563EB",
+    "on_accent": "#FFFFFF",
+    "second": "#B45309"
+   },
+   "dark": {
+    "bg": "#09090B",
+    "text": "#F4F4F5",
+    "accent": "#60A5FA",
+    "second": "#FBBF24"
+   },
+   "checks": {
+    "text_on_bg": 16.97,
+    "muted_on_bg": 7.41,
+    "accent_on_bg": 4.95,
+    "on_accent": 5.17,
+    "second_on_bg": 4.81,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.1,
+    "accent_on_dark": 7.83,
+    "second_on_dark": 11.92
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0064E8",
+      "#877703"
+     ],
+     "contrast": 1.17,
+     "hue_gap": 161,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0076F0",
+      "#6F6100"
+     ],
+     "contrast": 1.43,
+     "hue_gap": 159,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-slate-violet-yellow",
+   "name": "Slate, violet, yellow",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "600",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#475569",
+    "border": "#64748B",
+    "accent": "#7C3AED",
+    "on_accent": "#FFFFFF",
+    "second": "#A16207"
+   },
+   "dark": {
+    "bg": "#020617",
+    "text": "#F1F5F9",
+    "accent": "#A78BFA",
+    "second": "#FACC15"
+   },
+   "checks": {
+    "text_on_bg": 17.06,
+    "muted_on_bg": 7.24,
+    "accent_on_bg": 5.45,
+    "on_accent": 5.7,
+    "second_on_bg": 4.71,
+    "border_on_bg": 4.55,
+    "text_on_dark": 18.41,
+    "accent_on_dark": 7.41,
+    "second_on_dark": 13.17
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#0063EA",
+      "#85760A"
+     ],
+     "contrast": 1.16,
+     "hue_gap": 162,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#0069F2",
+      "#766800"
+     ],
+     "contrast": 1.15,
+     "hue_gap": 161,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [
+    "generic developer-tool hue: write a reason before using it"
+   ],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  },
+  {
+   "id": "technical-gray-teal-rose",
+   "name": "Gray, teal, rose",
+   "feel": "technical",
+   "source": {
+    "scales": "tailwindcss v3.4.17 default colours",
+    "license": "MIT",
+    "steps": {
+     "accent": "700",
+     "second": "700",
+     "accent_dark": "400",
+     "second_dark": "400"
+    }
+   },
+   "light": {
+    "bg": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "border": "#6B7280",
+    "accent": "#0F766E",
+    "on_accent": "#FFFFFF",
+    "second": "#BE123C"
+   },
+   "dark": {
+    "bg": "#030712",
+    "text": "#F3F4F6",
+    "accent": "#2DD4BF",
+    "second": "#FB7185"
+   },
+   "checks": {
+    "text_on_bg": 16.98,
+    "muted_on_bg": 7.23,
+    "accent_on_bg": 5.24,
+    "on_accent": 5.47,
+    "second_on_bg": 6.01,
+    "border_on_bg": 4.63,
+    "text_on_dark": 18.3,
+    "accent_on_dark": 10.82,
+    "second_on_dark": 7.48
+   },
+   "cvd": {
+    "deuteranopia": {
+     "simulated": [
+      "#62656F",
+      "#776C37"
+     ],
+     "contrast": 1.1,
+     "hue_gap": 176,
+     "distinct": true
+    },
+    "protanopia": {
+     "simulated": [
+      "#6F6F6E",
+      "#4E4A3C"
+     ],
+     "contrast": 1.76,
+     "hue_gap": 13,
+     "distinct": true
+    }
+   },
+   "fails": [],
+   "flags": [],
+   "use_when": "developer tools, APIs, CLI-first products",
+   "not_when": "consumer lifestyle brands",
+   "second_role": "marks state and emphasis (current page, tags, highlights), not primary actions"
+  }
+ ]
+}
