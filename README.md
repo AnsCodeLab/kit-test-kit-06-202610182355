@@ -26,6 +26,7 @@ Install with `npm ci`. The browser commands download Playwright chromium on firs
 | `npm run build` | Static build into `dist/` |
 | `npm run lint` | ESLint, then `astro check` |
 | `npm run scan:secrets` | Offline secret scan of the working tree and git history (allowlist: `scripts/secret-scan-allowlist.txt`, a reason on every entry) |
+| `npm run healthcheck [url]` | Proves a served site is up: every sitemap page (200, text/html, title, one h1), `/robots.txt`, `/sitemap-index.xml` (skipped when 404) and an unknown path (404); security headers are required on non-local targets. Target is the argument or `HEALTH_URL`; with neither, it serves `dist/` itself. Exits 1 and names the first failure class. |
 | `npm run audit` | `npm audit` on production dependencies, fails on high or critical |
 | `npm test` | Unit tests (Vitest) |
 | `npm run test:smoke` | Playwright smoke test on the served `dist/` at 375, 768 and 1440 px |
