@@ -1,0 +1,73 @@
+---
+import '../../styles/art.css';
+
+interface Props {
+  group: string;
+  /** 'sm' for list cells, 'md' for beside a heading. */
+  size?: 'sm' | 'md';
+}
+const { group, size = 'md' } = Astro.props;
+
+// Ring of the maintenance drawing: twelve tick marks around a centre at (80, 60).
+const ticks = Array.from({ length: 12 }, (_, i) => {
+  const a = (i * Math.PI) / 6;
+  const r1 = i % 3 === 0 ? 47 : 50;
+  return { x1: (80 + r1 * Math.sin(a)).toFixed(2), y1: (60 - r1 * Math.cos(a)).toFixed(2), x2: (80 + 54 * Math.sin(a)).toFixed(2), y2: (60 - 54 * Math.cos(a)).toFixed(2) };
+});
+---
+
+<!-- Decorative: the group name sits in the heading or list item beside it, so this is hidden from assistive tech. -->
+{
+  group === 'core' && (
+    <svg class={`art art-group ${size}`} viewBox="0 0 160 120" width="160" height="120" aria-hidden="true" focusable="false">
+      {/* A rail with a fork (parallelize) and a vermilion gate before the end (cross-review). */}
+      <path class="ink join" d="M14 60 H58 M58 60 V34 H94 V60 M58 60 V86 H94 V60 M94 60 H150" />
+      <path class="acc join draw" pathLength="1" d="M126 36 V84" />
+      <circle class="ink f-surface" cx="22" cy="60" r="8" />
+      <circle class="ink f-surface" cx="58" cy="60" r="8" />
+      <circle class="ink f-surface" cx="94" cy="60" r="8" />
+      <circle class="f-sig" cx="150" cy="60" r="7" />
+    </svg>
+  )
+}
+{
+  group === 'architecture' && (
+    <svg class={`art art-group ${size}`} viewBox="0 0 160 120" width="160" height="120" aria-hidden="true" focusable="false">
+      {/* A repo as nested rectangles: modules inside a boundary, with a dimension line below. */}
+      <rect class="ink join f-surface" x="16" y="10" width="128" height="88" />
+      <rect class="ink join f-soft" x="28" y="22" width="58" height="40" />
+      <rect class="ink join f-surface" x="94" y="22" width="38" height="40" />
+      <rect class="ink join f-surface" x="28" y="70" width="104" height="16" />
+      <rect class="f-sig" x="36" y="30" width="20" height="8" />
+      <path class="acc join draw" pathLength="1" d="M16 112 H144 M16 106 V118 M144 106 V118" />
+    </svg>
+  )
+}
+{
+  group === 'maintenance' && (
+    <svg class={`art art-group ${size}`} viewBox="0 0 160 120" width="160" height="120" aria-hidden="true" focusable="false">
+      {/* A ring that comes round again: three arcs, a vermilion one, tick marks and clock hands. */}
+      <circle class="ink f-surface" cx="80" cy="60" r="33" pathLength="100" stroke-dasharray="29 4.33" transform="rotate(-100 80 60)" />
+      <circle class="acc" cx="80" cy="60" r="33" pathLength="100" stroke-dasharray="29 71" transform="rotate(20 80 60)" />
+      {ticks.map((t) => <line class="rule" x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} />)}
+      <path class="sig join" d="M80 60 V38 M80 60 L96 68" />
+      <circle class="f-sig" cx="80" cy="60" r="4" />
+    </svg>
+  )
+}
+{
+  group === 'ui' && (
+    <svg class={`art art-group ${size}`} viewBox="0 0 160 120" width="160" height="120" aria-hidden="true" focusable="false">
+      {/* Shape primitives on a layout grid, with a row of swatches. */}
+      <path class="soft" d="M20 10 V86 M60 10 V86 M100 10 V86 M140 10 V86 M10 26 H150 M10 56 H150 M10 86 H150" />
+      <rect class="shadow" x="23" y="29" width="34" height="34" />
+      <rect class="ink f-surface join" x="20" y="26" width="34" height="34" />
+      <circle class="f-acc" cx="94" cy="44" r="22" />
+      <path class="sig join f-bg" d="M100 86 L120 38 L140 86 Z" />
+      <rect class="f-ink" x="20" y="100" width="22" height="12" />
+      <rect class="f-sig" x="46" y="100" width="22" height="12" />
+      <rect class="f-acc" x="72" y="100" width="22" height="12" />
+      <rect class="ink-thin f-surface" x="98" y="100" width="22" height="12" />
+    </svg>
+  )
+}

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getRepositoryUrl } from '../../lib/contact';
+import AboutArt from '../../components/art/AboutArt.astro';
 import { NEVER_DOES, LICENCE_CLAIMS, THIRD_PARTY_CLAIMS, assertClaims } from '../../lib/trust';
 
 const all = [...NEVER_DOES, ...LICENCE_CLAIMS, ...THIRD_PARTY_CLAIMS];
@@ -16,11 +17,16 @@ const repository = getRepositoryUrl();
     <section class="row" aria-labelledby="h-about">
       <p class="label" aria-hidden="true">/about</p>
       <div class="body">
-        <h1 id="h-about">About and trust</h1>
-        <p class="lede">
-          Each statement below is quoted from the kit's own files, with the file named beside it. Check it against
-          the repository.
-        </p>
+        <div class="art-head">
+          <div class="art-text">
+            <h1 id="h-about">About and trust</h1>
+            <p class="lede">
+              Each statement below is quoted from the kit's own files, with the file named beside it. Check it against
+              the repository.
+            </p>
+          </div>
+          <div class="art-fig"><AboutArt /></div>
+        </div>
       </div>
     </section>
 

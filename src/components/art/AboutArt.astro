@@ -1,0 +1,24 @@
+---
+import '../../styles/art.css';
+
+// Real targets the kit writes (docs/design-direction.md, handbook chapter 2).
+const files = ['CLAUDE.md', '.claude/skills/', '.mcp.json'];
+---
+
+<!-- Decorative: the claims below the heading say the same in words, each with its source file. -->
+<svg class="art" viewBox="0 0 480 190" width="480" height="190" aria-hidden="true" focusable="false">
+  <rect class="f-ink" x="10" y="70" width="90" height="50" />
+  <text class="big on-dark" x="28" y="102">kit</text>
+  <path class="acc join draw" pathLength="1" d="M100 95 H164 M152 87 L164 95 L152 103" />
+  <rect class="ink join f-bg dash" x="170" y="14" width="300" height="162" />
+  <text class="muted" x="184" y="38">your repo</text>
+  {
+    files.map((f, i) => (
+      <g>
+        <rect class="ink join f-surface" x="186" y={52 + i * 38} width="268" height="28" />
+        <text x="198" y={71 + i * 38}>{f}</text>
+      </g>
+    ))
+  }
+  <text class="sigtext" x="10" y="150">network: none</text>
+</svg>

@@ -1,0 +1,45 @@
+---
+import '../../styles/art.css';
+import { treemap } from '../../lib/treemap';
+
+interface Props {
+  groups: { group: string; count: number }[];
+}
+const { groups } = Astro.props;
+
+const W = 480;
+const H = 240;
+const total = groups.reduce((s, g) => s + g.count, 0);
+const fills: Record<string, { box: string; text: string }> = {
+  ui: { box: 'f-surface ink', text: '' },
+  core: { box: 'f-ink', text: 'on-dark' },
+  architecture: { box: 'f-sig', text: 'on-fill' },
+  maintenance: { box: 'f-acc', text: 'on-fill' },
+};
+const cells = treemap(groups.map((g) => ({ key: g.group, value: g.count })), W, H);
+const desc = `A treemap whose areas are proportional to the number of skills in each group: ${[...groups]
+  .sort((a, b) => b.count - a.count)
+  .map((g) => `${g.group} ${g.count}`)
+  .join(', ')}, ${total} in all.`;
+---
+
+<svg class="art art-wide" viewBox={`0 0 ${W} ${H + 8}`} width={W} height={H + 8} role="img" aria-labelledby="art-product-title" aria-describedby="art-product-desc" focusable="false">
+  <title id="art-product-title">The skills, by group</title>
+  <desc id="art-product-desc">{desc}</desc>
+  {
+    cells.map((c) => (
+      <g>
+        <rect class={`join ${fills[c.key]?.box ?? 'f-surface ink'}`} x={c.x} y={c.y} width={c.w} height={c.h} />
+        <text class={`${fills[c.key]?.text ?? ''}`} x={c.x + 14} y={c.y + 34}>{c.key}</text>
+        <text class={`big ${fills[c.key]?.text ?? ''}`} x={c.x + c.w - 14} y={c.y + 34} text-anchor="end">{c.value}</text>
+      </g>
+    ))
+  }
+  <path class="acc join draw" pathLength="1" d={`M0 ${H + 4} H${W}`} />
+</svg>
+
+<style>
+  .art-wide {
+    --art-max: 30rem;
+  }
+</style>

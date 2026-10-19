@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getRepositoryUrl } from '../../lib/contact';
+import OfferArt from '../../components/art/OfferArt.astro';
 
 const contact = getRepositoryUrl();
 const proPack = ['Private skills', 'Templates', 'Team policy presets'];
@@ -15,11 +16,16 @@ const services = ['Team onboarding', 'Setup for your repositories', 'Priority su
     <section class="row" aria-labelledby="h-offer">
       <p class="label" aria-hidden="true">/offer</p>
       <div class="body">
-        <h1 id="h-offer">Free kit, planned Pro Pack, services for teams</h1>
-        <p class="lede">
-          This page is informational. Nothing here can be bought yet. To ask about the Pro Pack or the services, use the
-          link at the end of the page.
-        </p>
+        <div class="art-head">
+          <div class="art-text">
+            <h1 id="h-offer">Free kit, planned Pro Pack, services for teams</h1>
+            <p class="lede">
+              This page is informational. Nothing here can be bought yet. To ask about the Pro Pack or the services, use
+              the link at the end of the page.
+            </p>
+          </div>
+          <figure class="art-fig"><OfferArt /></figure>
+        </div>
       </div>
     </section>
 
