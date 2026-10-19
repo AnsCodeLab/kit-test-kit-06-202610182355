@@ -1,0 +1,39 @@
+{
+  "title": "The flow: Plan, Parallelize, Verify, Cross-Review",
+  "stages": [
+    {
+      "n": 1,
+      "name": "Plan",
+      "description": "Fetch the ticket, plan, then have an independent pass review the plan alone.",
+      "gate": {
+        "name": "Gate A",
+        "text": "Reviews the plan document alone, before any code exists."
+      }
+    },
+    {
+      "n": 2,
+      "name": "Parallelize",
+      "description": "Define independent work units, give each its own isolated agent context (a worktree), run them concurrently, review and merge on completion."
+    },
+    {
+      "n": 3,
+      "name": "Verify",
+      "description": "Run the changed path. For a bug ticket, reproduce the bug first, then show it no longer reproduces.",
+      "gate": {
+        "name": "Gate Q",
+        "text": "A human QA person signing off against the ticket's acceptance criteria."
+      }
+    },
+    {
+      "n": 4,
+      "name": "Cross-Review",
+      "description": "A fresh context without the implementer's reasoning still beats same-session re-reading, but a different vendor is the target.",
+      "gate": {
+        "name": "Gate B",
+        "text": "A reviewer that did not write the code, ideally another model or vendor."
+      }
+    }
+  ],
+  "relation": "Gate Q and Gate B may run at the same time. Ship is blocked until both are clear.",
+  "failLabel": "QA: FAIL = defect"
+}

@@ -1,0 +1,197 @@
+---
+import flow from '../data/flow.json';
+import { describe, horizontal, vertical, type Layout } from '../lib/flow-layout';
+import type { FlowData } from '../../scripts/flow-lib.mjs';
+
+interface Props {
+  /** Show a caption that links to the handbook chapter the diagram comes from. */
+  caption?: boolean;
+}
+const { caption = false } = Astro.props;
+
+const data = flow as FlowData;
+const alt = describe(data);
+// One drawing per orientation; the stylesheet shows the one that fits the column (container query), so the
+// text is never scaled below its size.
+const views: { id: string; cls: string; layout: Layout }[] = [
+  { id: 'wide', cls: 'wide', layout: horizontal(data) },
+  { id: 'narrow', cls: 'narrow', layout: vertical(data) },
+];
+---
+
+<figure class="flow" data-flow>
+  {
+    views.map(({ id, cls, layout }) => (
+      <svg
+        class={cls}
+        data-flow-view={id}
+        viewBox={`0 0 ${layout.w} ${layout.h}`}
+        role="img"
+        aria-labelledby={`flow-${id}-title`}
+        aria-describedby={`flow-${id}-desc`}
+        focusable="false"
+      >
+        <title id={`flow-${id}-title`}>{data.title}</title>
+        <desc id={`flow-${id}-desc`}>{alt}</desc>
+        {layout.shapes.map((s) =>
+          s.kind === 'rect' ? (
+            <rect class={s.cls} x={s.x} y={s.y} width={s.w} height={s.h} />
+          ) : (
+            <path class={s.cls} d={s.d} pathLength={s.cls.includes('draw') ? 1 : undefined} />
+          ),
+        )}
+        {layout.texts.map((t) => (
+          <text
+            class={t.cls}
+            x={t.x}
+            y={t.y}
+            text-anchor={t.anchor}
+            transform={t.rotate ? `rotate(-90 ${t.x} ${t.y})` : undefined}
+          >
+            {t.lines.map((line, i) => (
+              <tspan x={t.x} dy={i === 0 ? 0 : t.cls === 't-desc' || t.cls === 't-gate' || t.cls === 't-rel' ? (id === 'wide' ? 20 : 22) : 0}>
+                {line}
+              </tspan>
+            ))}
+          </text>
+        ))}
+      </svg>
+    ))
+  }
+  {
+    caption && (
+      <figcaption>
+        From the handbook chapter <a href="/docs/the-flow/">{data.title}</a>.
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .flow {
+    margin: 0;
+    container-type: inline-size;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .wide {
+    display: none;
+    max-width: 56rem;
+  }
+  .narrow {
+    max-width: 24rem;
+  }
+  @container (min-width: 45rem) {
+    .wide {
+      display: block;
+    }
+    .narrow {
+      display: none;
+    }
+  }
+
+  .shadow {
+    fill: var(--color-ink);
+  }
+  .box {
+    fill: var(--color-bg);
+    stroke: var(--color-ink);
+    stroke-width: 2;
+  }
+  .chip {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 2;
+  }
+  .label-bg {
+    fill: var(--color-bg);
+  }
+  .edge,
+  .bracket {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 2;
+  }
+  .fail {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+  }
+  .head {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 2;
+    stroke-linejoin: miter;
+  }
+  .fail-head {
+    stroke: var(--color-accent);
+  }
+
+  text {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    fill: var(--color-ink);
+  }
+  .narrow text {
+    font-size: 15px;
+  }
+  .t-num,
+  .t-chip,
+  .t-fail {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-medium);
+  }
+  .t-num,
+  .t-chip {
+    fill: var(--color-signal);
+  }
+  .t-fail {
+    fill: var(--color-accent);
+  }
+  .t-name {
+    font-size: 22px;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.02em;
+  }
+  .narrow .t-name {
+    font-size: 22px;
+  }
+  .t-gate {
+    fill: var(--color-ink-muted);
+  }
+  figcaption {
+    margin-block-start: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+  figcaption a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  /* The connectors draw in as the diagram scrolls into view. Without motion preference or scroll timelines the
+     final drawing is simply there. */
+  @keyframes flow-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .draw {
+        stroke-dasharray: 1;
+        animation: flow-draw linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+</style>

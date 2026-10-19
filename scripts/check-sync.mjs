@@ -1,13 +1,18 @@
 import fs from 'node:fs';
+import { FLOW_FILE, buildFlowFromContent, serializeFlow } from './flow-lib.mjs';
 import { REPLAY_FILE, buildReplayFromContent, hasReplayInputs, serializeReplay } from './replay-lib.mjs';
 import { contentDir, findDrift, sourceDir } from './sync-lib.mjs';
 
 const problems = findDrift(sourceDir(), contentDir());
-// The hero replay data is derived from content/; it must match a fresh derivation.
+// The hero replay and flow diagram data are derived from content/; it must match a fresh derivation.
 if (hasReplayInputs()) {
   const want = serializeReplay(buildReplayFromContent(contentDir()));
   if (!fs.existsSync(REPLAY_FILE) || fs.readFileSync(REPLAY_FILE, 'utf8') !== want) {
     problems.push(`${REPLAY_FILE} is stale or missing`);
+  }
+  const wantFlow = serializeFlow(buildFlowFromContent(contentDir()));
+  if (!fs.existsSync(FLOW_FILE) || fs.readFileSync(FLOW_FILE, 'utf8') !== wantFlow) {
+    problems.push(`${FLOW_FILE} is stale or missing`);
   }
 }
 if (problems.length > 0) {
