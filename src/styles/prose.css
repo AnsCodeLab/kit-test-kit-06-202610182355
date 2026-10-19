@@ -118,3 +118,16 @@
   min-width: var(--tap-min);
   min-height: var(--tap-min);
 }
+
+/* A "Next: [chapter]" line is a pager target, not a link inside a sentence: give it the full tap height. */
+.prose p:has(> strong:first-child + a:last-child) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-2);
+}
+.prose p:has(> strong:first-child + a:last-child) > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+}

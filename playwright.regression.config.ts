@@ -16,7 +16,7 @@ export default defineConfig({
     })),
     {
       name: 'site',
-      testMatch: ['site.spec.ts', 'fixtures.spec.ts'],
+      testMatch: ['site.spec.ts', 'fixtures.spec.ts', 'ui-review.spec.ts'],
       use: { browserName: 'chromium' as const, viewport: { width: 1440, height: 900 } },
     },
   ],
