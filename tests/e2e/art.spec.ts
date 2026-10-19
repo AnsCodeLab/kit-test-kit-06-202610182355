@@ -130,3 +130,20 @@ test('strokes are fully visible with reduced motion and animate otherwise (where
   const supported = await page.evaluate(() => CSS.supports('animation-timeline: view()'));
   if (supported) expect(await draw.evaluate((el) => getComputedStyle(el).animationName)).toBe('art-draw');
 });
+
+// KRK06-26: every main page shows an image-like visual before the second scroll (two viewport heights) at 1440 px.
+test.describe('visual above the second scroll at 1440 px', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+  for (const route of PAGES) {
+    test(`${route} has a visible inline SVG within two screens`, async ({ page }) => {
+      await page.goto(route);
+      const found = await page.evaluate(() =>
+        [...document.querySelectorAll('main svg[role="img"], main svg.art')].some((s) => {
+          const r = s.getBoundingClientRect();
+          return r.width >= 200 && r.height >= 100 && r.top + window.scrollY + r.height <= 2 * window.innerHeight && getComputedStyle(s).visibility !== 'hidden';
+        }),
+      );
+      expect(found).toBe(true);
+    });
+  }
+});

@@ -1,0 +1,28 @@
+---
+import '../../styles/art.css';
+
+// Real targets from the README's 'What gets written' table. The first row depends on the agent chosen.
+const files = ['CLAUDE.md | AGENTS.md', '.claude/skills/ | .agents/skills/', '.mcp.json', '.vscode/extensions.json', '.orca/config.yaml', '.git/hooks/pre-commit', '.claude/statusline.sh'];
+const ROW = 34;
+const H = 56 + files.length * ROW + 52;
+---
+
+<svg class="art" viewBox={`0 0 440 ${H}`} width="440" height={H} role="img" aria-labelledby="art-home-title" aria-describedby="art-home-desc" focusable="false">
+  <title id="art-home-title">The files the command writes</title>
+  <desc id="art-home-desc">A list of the seven kinds of file the kit adds to a repo: the agent file, the skills directory, .mcp.json, the VS Code extension recommendation, the Orca config, the git pre-commit hook and the statusline script. Text outside the kit's own marked sections is left as it is.</desc>
+  <rect class="shadow" x="8" y="8" width="430" height={H - 8} />
+  <rect class="ink join f-surface" x="2" y="2" width="430" height={H - 8} />
+  <rect class="f-ink" x="2" y="2" width="430" height="44" />
+  <text class="on-dark" x="14" y="31">npx @anscodelab/coding-agent-kit</text>
+  <path class="acc join draw" pathLength="1" d="M2 46 H432" />
+  {
+    files.map((f, i) => (
+      <g>
+        <text class="sigtext big" x="18" y={80 + i * ROW}>+</text>
+        <text x="44" y={80 + i * ROW}>{f}</text>
+        <path class="soft" d={`M18 ${92 + i * ROW} H416`} />
+      </g>
+    ))
+  }
+  <text class="muted" x="18" y={H - 24}>everything else: untouched</text>
+</svg>

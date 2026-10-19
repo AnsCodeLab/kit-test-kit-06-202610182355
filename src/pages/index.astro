@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import HomeArt from '../components/art/HomeArt.astro';
 import FlowDiagram from '../components/FlowDiagram.astro';
 import InstallCommand from '../components/InstallCommand.astro';
 import ReplayScene from '../components/ReplayScene.astro';
@@ -27,12 +28,15 @@ const offer = [
     <section class="row" aria-labelledby="h-install">
       <p class="label" aria-hidden="true">/install</p>
       <div class="body hero">
-        <div class="hero-text">
-          <h1 id="h-install">Set up your AI coding agent with one command</h1>
-          <p class="lede">
-            Pick an agent, an editor, skills, MCP servers and safeguard hooks. The kit writes the config files those
-            choices need into your repo, without overwriting anything you already have.
-          </p>
+        <div class="hero-top">
+          <div class="hero-text">
+            <h1 id="h-install">Set up your AI coding agent with one command</h1>
+            <p class="lede">
+              Pick an agent, an editor, skills, MCP servers and safeguard hooks. The kit writes the config files those
+              choices need into your repo, without overwriting anything you already have.
+            </p>
+          </div>
+          <figure class="art-fig"><HomeArt /></figure>
         </div>
         <InstallCommand display />
         <ReplayScene />
@@ -142,6 +146,35 @@ const offer = [
   }
   .hero-text {
     min-width: 0;
+  }
+  .hero-top {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .hero-top .art-fig {
+    margin: 0;
+    min-width: 0;
+  }
+  .hero-top :global(.art) {
+    max-width: 27.5rem;
+  }
+  /* On phones the drawing follows the command, so the command stays on the first screen. */
+  @media (max-width: 47.99rem) {
+    .hero-top {
+      display: contents;
+    }
+    .hero-top .art-fig {
+      order: 1;
+    }
+    .hero :global(.replay) {
+      order: 2;
+    }
+  }
+  @media (min-width: 64rem) {
+    .hero-top {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 27.5rem);
+    }
   }
   .lede {
     font-size: var(--text-lg);
