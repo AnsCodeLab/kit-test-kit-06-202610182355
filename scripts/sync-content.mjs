@@ -9,6 +9,7 @@ import {
   selectSourceFiles,
   sourceDir,
 } from './sync-lib.mjs';
+import { FLOW_FILE, buildFlowFromContent, serializeFlow } from './flow-lib.mjs';
 import { REPLAY_FILE, buildReplayFromContent, hasReplayInputs, serializeReplay } from './replay-lib.mjs';
 
 const src = sourceDir();
@@ -43,5 +44,6 @@ fs.renameSync(tmp, dir);
 if (hasReplayInputs()) {
   fs.mkdirSync(path.dirname(REPLAY_FILE), { recursive: true });
   fs.writeFileSync(REPLAY_FILE, serializeReplay(buildReplayFromContent(dir)));
+  fs.writeFileSync(FLOW_FILE, serializeFlow(buildFlowFromContent(dir)));
 }
 console.log(`sync: copied ${rels.length} files from ${src} (checksum ${manifest.checksum})`);

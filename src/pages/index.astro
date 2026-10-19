@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import FlowDiagram from '../components/FlowDiagram.astro';
 import InstallCommand from '../components/InstallCommand.astro';
 import ReplayScene from '../components/ReplayScene.astro';
 import RepoTree from '../components/RepoTree.astro';
@@ -35,6 +36,14 @@ const offer = [
           <InstallCommand />
         </div>
         <ReplayScene />
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="h-flow">
+      <p class="label" aria-hidden="true">/flow</p>
+      <div class="body">
+        <h2 id="h-flow">How to use it: plan, parallelize, verify, cross-review</h2>
+        <FlowDiagram caption />
       </div>
     </section>
 

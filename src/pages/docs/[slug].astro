@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import FlowDiagram from '../../components/FlowDiagram.astro';
 import Docs from '../../layouts/Docs.astro';
 import { CONCEPT_PAGES } from '../../lib/docs';
 import { renderDoc } from '../../lib/skill-markdown';
@@ -18,5 +19,6 @@ const { html, headings } = renderDoc(body);
 
 <Docs title={`${title} | Docs - Coding Agent Kit`} description={`${title}: a chapter of the Coding Agent Kit handbook.`} current={slug} headings={headings}>
   <h1>{title}</h1>
+  {slug === 'the-flow' && <FlowDiagram />}
   <div class="prose" data-doc-body set:html={html} />
 </Docs>

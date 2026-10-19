@@ -41,3 +41,15 @@ Re-run of the `ui-review` skill on Home after adding the replay scene. `measure-
 | replay-below-fold-375 | Home | 375 | The scene starts at y=766 of an 812 px screen, below the install command and copy button, which stay on the first screen. Judgment. | P3 | Open, by design: command first, scene follows. |
 
 Coverage: Home only (no other page template changed); viewports 375, 768, 1440; states: final frame, mid-animation at 2 s (1440 and 375), reduced motion, JavaScript disabled, Replay hover and focus. Not checked: Safari and Firefox (Chromium only).
+
+## KRK06-23: flow diagram on Home and /docs/the-flow/
+
+`ui-review` on the built site (`node scripts/serve.mjs dist 4173`). `node .claude/skills/ui-review/scripts/measure-page.cjs http://127.0.0.1:4173<path> <w>` for `/` and `/docs/the-flow/` at 375, 768 and 1440: axe 0, contrastFails 0, smallTargets 0, overflow false, consoleErrors 0 on all six runs; brokenLinks 1 is the known repo-link-404 (P3, open). Screenshots of the diagram at 375 (vertical stack), 900 and 1440 (four columns) with reduced motion.
+
+| ID | Page | Viewport | Issue | Priority | Status |
+|---|---|---|---|---|---|
+| flow-wide-gaps | Home, Docs the flow | 1440 | judgment: the gate row is aligned across columns, so under Plan and Parallelize there is white space between the description and the gate chip. No measurement fails. | P3 | Open |
+
+No P1 or P2 found. `tests/e2e/flow.spec.ts` measures the drawn text in a real browser: rendered size at least 14 px (font size times the SVG screen scale) at 375, 768 and 1440, no text outside the drawing, no two text boxes overlapping, unique ids, and no animation under reduced motion. No new colour pair: the diagram uses only pairs already in the table above (ink, ink-muted, signal and accent on `--color-bg`).
+
+Not checked: Safari and Firefox (Chromium only); the scroll-driven connector draw-in needs `animation-timeline`, which only Chromium has, and elsewhere the finished drawing is shown.
