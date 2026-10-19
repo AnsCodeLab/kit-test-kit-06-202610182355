@@ -22,6 +22,8 @@
     "lint": "eslint . && astro check",
     "scan:secrets": "node scripts/scan-secrets.mjs",
     "healthcheck": "node scripts/healthcheck.mjs",
+    "release:build": "node scripts/release.mjs",
+    "deploy": "node scripts/deploy-cloudflare.mjs",
     "audit": "npm audit --omit=dev --audit-level=high"
   },
   "devDependencies": {
