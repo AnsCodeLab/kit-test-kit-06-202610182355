@@ -21,6 +21,7 @@
     "lighthouse": "node scripts/ensure-browser.mjs && node scripts/lighthouse.mjs",
     "lint": "eslint . && astro check",
     "scan:secrets": "node scripts/scan-secrets.mjs",
+    "healthcheck": "node scripts/healthcheck.mjs",
     "audit": "npm audit --omit=dev --audit-level=high"
   },
   "devDependencies": {

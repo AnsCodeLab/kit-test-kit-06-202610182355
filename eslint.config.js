@@ -7,5 +7,5 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
-  { languageOptions: { globals: { process: 'readonly', console: 'readonly', fetch: 'readonly' } } },
+  { languageOptions: { globals: { process: 'readonly', console: 'readonly', fetch: 'readonly', URL: 'readonly' } } },
 ];
