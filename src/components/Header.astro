@@ -36,6 +36,8 @@ const links = [
   .site-header {
     background: var(--color-surface);
     border-block-end: 2px solid var(--color-ink);
+    /* Room above the links so the full focus ring (width plus offset) is not cut off by the top of the viewport. */
+    padding-block-start: calc(var(--focus-width) + var(--focus-offset));
   }
   .bar {
     display: flex;
