@@ -29,9 +29,9 @@ Install with `npm ci`. The browser commands download Playwright chromium on firs
 | `npm run audit` | `npm audit` on production dependencies, fails on high or critical |
 | `npm test` | Unit tests (Vitest) |
 | `npm run test:smoke` | Playwright smoke test on the served `dist/` at 375, 768 and 1440 px |
-| `npm run test:a11y` | axe on every built page at 375, 768 and 1440 px |
+| `npm run test:a11y` | axe on every built page at 375, 768 and 1440 px; colour contrast of links and buttons in hover, focus-visible and active states and CLS (including the font fallback metrics) on the 11 audited pages at 375 and 1440 px |
 | `npm run test:regression` | Site-wide bars on every page in the sitemap plus 404 at 375, 768 and 1440 px (status, lang, title, h1, headings, landmarks, alt, external requests, cookies, console errors, horizontal scroll, 44 px targets, internal links), then Home size and CLS and the font budget. Builds `dist/` first when it is missing. Negative tests prove it fails on broken HTML. |
-| `npm run lighthouse` | Lighthouse on every built page, asserts performance and accessibility >= 90 |
+| `npm run lighthouse` | Lighthouse on the 11 audited pages (`scripts/audit-pages.mjs`), asserts performance and accessibility >= 90 and CLS <= 0.05, prints each score |
 | `npm run preview` | Serve `dist/` on http://127.0.0.1:4173 |
 
 The browser commands need `npm run build` first. They use the server at `BASE_URL` when set, otherwise they serve `dist/` themselves.

@@ -59,11 +59,13 @@ All tokens live in `src/styles/tokens.css` as CSS custom properties. Pages use t
 
 ## Fonts
 
-Two self-hosted variable woff2 files in `public/fonts/`, subsetted to Basic Latin plus a few punctuation marks (from `@fontsource-variable/hanken-grotesk` and `@fontsource-variable/jetbrains-mono`, SIL OFL 1.1, licences beside the files). About 51 KB in total (limit: 3 files, 150 KB). Both `@font-face` rules use `font-display: swap`. Each has a metric-matched fallback face (`size-adjust`, `ascent-override`, `descent-override`, `line-gap-override`) computed from the glyph widths and line metrics against Arial / Courier New, so the swap does not shift layout. The sans face is preloaded.
+Two self-hosted variable woff2 files in `public/fonts/`, subsetted to Basic Latin plus a few punctuation marks (from `@fontsource-variable/hanken-grotesk` and `@fontsource-variable/jetbrains-mono`, SIL OFL 1.1, licences beside the files). About 51 KB in total (limit: 3 files, 150 KB). Both `@font-face` rules use `font-display: swap`. Each has a metric-matched fallback face (`size-adjust`, `ascent-override`, `descent-override`, `line-gap-override`) computed from the glyph widths and line metrics against Arial / Courier New, so the swap does not shift layout. The sans fallback uses `size-adjust: 100.7%` with `ascent-override: 99.3%` and `descent-override: 30.1%` (the font's 1.000 and 0.303 em divided by the size adjustment); `tests/e2e/fonts-fallback.spec.ts` measures both fallbacks against the real faces. Both fonts are preloaded, so they normally arrive before first paint. The reading width `--measure` is 42.5rem (680 px), not `68ch`: `ch` follows the font in use, so a `ch` measure changed the line length, and re-wrapped paragraphs, at the swap.
 
 ## Contrast pairs
 
 Measured with the WCAG 2.x relative luminance formula. The unit test `tests/unit/contrast.test.ts` reads this table, resolves each token from `tokens.css`, and fails if a pair drops below its minimum or if the measured value written here is wrong. Minimum 4.5 is normal text, 3 is large text and UI components (focus ring, rules).
+
+States: `tests/e2e/contrast.spec.ts` measures every distinct link and button on the 11 audited pages (`scripts/audit-pages.mjs`) at 375 and 1440 px in rest, hover, active and focus-visible states (text 4.5:1, focus ring 3:1 against the surrounding background), and runs axe `color-contrast` on every built page. Hover keeps the text colour readable on its own background (links keep `--color-accent`; the button hover fill is `--color-ink` under `--color-accent-ink`). The direction is light only, so there is no dark variant to measure.
 
 | Foreground token | Background token | Use | Min | Measured |
 |---|---|---|---|---|
@@ -75,6 +77,7 @@ Measured with the WCAG 2.x relative luminance formula. The unit test `tests/unit
 | `--color-accent` | `--color-surface` | links on cards | 4.5 | 6.44 |
 | `--color-signal` | `--color-bg` | state text | 4.5 | 6.48 |
 | `--color-accent-ink` | `--color-accent` | text on accent fill | 4.5 | 6.44 |
+| `--color-accent-ink` | `--color-ink` | text on button hover fill | 4.5 | 17.77 |
 | `--color-on-dark` | `--color-dark` | footer text | 4.5 | 16.11 |
 | `--color-on-dark-muted` | `--color-dark` | footer secondary text | 4.5 | 9.31 |
 | `--color-rule` | `--color-bg` | rules, input borders (UI) | 3 | 3.33 |

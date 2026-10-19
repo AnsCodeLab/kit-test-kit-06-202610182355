@@ -1,4 +1,4 @@
-// Runs Lighthouse against the served dist/ build and asserts performance and accessibility >= 90.
+// Runs Lighthouse on the 11 audited pages (scripts/audit-pages.mjs) of the served dist/ build and asserts performance and accessibility >= 90.
 // Uses BASE_URL when set (CI serves dist/ itself); otherwise serves dist/ on a local port.
 import { spawn } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';
@@ -6,6 +6,7 @@ import { chromium } from '@playwright/test';
 import lighthouse from 'lighthouse';
 import { launch } from 'chrome-launcher';
 import { builtPages } from './pages.mjs';
+import { auditPages } from './audit-pages.mjs';
 
 const MIN = 0.9;
 const MAX_CLS = 0.05;
@@ -30,7 +31,13 @@ const chrome = await launch({
 });
 let failed = false;
 try {
-  for (const page of builtPages()) {
+  const built = new Set(builtPages());
+  for (const page of auditPages) {
+    if (!built.has(page)) {
+      console.log(`FAIL ${page} is not in dist/`);
+      failed = true;
+      continue;
+    }
     const result = await lighthouse(base + page, { port: chrome.port, onlyCategories: ['performance', 'accessibility'], output: 'json', logLevel: 'error' });
     for (const id of ['performance', 'accessibility']) {
       const score = result.lhr.categories[id].score ?? 0;

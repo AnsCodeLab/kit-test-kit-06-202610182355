@@ -20,9 +20,9 @@
   font-family: 'Hanken Grotesk Fallback';
   src: local('Arial'), local('Liberation Sans'), local('Helvetica');
   font-display: swap;
-  size-adjust: 101.8%;
-  ascent-override: 98.2%;
-  descent-override: 29.8%;
+  size-adjust: 100.7%;
+  ascent-override: 99.3%;
+  descent-override: 30.1%;
   line-gap-override: 0%;
 }
 
