@@ -109,3 +109,49 @@ Vermilion marks "do something here" or "you are here", plus one hero word. If an
 | `--color-on-band` | `--color-band` | text on the teal band | 4.5 | 8.37 |
 | `--color-on-band-muted` | `--color-band` | secondary text on the teal band | 4.5 | 7.51 |
 | `--color-focus-on-dark` | `--color-band` | focus ring on the teal band | 3 | 6.40 |
+
+## Round 2 review
+
+KRK06-26. Two checks on the built site (`npm run build`, served from `dist/`), then fixes.
+
+### Cold reviewer test, with a control
+
+Method: full-page screenshots at 1440 px with the header and footer product name hidden (the install command itself still names the package, because it is the content). Each screenshot went to a fresh reviewer subagent with no repo access and no context, one session per image, under neutral file names in a shuffled order (`shot-a` to `shot-g`). The control is a plain generic dev-tool page built from the same Home content (dark hero with a radial glow, centred headline, terminal card, pill chips, three icon cards, numbered steps, a repeated CTA band). The prompt, identical for all:
+
+> Read ONLY the image file <path> (a full-page screenshot of a website, 1440 px wide). Do not read or list any other file and do not run any command. Answer in under 120 words: (1) What kind of product is this? (2) Which common website template or layout pattern does the page follow? (3) Name three real websites it resembles.
+
+| Shot | Page | Template named | Sites named |
+|---|---|---|---|
+| a | Control | Standard dark-mode SaaS or developer-tool landing: sticky nav with CTA, centred glow hero, stat pills, three-column card grids, gradient CTA band | Vercel, Linear, Supabase |
+| b | Home | Developer-tool landing built as a single-column "poster": giant monospace command, spec table, teal band, numbered points; brutalist and editorial | Vite, Astro, Zed |
+| c | Product | Documentation or reference index in a narrow monospace column | Python docs index, awesome-list READMEs, Homebrew formulae |
+| d | Docs | Documentation index with a ruled table of contents and a line-art illustration | Stripe Docs, Read the Docs, Vercel or Next.js Docs |
+| e | Offer | Minimal editorial docs-style page with slash labels in a left gutter | Linear (changelog), Vercel (docs and pricing), Stripe Press |
+| f | About | Minimal editorial page of ruled sections with quoted sources, terminal feel | Astro docs, Tailwind CSS, Linear changelog |
+
+Verdicts:
+
+- The control was judged the dark SaaS template, as it must be, so the reviewer discriminates.
+- No page was judged to follow the control's template. None was called a generic or standard dark landing page. Pages d, e and f were described as editorial docs-style pages. The overlap in named sites with the control is limited to Vercel and Linear (their docs and changelog, not their landing pages), so on the skill's rule this passes on the template test and also passes the structure test: `checkStructure` reports `ok` with the default sequence (hero, facts, tabs, steps, install, offer, footer) dropped to its hero on every page, and `scanTells` totals are 0 on Home, Offer and About and 1 (`oneHueJobs`) on Product and Docs, never more than one.
+- The weak finding was Home: the reviewer saw a text-only hero with half the width empty. That is fixed below, and Home was reviewed again (shot g, same prompt) after the fix: "developer-tool landing page ... monospace and brutalist-editorial ... resembles Vite, Astro, Bun". Still not the control's template or family.
+
+### What the review changed
+
+Home now has a hero drawing (`src/components/art/HomeArt.astro`) beside the headline: the command as a dark title bar over the seven kinds of file it writes, each marked with a teal `+`, closing with "everything else: untouched". Every path is from the README's "What gets written" table. It stays inside the direction: ink, paper, one vermilion rule, teal marks, a hard offset shadow, no gradients. Below 48 rem it sits under the display command so the command stays on the first screen. Between 48 and 64 rem it stays above the command, because moving it below made the display line's first-layout resize count as a shift of the art.
+
+Each of the five main pages now has an inline SVG of at least 200 by 100 px that ends before the second viewport height at 1440 px: Home, Product, Docs, Offer and About. `tests/e2e/art.spec.ts` checks it.
+
+### ui-review
+
+Commands: `measure-page.cjs <url> <1440|768|375>` on the five pages (15 runs), `snapshot-page.cjs` with `scanTells` and `checkStructure`, `node /tmp/k26/lh.mjs` equivalent (Lighthouse on the five pages), `npm run lighthouse`, and screenshots at 1440 and 375.
+
+```
+## Items
+- [P2] home-first-screen-no-visual | Home | 1440 | before the fix the only inline SVG of 200 px or more started at y=1734 (flow diagram) and the right 40 percent of the first screen was empty (screenshot fold-home.png); the cold reviewer saw a text-only hero | fixed: HomeArt.astro in the hero
+- [P3] home-spec-stale | Home | all | tests/e2e/home.spec.ts fails on main before this ticket (9 failures: 'command, copy button and file tree within two viewports' expects dl.tree within two screens, and a '%' text match). It is not part of test:smoke, test:a11y or CI | not changed, out of scope for this ticket
+- [P3] one-hue-jobs | Product, Docs | 1440 | scanTells oneHueJobs = 1 (total 1, allowed 1) | none
+```
+
+Measured and clean on all five pages at 1440, 768 and 375: axe 0, contrast failures 0, targets under 44 px 0, horizontal overflow false, console errors 0. Lighthouse on the five pages: performance 100, accessibility 100, best practices 100 (CLS 0.000 on the audited pages). Home HTML is 37 KB and the fonts are 67 KB.
+
+Coverage: pages Home, Product, Docs, Offer, About (the other 70 built pages share the layout and were covered by axe and contrast in `test:a11y`, not reviewed visually); viewports 1440, 768, 375; states checked: replay terminal after scroll, reduced-motion and strokes (`art.spec.ts`), keyboard focus and hover contrast (`contrast.spec.ts`); not checked: Safari and Firefox rendering (Chromium only), a person's taste review (the cold reviewers are models and find sameness, not taste), the control for Product, Docs, Offer and About (one control built from Home content), 375 px screenshots in the cold test (1440 only).
