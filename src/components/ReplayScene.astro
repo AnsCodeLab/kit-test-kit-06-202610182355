@@ -1,0 +1,231 @@
+---
+import replay from '../data/replay.json';
+
+// Reveal order: command line, wizard steps, confirmation, then the files. Delays live in the stylesheet
+// (the CSP forbids style attributes), keyed by data-i.
+let i = 0;
+const next = () => i++;
+const head = next();
+const steps = replay.steps.map((s) => ({ ...s, i: next() }));
+const confirm = next();
+const files = replay.files.map((f) => ({ ...f, i: next() }));
+---
+
+<figure class="replay" data-replay aria-labelledby="replay-title">
+  <div class="head reveal" data-i={head}>
+    <figcaption id="replay-title">
+      <span aria-hidden="true" class="prompt">$</span>
+      <span class="cmd">{replay.command}</span>
+    </figcaption>
+  </div>
+  <button type="button" class="again" hidden>Replay</button>
+
+  <ol class="steps">
+    {
+      steps.map((s) => (
+        <li class="reveal" data-i={s.i}>
+          <svg class="tick" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path d="M3 8.5 6.5 12 13 4.5" pathLength="1" />
+          </svg>
+          <span class="k">{s.label}</span>
+          <span class="v">{s.value}</span>
+        </li>
+      ))
+    }
+  </ol>
+  <p class="confirm reveal" data-i={confirm}>{replay.confirm} <strong>{replay.answer}</strong></p>
+
+  <p class="repo-label reveal" data-i={confirm} id="replay-files">Your repo</p>
+  <ul class="files" aria-labelledby="replay-files">
+    {
+      files.map((f) => (
+        <li class="reveal" data-i={f.i}>
+          <svg class="doc" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path d="M3.5 1.5h6l3 3v10h-9zM9.5 1.5v3h3" />
+          </svg>
+          <code>{f.path}</code>
+          <span class="state">created</span>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="note">Example run in an empty repo, with the choices from the quickstart.</p>
+</figure>
+
+<script>
+  import '../scripts/replay';
+</script>
+
+<style>
+  .replay {
+    position: relative;
+    margin: 0;
+    background: var(--color-surface);
+    border-top: 2px solid var(--color-ink);
+    border-bottom: 1px solid var(--color-rule);
+    box-shadow: var(--shadow-2);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: var(--space-2) calc(var(--space-6) + 4.5rem) var(--space-2) var(--space-4);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    overflow-wrap: anywhere;
+  }
+  .prompt {
+    color: var(--color-accent);
+    margin-inline-end: var(--space-2);
+  }
+  .again {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    padding-inline: var(--space-4);
+    border: 0;
+    border-inline-start: 1px solid var(--color-rule);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+  }
+  .again:hover {
+    background: var(--color-bg);
+  }
+  ol,
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    column-gap: var(--space-3);
+    padding: var(--space-1) var(--space-4);
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+  .tick {
+    grid-row: 1 / span 2;
+    margin-block-start: 0.2rem;
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 2;
+    stroke-linecap: square;
+  }
+  .k {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .v {
+    font-weight: var(--weight-medium);
+    overflow-wrap: anywhere;
+  }
+  .confirm {
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    max-width: none;
+    border-bottom: 1px solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+  .confirm strong {
+    color: var(--color-signal);
+  }
+  .repo-label {
+    margin: 0;
+    padding: var(--space-3) var(--space-4) var(--space-1);
+    max-width: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .files li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: var(--space-3);
+    padding: var(--space-1) var(--space-4);
+  }
+  .doc {
+    align-self: center;
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 1.4;
+  }
+  .files code {
+    overflow-wrap: anywhere;
+    font-weight: var(--weight-medium);
+  }
+  .note {
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    max-width: none;
+    border-top: 1px solid var(--color-rule-soft);
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+  }
+  .state {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-signal);
+    font-weight: var(--weight-medium);
+  }
+
+  /* Timeline: runs once, ends by 7.2 s, then the final frame (the rules above) holds. Only clip-path and
+     stroke-dashoffset move, so layout never shifts and text colour is never faded. */
+  .reveal[data-i='0'] { --d: 0.2s; }
+  .reveal[data-i='1'] { --d: 0.7s; }
+  .reveal[data-i='2'] { --d: 1.15s; }
+  .reveal[data-i='3'] { --d: 1.6s; }
+  .reveal[data-i='4'] { --d: 2.05s; }
+  .reveal[data-i='5'] { --d: 2.5s; }
+  .reveal[data-i='6'] { --d: 2.95s; }
+  .reveal[data-i='7'] { --d: 3.5s; }
+  .reveal[data-i='8'] { --d: 4.2s; }
+  .reveal[data-i='9'] { --d: 4.7s; }
+  .reveal[data-i='10'] { --d: 5.2s; }
+  .reveal[data-i='11'] { --d: 5.7s; }
+  .reveal[data-i='12'] { --d: 6.2s; }
+
+  @keyframes wipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+  @keyframes draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+    .reveal {
+      animation: wipe 0.5s steps(14, end) var(--d) both;
+    }
+    .tick path {
+      stroke-dasharray: 1;
+      animation: draw 0.25s linear calc(var(--d, 0s) + 0.3s) both;
+    }
+    .replay.is-reset .reveal,
+    .replay.is-reset .tick path {
+      animation: none;
+    }
+  }
+  @media (max-width: 30rem) {
+    .head {
+      padding-inline-end: calc(var(--space-4) + 4.5rem);
+    }
+  }
+</style>

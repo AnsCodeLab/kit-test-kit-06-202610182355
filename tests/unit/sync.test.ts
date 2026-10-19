@@ -16,7 +16,7 @@ function write(base: string, rel: string, text: string) {
 
 function run(script: string) {
   return spawnSync('node', [path.join(root, 'scripts', script)], {
-    env: { ...process.env, KIT_SOURCE: src, CONTENT_DIR: content },
+    env: { ...process.env, KIT_SOURCE: src, CONTENT_DIR: content, SKIP_REPLAY: '1' },
     encoding: 'utf8',
   });
 }
@@ -98,7 +98,7 @@ describe('sync and check-sync', () => {
     fs.rmSync(path.join(content, 'LICENSE'));
     expect(run('check-sync.mjs').stderr).toContain('missing from content: LICENSE');
     execFileSync('node', [path.join(root, 'scripts/sync-content.mjs')], {
-      env: { ...process.env, KIT_SOURCE: src, CONTENT_DIR: content },
+      env: { ...process.env, KIT_SOURCE: src, CONTENT_DIR: content, SKIP_REPLAY: '1' },
     });
     write(content, 'stray.md', 'x\n');
     expect(run('check-sync.mjs').stderr).toContain('extra file in content: stray.md');

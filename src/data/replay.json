@@ -1,0 +1,53 @@
+{
+  "command": "npx @anscodelab/coding-agent-kit",
+  "steps": [
+    {
+      "label": "Target",
+      "value": "Use current directory"
+    },
+    {
+      "label": "Agent",
+      "value": "claude-code"
+    },
+    {
+      "label": "IDE/ADE",
+      "value": "vscode"
+    },
+    {
+      "label": "Skills",
+      "value": "brainstorming, test-driven-development, ticket-flow"
+    },
+    {
+      "label": "MCP servers",
+      "value": "github, atlassian"
+    },
+    {
+      "label": "Safeguards and tooling",
+      "value": "secret-scan"
+    }
+  ],
+  "confirm": "Apply these changes?",
+  "answer": "yes",
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "step": "Agent"
+    },
+    {
+      "path": ".claude/skills/",
+      "step": "Skills"
+    },
+    {
+      "path": ".mcp.json",
+      "step": "MCP servers"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "step": "IDE/ADE"
+    },
+    {
+      "path": ".git/hooks/pre-commit",
+      "step": "Safeguards and tooling"
+    }
+  ]
+}
