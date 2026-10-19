@@ -12,3 +12,4 @@ playwright-report/
 TICKET.md
 QA_HANDOFF.md
 dist-fixture/
+release/
