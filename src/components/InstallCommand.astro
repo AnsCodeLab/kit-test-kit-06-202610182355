@@ -11,10 +11,8 @@ const { display = false } = Astro.props;
 {
   display ? (
     <div class="install display" data-install>
-      {/* Same text as INSTALL_COMMAND; the empty spans are break points only (m: narrow screens, d: wide). */}
-      <code class="cmd">
-        npx<span class="brk m" aria-hidden="true" /> <span>@anscodelab</span><span class="brk m" aria-hidden="true" />/<span class="brk d" aria-hidden="true" /><span>coding-</span><span class="brk m" aria-hidden="true" /><span class="hot">agent-kit</span>
-      </code>
+      {/* Same text as INSTALL_COMMAND; the span only carries the accent. The line scrolls inside its own box when it is wider than the screen. */}
+      <code class="cmd" tabindex="0">npx @anscodelab/coding-<span class="hot">agent-kit</span></code>
       <button type="button" hidden>Copy command</button>
       <p class="status" role="status" aria-live="polite" data-status />
     </div>
@@ -80,52 +78,30 @@ const { display = false } = Astro.props;
     }
   }
 
-  /* Display variant: the command is the largest thing on the page and the layout hangs off it. Sized from the
-     width of its own container so the longest line always fits: 4 lines of at most 11 characters on narrow
-     screens, 2 lines of 16 characters from 48rem. Mono advance is 0.6em, tightened by the letter-spacing. */
+  /* Display variant: the command is one line, 2 to 2.5 times the body size, with the button directly under it.
+     The page headline stays the largest text on the first screen. */
   .display {
-    container-type: inline-size;
     grid-template-columns: minmax(0, 1fr);
     row-gap: var(--space-3);
     justify-items: start;
   }
   .display .cmd {
-    padding-block: 0;
-    font-size: min(var(--text-display), 15.4cqi);
+    max-width: 100%;
+    padding-block: var(--space-2);
+    font-size: 2.3rem;
     font-weight: var(--weight-bold);
-    line-height: 0.98;
+    line-height: 1.1;
     letter-spacing: -0.03em;
+    white-space: nowrap;
+    overflow-x: auto;
     overflow-wrap: normal;
-    white-space: normal;
   }
-  .display button {
-    margin-block-start: var(--space-4);
+  /* The button is revealed by script; keep its space so the content below does not jump when it appears. */
+  .display button[hidden] {
+    display: block;
+    visibility: hidden;
   }
   .display .hot {
     color: var(--color-accent);
-  }
-  .display .brk {
-    width: 0;
-    height: 0;
-  }
-  .display .brk.d {
-    display: none;
-  }
-  .display .brk.m {
-    display: block;
-  }
-  .display .cmd span:not(.brk) {
-    white-space: nowrap;
-  }
-  @media (min-width: 48rem) {
-    .display .cmd {
-      font-size: min(var(--text-display), 10.6cqi);
-    }
-    .display .brk.m {
-      display: none;
-    }
-    .display .brk.d {
-      display: block;
-    }
   }
 </style>
