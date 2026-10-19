@@ -15,7 +15,7 @@
     "test:components": "npm run build:fixture && node scripts/ensure-browser.mjs && playwright test -c playwright.fixture.config.ts",
     "preview": "node scripts/serve.mjs dist 4173",
     "test": "vitest run",
-    "test:smoke": "node scripts/ensure-browser.mjs && playwright test tests/e2e/smoke.spec.ts tests/e2e/layout.spec.ts tests/e2e/skills.spec.ts tests/e2e/csp.spec.ts tests/e2e/flow.spec.ts tests/e2e/art.spec.ts",
+    "test:smoke": "node scripts/ensure-browser.mjs && playwright test tests/e2e/smoke.spec.ts tests/e2e/layout.spec.ts tests/e2e/skills.spec.ts tests/e2e/csp.spec.ts tests/e2e/flow.spec.ts tests/e2e/art.spec.ts tests/e2e/type.spec.ts",
     "test:a11y": "node scripts/ensure-browser.mjs && playwright test tests/e2e/a11y.spec.ts tests/e2e/contrast.spec.ts tests/e2e/cls.spec.ts",
     "test:regression": "node scripts/regression.mjs",
     "lighthouse": "node scripts/ensure-browser.mjs && node scripts/lighthouse.mjs",

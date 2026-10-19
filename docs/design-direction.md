@@ -84,3 +84,28 @@ States: `tests/e2e/contrast.spec.ts` measures every distinct link and button on 
 | `--color-focus` | `--color-bg` | focus ring on page | 3 | 5.79 |
 | `--color-focus` | `--color-surface` | focus ring on cards | 3 | 6.39 |
 | `--color-focus-on-dark` | `--color-dark` | focus ring in footer | 3 | 12.32 |
+
+## Round 2
+
+Owner feedback on the finished site: "looks good but not really impressed". Round 1 was clean and consistent but timid. Round 2 raises the type and colour impact inside Manifest (same rows, rules, fonts and tokens), and adds the illustration layer from KRK06-24.
+
+### Deviations from the developer-tool category default
+
+1. **The command is the page, not a widget.** The default puts a small command in a terminal card under a centred headline. Here `npx @anscodelab/coding-agent-kit` is set as a display line (up to 7 rem, bold mono, tight tracking) that the Home hero is built around: two lines at 48 rem and up, four lines below that, sized from its container so it never overflows. At 1440 px it is about 6.6 times the body size, at 375 px about 3.1 times. The Home h1 sits above it at `--text-3xl`, and the band heading is a normal h2, so the command stays the top of the hierarchy.
+2. **Page titles are poster-scale.** The default keeps a 40 px title. Every page `h1` now uses `--text-4xl` (40 px up to 84 px, tracking -0.035em), so each page opens with a typographic statement instead of a label.
+3. **One full-bleed colour band, not a coloured card.** The default separates sections with cards and gradients. Home has a single edge-to-edge deep teal band for "How it works", with oversized mono numerals and ink-on-teal rules; every other section stays on paper. The band is painted with a clipped box shadow, so it needs no extra markup and cannot cause horizontal scroll.
+4. **A strict accent budget.** The default sprinkles one bright accent over cards, icons and badges. Vermilion (`--color-accent`) appears only on: the primary action (buttons, links), the active route, the one word `agent-kit` in the display command, and the drawn strokes in the illustrations. Teal is for state and the band. Nothing else is saturated.
+
+### Accent usage rule
+
+Vermilion marks "do something here" or "you are here", plus one hero word. If an element is neither an action nor a location, it is ink, muted ink or teal. No glow, no gradients, no chip rows, no icon-card grids, no accent-border cards, no second install band.
+
+### New tokens and contrast pairs
+
+`--text-4xl`, `--text-display`, `--color-band`, `--color-on-band`, `--color-on-band-muted`. Checked by `tests/unit/contrast.test.ts` like the table above.
+
+| Foreground token | Background token | Use | Min | Measured |
+|---|---|---|---|---|
+| `--color-on-band` | `--color-band` | text on the teal band | 4.5 | 8.37 |
+| `--color-on-band-muted` | `--color-band` | secondary text on the teal band | 4.5 | 7.51 |
+| `--color-focus-on-dark` | `--color-band` | focus ring on the teal band | 3 | 6.40 |
