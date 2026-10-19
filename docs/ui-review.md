@@ -30,3 +30,14 @@ No P1 found. All other measurements passed for all 12 page types at all 3 viewpo
 ## Coverage
 
 Pages: all 12 page types. Viewports: 375, 768, 1440. States checked: keyboard focus on Home and Docs at 1440, contrast and target size by script. Not checked: hover and active states beyond the existing `contrast.spec.ts`; the long pages were read from downscaled full-page screenshots, so text-level typography on them was not inspected; `ui-style-direction` scripts are not installed, so the template-tells scan was not run.
+
+## KRK06-22: hero replay on Home
+
+Re-run of the `ui-review` skill on Home after adding the replay scene. `measure-page.cjs http://127.0.0.1:4173/ <w>` at 375, 768 and 1440: axe 0, contrast failures 0, smallTargets 0, overflow false, console errors 0; brokenLinks 1 is the known repo-link-404 (P3, open). Screenshots of the final frame at the three widths (reduced motion) and a keyboard pass to the Replay button (3 px ring visible, not clipped).
+
+| ID | Page | Viewport | Issue | Priority | Status |
+|---|---|---|---|---|---|
+| replay-hover-contrast | Home | 375, 1440 | `contrast.spec.ts` measured the Replay button at 3.14:1 on hover and 2.67:1 on focus: the first hover style also changed the text colour, so the colour transition was sampled mid-way. | P2 | Fixed: hover only changes the background (ink text on `--color-bg`); `test:a11y` passes. |
+| replay-below-fold-375 | Home | 375 | The scene starts at y=766 of an 812 px screen, below the install command and copy button, which stay on the first screen. Judgment. | P3 | Open, by design: command first, scene follows. |
+
+Coverage: Home only (no other page template changed); viewports 375, 768, 1440; states: final frame, mid-animation at 2 s (1440 and 375), reduced motion, JavaScript disabled, Replay hover and focus. Not checked: Safari and Firefox (Chromium only).
