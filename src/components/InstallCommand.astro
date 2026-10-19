@@ -1,12 +1,31 @@
 ---
 import { INSTALL_COMMAND } from '../lib/install';
+
+interface Props {
+  /** Set the command as the display line a page is built around (Home). */
+  display?: boolean;
+}
+const { display = false } = Astro.props;
 ---
 
-<div class="install" data-install>
-  <code class="cmd">{INSTALL_COMMAND}</code>
-  <button type="button" hidden>Copy command</button>
-  <p class="status" role="status" aria-live="polite" data-status></p>
-</div>
+{
+  display ? (
+    <div class="install display" data-install>
+      {/* Same text as INSTALL_COMMAND; the empty spans are break points only (m: narrow screens, d: wide). */}
+      <code class="cmd">
+        npx<span class="brk m" aria-hidden="true" /> <span>@anscodelab</span><span class="brk m" aria-hidden="true" />/<span class="brk d" aria-hidden="true" /><span>coding-</span><span class="brk m" aria-hidden="true" /><span class="hot">agent-kit</span>
+      </code>
+      <button type="button" hidden>Copy command</button>
+      <p class="status" role="status" aria-live="polite" data-status />
+    </div>
+  ) : (
+    <div class="install" data-install>
+      <code class="cmd">{INSTALL_COMMAND}</code>
+      <button type="button" hidden>Copy command</button>
+      <p class="status" role="status" aria-live="polite" data-status />
+    </div>
+  )
+}
 
 <script>
   import '../scripts/copy';
@@ -58,6 +77,55 @@ import { INSTALL_COMMAND } from '../lib/install';
     .install {
       grid-template-columns: minmax(0, 1fr);
       row-gap: var(--space-3);
+    }
+  }
+
+  /* Display variant: the command is the largest thing on the page and the layout hangs off it. Sized from the
+     width of its own container so the longest line always fits: 4 lines of at most 11 characters on narrow
+     screens, 2 lines of 16 characters from 48rem. Mono advance is 0.6em, tightened by the letter-spacing. */
+  .display {
+    container-type: inline-size;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-3);
+    justify-items: start;
+  }
+  .display .cmd {
+    padding-block: 0;
+    font-size: min(var(--text-display), 15.4cqi);
+    font-weight: var(--weight-bold);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    overflow-wrap: normal;
+    white-space: normal;
+  }
+  .display button {
+    margin-block-start: var(--space-4);
+  }
+  .display .hot {
+    color: var(--color-accent);
+  }
+  .display .brk {
+    width: 0;
+    height: 0;
+  }
+  .display .brk.d {
+    display: none;
+  }
+  .display .brk.m {
+    display: block;
+  }
+  .display .cmd span:not(.brk) {
+    white-space: nowrap;
+  }
+  @media (min-width: 48rem) {
+    .display .cmd {
+      font-size: min(var(--text-display), 10.6cqi);
+    }
+    .display .brk.m {
+      display: none;
+    }
+    .display .brk.d {
+      display: block;
     }
   }
 </style>

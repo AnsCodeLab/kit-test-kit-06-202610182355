@@ -18,6 +18,11 @@
   --color-on-dark: #f4f4f0;
   --color-on-dark-muted: #b9bdb5;
 
+  /* Colour: full-bleed band (Round 2). Deep teal, the signal hue darkened; text on it uses the on-band tokens. */
+  --color-band: #0a5050;
+  --color-on-band: #f4f4f0;
+  --color-on-band-muted: #d9ece6;
+
   /* Colour: focus ring (light and dark backgrounds) */
   --color-focus: #0b57d0;
   --color-focus-on-dark: #ffd166;
@@ -34,6 +39,8 @@
   --text-xl: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
   --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
   --text-3xl: clamp(2.25rem, 1.6rem + 3vw, 4rem);
+  --text-4xl: clamp(2.5rem, 1.5rem + 4.5vw, 5.25rem); /* page titles (Round 2) */
+  --text-display: 7rem; /* ceiling for the Home command; the line itself is sized from its container */
   --leading-tight: 1.1;
   --leading-snug: 1.3;
   --leading-body: 1.6;

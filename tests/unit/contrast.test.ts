@@ -64,3 +64,17 @@ describe('design-direction.md structure', () => {
     expect(doc.match(/\*\*Direction [A-Z], [^*]+, is chosen\.\*\*/g)).toHaveLength(1);
   });
 });
+
+describe('design-direction.md Round 2', () => {
+  const round2 = doc.split(/^## Round 2$/m)[1] ?? '';
+  it('names at least three deviations from the category default and an accent rule', () => {
+    const list = round2.split('### Deviations from the developer-tool category default')[1]?.split(/^###/m)[0] ?? '';
+    expect([...list.matchAll(/^\d+\. \*\*/gm)].length).toBeGreaterThanOrEqual(3);
+    expect(round2).toMatch(/### Accent usage rule/);
+  });
+  it('lists the new band pairs', () => {
+    for (const fg of ['--color-on-band', '--color-on-band-muted', '--color-focus-on-dark']) {
+      expect(rows.some((r) => r.fg === fg && r.bg === '--color-band')).toBe(true);
+    }
+  });
+});
