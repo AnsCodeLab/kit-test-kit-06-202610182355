@@ -1,0 +1,28 @@
+---
+import '../../styles/art.css';
+import { DOC_PAGES } from '../../lib/docs';
+
+// One sheet per handbook chapter, fanned like a binder with a tab on each.
+const n = DOC_PAGES.length;
+const STEP = 16;
+const SHEET_W = 110;
+const sheets = DOC_PAGES.map((p, i) => ({ id: p.id, x: 10 + i * STEP }));
+const W = 10 + (n - 1) * STEP + SHEET_W + 10;
+const front = sheets[n - 1];
+const lines = [74, 94, 114, 134, 154];
+---
+
+<!-- Decorative: the chapter list below the heading is the content. -->
+<svg class="art" viewBox={`0 0 ${W} 190`} width={W} height="190" aria-hidden="true" focusable="false">
+  {
+    sheets.map((s) => (
+      <g>
+        <rect class="ink join f-soft" x={s.x} y="12" width="14" height="12" />
+        <rect class="ink join f-surface" x={s.x} y="22" width={SHEET_W} height="150" />
+      </g>
+    ))
+  }
+  <path class="acc join draw" pathLength="1" d={`M${front.x + 12} 46 H${front.x + 62}`} />
+  <path class="rule join" d={lines.map((y) => `M${front.x + 12} ${y} H${front.x + SHEET_W - 12}`).join(' ')} />
+  <rect class="f-sig" x={front.x + 12} y="54" width="20" height="8" />
+</svg>

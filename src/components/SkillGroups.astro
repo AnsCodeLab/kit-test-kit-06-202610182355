@@ -1,5 +1,6 @@
 ---
 import { getSkillGroups } from '../lib/catalog';
+import GroupArt from './art/GroupArt.astro';
 
 const groups = getSkillGroups();
 const total = groups.reduce((sum, g) => sum + g.count, 0);
@@ -11,6 +12,7 @@ const total = groups.reduce((sum, g) => sum + g.count, 0);
     {
       groups.map((g) => (
         <li data-skill-group={g.group}>
+          <GroupArt group={g.group} size="sm" />
           <span class="name">{g.group}</span>
           <span class="count">{g.count}</span>
         </li>
@@ -38,13 +40,18 @@ const total = groups.reduce((sum, g) => sum + g.count, 0);
     border-left: 1px solid var(--color-rule);
   }
   li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: baseline;
+    column-gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
     border-right: 1px solid var(--color-rule);
     border-bottom: 1px solid var(--color-rule);
     background: var(--color-surface);
+  }
+  li > :global(svg) {
+    grid-column: 1 / -1;
+    margin-block-end: var(--space-3);
   }
   .name {
     font-family: var(--font-mono);

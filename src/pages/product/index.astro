@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import { getAgents, getHooks, getIdes, getMcpServers, getSkillGroups } from '../../lib/catalog';
 import { purpose } from '../../lib/purpose';
+import GroupArt from '../../components/art/GroupArt.astro';
+import ProductArt from '../../components/art/ProductArt.astro';
 
 const groups = getSkillGroups();
 const total = groups.reduce((sum, g) => sum + g.count, 0);
@@ -33,17 +35,22 @@ const lists = [
     <section class="row" aria-labelledby="h-contents">
       <p class="label" aria-hidden="true">/contents</p>
       <div class="body">
-        <h1 id="h-contents">What the kit contains</h1>
-        <ul class="inventory" data-inventory>
-          {
-            inventory.map((i) => (
-              <li>
-                <span class="n">{i.count}</span>
-                <span class="t">{i.label}</span>
-              </li>
-            ))
-          }
-        </ul>
+        <div class="art-head">
+          <div class="art-text">
+            <h1 id="h-contents">What the kit contains</h1>
+            <ul class="inventory" data-inventory>
+              {
+                inventory.map((i) => (
+                  <li>
+                    <span class="n">{i.count}</span>
+                    <span class="t">{i.label}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <figure class="art-fig"><ProductArt groups={groups.map((g) => ({ group: g.group, count: g.count }))} /></figure>
+        </div>
         <nav aria-label="Skill groups">
           <ul class="jump">
             {
@@ -63,9 +70,12 @@ const lists = [
         <section class="row" id={`group-${g.group}`} aria-labelledby={`h-group-${g.group}`} data-skill-group={g.group}>
           <p class="label" aria-hidden="true">/skills/{g.group}</p>
           <div class="body">
-            <h2 id={`h-group-${g.group}`}>
-              {g.group} <span class="count" data-group-count>{g.count}</span>
-            </h2>
+            <div class="group-head">
+              <h2 id={`h-group-${g.group}`}>
+                {g.group} <span class="count" data-group-count>{g.count}</span>
+              </h2>
+              <GroupArt group={g.group} />
+            </div>
             <ul class="items">
               {g.skills.map((s) => (
                 <li id={`skill-${s.id}`} data-skill={s.id}>
@@ -124,6 +134,21 @@ const lists = [
     overflow-wrap: anywhere;
   }
   .body {
+    min-width: 0;
+  }
+  .group-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    margin-block-end: var(--space-5);
+  }
+  .group-head h2 {
+    margin-block-end: 0;
+    min-width: 0;
+  }
+  .group-head :global(svg) {
+    flex: 0 1 9rem;
     min-width: 0;
   }
   h2 {

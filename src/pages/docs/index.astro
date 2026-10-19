@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Docs from '../../layouts/Docs.astro';
 import { DOC_PAGES, docPath } from '../../lib/docs';
+import DocsArt from '../../components/art/DocsArt.astro';
 
 const chapters = new Map((await getCollection('handbook')).map((c) => [c.id, c.data]));
 const pages = DOC_PAGES.map((p) => {
@@ -12,7 +13,10 @@ const pages = DOC_PAGES.map((p) => {
 ---
 
 <Docs title="Docs - Coding Agent Kit" description="Documentation for Coding Agent Kit, taken from its handbook.">
-  <h1>Docs</h1>
+  <div class="art-head">
+    <h1>Docs</h1>
+    <div class="art-fig"><DocsArt /></div>
+  </div>
   <ul class="pages" data-doc-pages>
     {
       pages.map((p) => (
