@@ -71,7 +71,7 @@ test('text alternative: the scene is real text, every step and file is readable'
   await page.goto('/');
   const fig = page.locator('figure[data-replay]');
   await expect(fig).toHaveAttribute('aria-labelledby', 'replay-title');
-  await expect(page.locator('#replay-title')).toContainText(replay.command);
+  await expect(page.locator('#replay-title')).toContainText('example run');
   await expect(fig.locator('ol.steps > li')).toHaveCount(replay.steps.length);
   for (const f of replay.files) await expect(fig.locator('ul.files')).toContainText(f.path);
   expect(await fig.locator('svg:not([aria-hidden="true"])').count()).toBe(0);

@@ -138,9 +138,9 @@ const offer = [
     gap: var(--space-6);
     align-items: start;
   }
-  /* The h1 is the sentence; the command below it is the anchor, so the h1 stays a step below the display line. */
+  /* The h1 is the anchor of the first screen: always larger than the install command under the lede. */
   .hero h1 {
-    font-size: var(--text-3xl);
+    font-size: clamp(2.75rem, 1.6rem + 3vw, 4.25rem);
     letter-spacing: -0.03em;
     max-width: var(--measure);
   }
