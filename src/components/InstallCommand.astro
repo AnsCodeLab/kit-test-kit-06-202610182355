@@ -96,6 +96,11 @@ const { display = false } = Astro.props;
     overflow-x: auto;
     overflow-wrap: normal;
   }
+  /* The button is revealed by script; keep its space so the content below does not jump when it appears. */
+  .display button[hidden] {
+    display: block;
+    visibility: hidden;
+  }
   .display .hot {
     color: var(--color-accent);
   }
