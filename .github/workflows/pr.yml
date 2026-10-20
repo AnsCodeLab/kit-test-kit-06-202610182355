@@ -3,14 +3,6 @@ name: PR Checks
 # Per-run PR workflow for the project-run harness (GitHub Actions, self-hosted
 # Linux runner with label `podman`, bash, Jira).
 #
-# Origin: the EQQNext Gitea workflow (.gitea/workflows/pr.yml). Same design, ported:
-#   Gitea -> GitHub            API calls use `gh api` and the built-in GITHUB_TOKEN
-#   Mantis -> Jira             ticket fetched over REST; QA verdict goes back as a Jira comment
-#   PowerShell -> bash         Linux runner, `defaults.run.shell: bash`
-#   omp + auth broker -> Claude Code (`claude -p`) with a podman-secret OAuth token
-#   Windows junction cache -> plain `npm ci` (each run has its own container)
-#   merge via a whitelisted user token -> `gh pr merge` with GITHUB_TOKEN
-#
 # Jobs (needs in brackets):
 #   protected-paths  Fails a PR whose files include .github/**, review-prompt.md, qa-prompt.md, DONE.md, PLAN-INSTRUCTIONS.md
 #                or TICKET.md (the pipeline owns them; the builder opens an issue instead). Runs from the base branch. review and qa
@@ -46,11 +38,8 @@ name: PR Checks
 #                was trivial. A PR that is labelled flow-real when merge starts but whose QA did not run
 #                is NOT merged. The review job reads no labels.
 #
-# Why merge is a separate job: the review job must never merge itself. In EQQNext the review
-# job's own status was a required check, so merging from inside it deadlocked (Gitea refused
-# while that same status was pending). GitHub free private repos have no required checks,
-# so here the reason is determinism: the agent job only decides, and one plain script
-# job with no LLM is the single place that merges.
+# Why merge is a separate job: the review job must never merge itself. The agent job only
+# decides, and one plain script job with no LLM is the single place that merges.
 #
 # Runner environment (set from podman secrets at container start, never written to the repo):
 #   JIRA_BASE_URL, JIRA_USER, JIRA_TOKEN   Jira REST access
