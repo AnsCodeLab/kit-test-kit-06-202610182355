@@ -172,7 +172,7 @@ const lists = [
   }
   .inventory {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-block: var(--space-5);
     border-top: 1px solid var(--color-rule);
     border-left: 1px solid var(--color-rule);
@@ -185,12 +185,18 @@ const lists = [
     border-bottom: 1px solid var(--color-rule);
     background: var(--color-surface);
   }
+  .inventory li:last-child {
+    grid-column: 1 / -1;
+  }
   .n {
     font-size: var(--text-2xl);
   }
   .t {
     font-family: var(--font-mono);
     font-size: var(--text-sm);
+  }
+  nav:has(> .jump) {
+    margin-block-start: var(--space-6);
   }
   .jump {
     display: flex;
@@ -237,6 +243,27 @@ const lists = [
   .purpose strong {
     color: var(--color-ink);
     font-weight: var(--weight-medium);
+  }
+  @media (min-width: 30rem) {
+    .inventory {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .inventory li {
+      grid-column: span 2;
+    }
+    .inventory li:nth-child(n + 4) {
+      grid-column: span 3;
+    }
+  }
+  @media (min-width: 64rem) {
+    .inventory {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .inventory li,
+    .inventory li:nth-child(n + 4) {
+      grid-column: auto;
+      padding-inline: var(--space-3);
+    }
   }
   @media (min-width: 48rem) {
     .row {
